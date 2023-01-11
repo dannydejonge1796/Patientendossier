@@ -11,11 +11,11 @@ import java.io.IOException;
 public class Index extends Application {
   @Override
   public void start(Stage stage) throws IOException {
-    stage.setTitle("Patiëntendossier");
+    stage.setTitle("Elektronisch Patiëntendossier");
     stage.setWidth(1280);
     stage.setHeight(720);
     stage.setResizable(false);
-    new LoginScreen(stage).setPatientLoginScene();;
+    stage.setScene(new LoginScreen(stage).getPatientLoginScene());
     stage.show();
   }
 

@@ -16,18 +16,16 @@ import javafx.stage.Stage;
 
 public class LoginScreen {
 
-  private final Stage stage;
-  private Scene patientLoginScene;
-  private Scene carerLoginScene;
+  private final Scene patientLoginScene;
+  private final Scene carerLoginScene;
 
   public LoginScreen(Stage stage)
   {
-    this.stage = stage;
-    this.patientLoginScene = null;
-    this.carerLoginScene = null;
+    this.patientLoginScene = setPatientLoginScene(stage);
+    this.carerLoginScene = setCarerLoginScene(stage);
   }
 
-  public void setPatientLoginScene()
+  private Scene setPatientLoginScene(Stage stage)
   {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -42,13 +40,7 @@ public class LoginScreen {
     grid.add(hlCarerLogin, 0, 5);
     GridPane.setHalignment(hlCarerLogin, HPos.RIGHT);
 
-    hlCarerLogin.setOnAction(e -> {
-      if (this.carerLoginScene != null) {
-        this.stage.setScene(this.carerLoginScene);
-      } else {
-        this.setCarerLoginScene();
-      }
-    });
+    hlCarerLogin.setOnAction(e -> stage.setScene(this.carerLoginScene));
 
     Button btnLogin = new Button("Inloggen");
     grid.add(btnLogin, 0, 6);
@@ -56,11 +48,10 @@ public class LoginScreen {
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
 
-    this.patientLoginScene = new Scene(borderPane);
-    this.stage.setScene(this.patientLoginScene);
+    return new Scene(borderPane);
   }
 
-  public void setCarerLoginScene()
+  private Scene setCarerLoginScene(Stage stage)
   {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -75,7 +66,7 @@ public class LoginScreen {
     grid.add(hlPatientLogin, 0, 5);
     GridPane.setHalignment(hlPatientLogin, HPos.RIGHT);
 
-    hlPatientLogin.setOnAction(e -> this.stage.setScene(this.patientLoginScene));
+    hlPatientLogin.setOnAction(e -> stage.setScene(this.patientLoginScene));
 
     Button btnLogin = new Button("Inloggen");
     grid.add(btnLogin, 0, 6);
@@ -83,8 +74,7 @@ public class LoginScreen {
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
 
-    this.carerLoginScene = new Scene(borderPane);
-    this.stage.setScene(this.carerLoginScene);
+    return new Scene(borderPane);
   }
 
   private void addFormFields(GridPane grid, Text txtCarerLogin)
@@ -103,5 +93,9 @@ public class LoginScreen {
 
     TextField tfPassword = new TextField();
     grid.add(tfPassword, 0, 4);
+  }
+
+  public Scene getPatientLoginScene() {
+    return patientLoginScene;
   }
 }
