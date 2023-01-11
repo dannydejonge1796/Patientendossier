@@ -15,7 +15,7 @@ public class Index extends Application {
     stage.setWidth(1280);
     stage.setHeight(720);
     stage.setResizable(false);
-    stage.setScene(new LoginScreen(stage).getPatientLoginScene());
+    new LoginScreen(stage).setPatientLoginScene();;
     stage.show();
   }
 
