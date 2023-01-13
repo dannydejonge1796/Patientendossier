@@ -16,6 +16,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.w3c.dom.events.UIEvent;
+
+import java.sql.SQLException;
 
 public class LoginScreen {
 
@@ -53,7 +56,11 @@ public class LoginScreen {
     grid.add(btnLogin, 0, 6);
 
     btnLogin.setOnAction(e -> {
+
+      Utility util = new Utility();
+
       boolean validated = this.validateFormFields(grid);
+
       if (validated) {
         TextField tfEmail = (TextField) getNodeByRowColumnIndex(0, 2, grid);
         String email = tfEmail.getText();
@@ -61,7 +68,13 @@ public class LoginScreen {
         TextField tfPassword = (TextField) getNodeByRowColumnIndex(0, 4, grid);
         String password = tfPassword.getText();
 
-        Patient patient = new Login(email, password).loginPatient();
+        Patient patient = new Login(this.db, email, password).loginPatient();
+
+        if (patient == null) {
+          util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
+        } else {
+          new Dossier(patient);
+        }
       }
     });
 

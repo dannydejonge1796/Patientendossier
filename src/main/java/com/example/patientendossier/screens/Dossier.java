@@ -8,5 +8,7 @@ public class Dossier {
 
   public Dossier(Patient patient) {
     this.patient = patient;
+
+    System.out.println(this.patient.getNumber());
   }
 }
