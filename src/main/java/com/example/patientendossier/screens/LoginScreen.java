@@ -73,7 +73,7 @@ public class LoginScreen {
         if (patient == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          new Dossier(patient);
+          this.stage.setScene(new Dossier(this.stage, patient, "patient").getDossierScene());
         }
       }
     });
