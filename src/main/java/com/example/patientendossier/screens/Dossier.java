@@ -4,9 +4,11 @@ import com.example.patientendossier.Patient;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -32,10 +34,27 @@ public class Dossier {
   private Scene setDossierScene()
   {
     BorderPane borderPane = new BorderPane();
+
+    borderPane.setTop(addTopMenu());
     borderPane.setLeft(addLeftMenu(borderPane));
     borderPane.setCenter(addProfilePane());
 
     return new Scene(borderPane);
+  }
+
+  private HBox addTopMenu()
+  {
+    HBox hbox = new HBox();
+    hbox.setPadding(new Insets(25, 25, 25, 25));
+    hbox.setSpacing(10);
+    hbox.setStyle("-fx-border-style: solid inside");
+    hbox.setStyle("-fx-border-width: 2");
+    hbox.setStyle("-fx-border-color: black");
+
+    Button btnBack = new Button("Uitloggen");
+    hbox.getChildren().add(btnBack);
+
+    return hbox;
   }
 
   private VBox addLeftMenu(BorderPane borderPane)
@@ -44,7 +63,7 @@ public class Dossier {
     vbox.setMinWidth(250);
     vbox.setPadding(new Insets(25, 25, 25, 25));
     vbox.setSpacing(5);
-    vbox.setStyle("-fx-border-style: solid outside");
+    vbox.setStyle("-fx-border-style: solid inside");
     vbox.setStyle("-fx-border-width: 2");
     vbox.setStyle("-fx-border-color: black");
 
