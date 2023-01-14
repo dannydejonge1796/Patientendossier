@@ -2,6 +2,7 @@ package com.example.patientendossier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Login {
 
@@ -32,7 +33,7 @@ public class Login {
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
-          result.getDate("birthdate"),
+          result.getDate("birthdate").toLocalDate(),
           result.getInt("phonenumber"),
           result.getString("email"),
           result.getString("password")

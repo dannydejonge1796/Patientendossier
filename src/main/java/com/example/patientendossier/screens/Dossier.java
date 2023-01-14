@@ -1,11 +1,11 @@
 package com.example.patientendossier.screens;
 
 import com.example.patientendossier.Patient;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -144,15 +144,89 @@ public class Dossier {
     return vbox;
   }
 
-  private GridPane addProfilePane()
+  private VBox addProfilePane()
   {
-    GridPane grid = new GridPane();
-    grid.setAlignment(Pos.CENTER);
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(25, 25, 25, 25));
+    VBox vBox = new VBox();
+    vBox.setPadding(new Insets(25, 25, 25, 25));
+    vBox.setSpacing(10);
 
-    return grid;
+    Text txtWelcome = new Text("Welkom in je patiëntendossier " + patient.getFirstname() + " " + patient.getLastname() + "!");
+    txtWelcome.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+    vBox.getChildren().add(txtWelcome);
+
+    GridPane grid = new GridPane();
+    grid.setHgap(20);
+    grid.setVgap(10);
+
+    Text txtProfile = new Text("Persoonlijke gegevens");
+    txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    grid.add(txtProfile, 0, 0);
+
+    Label lblNumber = new Label("Uw patiëntnummer:");
+    grid.add(lblNumber, 0, 1);
+    TextField tfNumber = new TextField(patient.getNumber().toString());
+    tfNumber.setPrefWidth(1200);
+    tfNumber.setEditable(false);
+    grid.add(tfNumber, 1, 1);
+
+    Label lblFirstname = new Label("Voornaam:");
+    grid.add(lblFirstname, 0, 2);
+    TextField tfFirstname = new TextField(patient.getFirstname());
+    tfFirstname.setPrefWidth(1200);
+    grid.add(tfFirstname, 1, 2);
+
+    Label lbLastname = new Label("Achternaam:");
+    grid.add(lbLastname, 0, 3);
+    TextField tfLastname = new TextField(patient.getLastname());
+    tfLastname.setPrefWidth(1200);
+    grid.add(tfLastname, 1, 3);
+
+    Label lblBirth = new Label("Geboortedatum:");
+    grid.add(lblBirth, 0, 4);
+    DatePicker dpBirth = new DatePicker();
+    dpBirth.setValue(patient.getBirthdate());
+    dpBirth.setPrefWidth(1200);
+    grid.add(dpBirth, 1, 4);
+
+    Label lblPhone = new Label("Telefoonnummer:");
+    grid.add(lblPhone, 0, 5);
+    TextField tfPhone = new TextField(patient.getPhonenumber().toString());
+    tfPhone.setPrefWidth(1200);
+    grid.add(tfPhone, 1, 5);
+
+    Label lblEmail = new Label("Email:");
+    grid.add(lblEmail, 0, 6);
+    TextField tfEmail = new TextField(patient.getEmail());
+    tfEmail.setPrefWidth(1200);
+    grid.add(tfEmail, 1, 6);
+
+    Button btnUpdate = new Button("Wijzig");
+    grid.add(btnUpdate, 1, 7);
+    GridPane.setHalignment(btnUpdate, HPos.RIGHT);
+
+    Text txtChangePass = new Text("Wachtwoord wijzigen");
+    txtChangePass.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    grid.add(txtChangePass, 0, 8);
+
+    Label lblNewPass = new Label("Nieuw wachtwoord:");
+    grid.add(lblNewPass, 0, 9);
+    PasswordField pfNewPass = new PasswordField();
+    pfNewPass.setPrefWidth(1200);
+    grid.add(pfNewPass, 1, 9);
+
+    Label lblConfirmPass = new Label("Bevestig nieuw wachtwoord:");
+    grid.add(lblConfirmPass, 0, 10);
+    PasswordField pfConfirmPass = new PasswordField();
+    pfConfirmPass.setPrefWidth(1200);
+    grid.add(pfConfirmPass, 1, 10);
+
+    Button btnUpdatePass = new Button("Wijzig");
+    grid.add(btnUpdatePass, 1, 11);
+    GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
+
+    vBox.getChildren().add(grid);
+
+    return vBox;
   }
 
   public Scene getDossierScene() {

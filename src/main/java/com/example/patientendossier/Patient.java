@@ -1,5 +1,6 @@
 package com.example.patientendossier;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Patient {
@@ -7,12 +8,12 @@ public class Patient {
   private Integer number;
   private String firstname;
   private String lastname;
-  private Date birthdate;
+  private LocalDate birthdate;
   private Integer phonenumber;
   private String email;
   private String password;
 
-  public Patient(Integer number, String firstname, String lastname, Date birthdate, Integer phonenumber, String email, String password) {
+  public Patient(Integer number, String firstname, String lastname, LocalDate birthdate, Integer phonenumber, String email, String password) {
     this.number = number;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -34,7 +35,7 @@ public class Patient {
     return lastname;
   }
 
-  public Date getBirthdate() {
+  public LocalDate getBirthdate() {
     return birthdate;
   }
 
