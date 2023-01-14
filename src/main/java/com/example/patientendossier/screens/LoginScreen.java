@@ -62,10 +62,10 @@ public class LoginScreen {
       boolean validated = this.validateFormFields(grid);
 
       if (validated) {
-        TextField tfEmail = (TextField) getNodeByRowColumnIndex(0, 2, grid);
+        TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
         String email = tfEmail.getText();
 
-        TextField tfPassword = (TextField) getNodeByRowColumnIndex(0, 4, grid);
+        TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
         String password = tfPassword.getText();
 
         Patient patient = new Login(this.db, email, password).loginPatient();
@@ -107,10 +107,10 @@ public class LoginScreen {
     btnLogin.setOnAction(e -> {
       boolean validated = this.validateFormFields(grid);
       if (validated) {
-        TextField tfEmail = (TextField) getNodeByRowColumnIndex(0, 2, grid);
+        TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
         String email = tfEmail.getText();
 
-        TextField tfPassword = (TextField) getNodeByRowColumnIndex(0, 4, grid);
+        TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
         String password = tfPassword.getText();
       }
     });
@@ -139,24 +139,11 @@ public class LoginScreen {
     grid.add(tfPassword, 0, 4);
   }
 
-  private Node getNodeByRowColumnIndex(final int column, final int row, GridPane gridPane)
-  {
-    Node result = null;
-    ObservableList<Node> children = gridPane.getChildren();
-    for(Node node : children) {
-      if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
-        result = node;
-        break;
-      }
-    }
-    return result;
-  }
-
   public boolean validateFormFields(GridPane grid)
   {
     Utility util = new Utility();
 
-    TextField tfEmail = (TextField) getNodeByRowColumnIndex(0, 2, grid);
+    TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
     String email = tfEmail.getText();
 
     if(email.isEmpty()) {
@@ -174,7 +161,7 @@ public class LoginScreen {
       return false;
     }
 
-    TextField tfPassword = (TextField) getNodeByRowColumnIndex(0, 4, grid);
+    TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
     String password = tfPassword.getText();
 
     if(password.isEmpty()) {

@@ -1,6 +1,7 @@
 package com.example.patientendossier.screens;
 
 import com.example.patientendossier.Patient;
+import com.example.patientendossier.Utility;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Dossier {
@@ -202,6 +204,7 @@ public class Dossier {
 
     Button btnUpdate = new Button("Wijzig");
     grid.add(btnUpdate, 1, 7);
+    btnUpdate.setOnAction(e -> updateProfile(grid));
     GridPane.setHalignment(btnUpdate, HPos.RIGHT);
 
     Text txtChangePass = new Text("Wachtwoord wijzigen");
@@ -227,6 +230,84 @@ public class Dossier {
     vBox.getChildren().add(grid);
 
     return vBox;
+  }
+
+  private void updateProfile(GridPane grid)
+  {
+    boolean validated = validateProfile(grid);
+
+    String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
+    String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
+    LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
+    String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
+    String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
+
+    if (validated) {
+      patient.setFirstname(firstname);
+      patient.setLastname(lastname);
+      patient.setBirthdate(birth);
+      patient.setPhonenumber(Integer.parseInt(phone));
+      patient.setEmail(email);
+      patient.store();
+    }
+  }
+
+  private boolean validateProfile(GridPane grid)
+  {
+    String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
+    if (firstname.isEmpty()) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw voornaam in!");
+      return false;
+    }
+    String regexFirstname = "/(^[a-zA-Z][a-zA-Z\\s]{0,20}[a-zA-Z]$)/";
+    if (!firstname.matches(regexFirstname)) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige voornaam in!");
+      return false;
+    }
+
+    String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
+    if (lastname.isEmpty()) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw achternaam in!");
+      return false;
+    }
+    String regexLastname = "/(^[a-zA-Z][a-zA-Z\\s]{0,20}[a-zA-Z]$)/";
+    if (!lastname.matches(regexLastname)) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige achternaam in!");
+      return false;
+    }
+
+    LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
+    if (birth == null) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw geboortedatum in!");
+      return false;
+    }
+
+    String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
+    if (phone.isEmpty()) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw telefoonnummer in!");
+      return false;
+    }
+    String regexPhone = "^[0-9]*$";
+    if (!phone.matches(regexPhone)) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldig telefoonnummer in!");
+      return false;
+    }
+
+    String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
+    if (email.isEmpty()) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw email in!");
+      return false;
+    }
+    String emailPattern = "" +
+            "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"
+            ;
+    if(!email.matches(emailPattern)) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige email in!");
+      return false;
+    }
+
+    return true;
   }
 
   public Scene getDossierScene() {

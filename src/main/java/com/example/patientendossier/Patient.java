@@ -23,6 +23,10 @@ public class Patient {
     this.password = password;
   }
 
+  public void store() {
+
+  }
+
   public Integer getNumber() {
     return number;
   }
@@ -49,5 +53,29 @@ public class Patient {
 
   public String getPassword() {
     return password;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
+  public void setBirthdate(LocalDate birthdate) {
+    this.birthdate = birthdate;
+  }
+
+  public void setPhonenumber(Integer phonenumber) {
+    this.phonenumber = phonenumber;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }
