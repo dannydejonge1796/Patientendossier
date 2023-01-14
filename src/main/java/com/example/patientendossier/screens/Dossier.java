@@ -23,24 +23,24 @@ public class Dossier {
   private Stage stage;
   private Patient patient;
   private Scene dossierScene;
+  private BorderPane borderPane;
   private String role;
 
   public Dossier(Stage stage, Patient patient, String role) {
     this.stage = stage;
     this.patient = patient;
     this.role = role;
+    this.borderPane = new BorderPane();
     this.dossierScene = setDossierScene();
   }
 
   private Scene setDossierScene()
   {
-    BorderPane borderPane = new BorderPane();
+    this.borderPane.setTop(addTopMenu());
+    this.borderPane.setLeft(addLeftMenu(borderPane));
+    this.borderPane.setCenter(addProfilePane());
 
-    borderPane.setTop(addTopMenu());
-    borderPane.setLeft(addLeftMenu(borderPane));
-    borderPane.setCenter(addProfilePane());
-
-    return new Scene(borderPane);
+    return new Scene(this.borderPane);
   }
 
   private HBox addTopMenu()
@@ -248,6 +248,8 @@ public class Dossier {
       patient.setPhonenumber(Integer.parseInt(phone));
       patient.setEmail(email);
       patient.store();
+
+      this.borderPane.setCenter(addProfilePane());
     }
   }
 
