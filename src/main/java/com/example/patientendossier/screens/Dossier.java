@@ -225,6 +225,7 @@ public class Dossier {
 
     Button btnUpdatePass = new Button("Wijzig");
     grid.add(btnUpdatePass, 1, 11);
+    btnUpdatePass.setOnAction(e -> updatePassword(grid));
     GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
 
     vBox.getChildren().add(grid);
@@ -236,18 +237,32 @@ public class Dossier {
   {
     boolean validated = validateProfile(grid);
 
-    String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
-    String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
-    LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
-    String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
-    String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
-
     if (validated) {
+      String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
+      String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
+      LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
+      String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
+      String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
+
       patient.setFirstname(firstname);
       patient.setLastname(lastname);
       patient.setBirthdate(birth);
       patient.setPhonenumber(Integer.parseInt(phone));
       patient.setEmail(email);
+      patient.update();
+
+      this.borderPane.setCenter(addProfilePane());
+    }
+  }
+
+  private void updatePassword(GridPane grid)
+  {
+    boolean validated = validateNewPassword(grid);
+
+    if (validated) {
+      String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 9, grid)).getText();
+
+      patient.setPassword(newPass);
       patient.update();
 
       this.borderPane.setCenter(addProfilePane());
@@ -306,6 +321,44 @@ public class Dossier {
             ;
     if(!email.matches(emailPattern)) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige email in!");
+      return false;
+    }
+
+    return true;
+  }
+
+  private boolean validateNewPassword(GridPane grid)
+  {
+    String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 9, grid)).getText();
+    String confirmPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 10, grid)).getText();
+
+    if(newPass.isEmpty()) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een nieuw wachtwoord in!");
+      return false;
+    }
+
+    if(confirmPass.isEmpty()) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw wachtwoord nogmaals in om te bevestigen!");
+      return false;
+    }
+
+//    String passwordPattern = "(?=.*?\\d)(?=.*?[a-zA-Z])(?=.*?\\W).{8,}";
+//    if(!newPass.matches(passwordPattern)) {
+//      new Utility().showAlert(
+//        Alert.AlertType.ERROR,
+//        grid.getScene().getWindow(),
+//        "Error!",
+//        "Het wachtwoord moet minimaal 1 cijfer hebben, " +
+//        "1 letter hebben, " +
+//        "1 symbool hebben, " +
+//        "8 karakters hebben en " +
+//        "mag niet enkel nummers bevatten!"
+//      );
+//      return false;
+//    }
+
+    if (!newPass.equals(confirmPass)) {
+      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De ingevoerde wachtwoorden komen niet overeen!");
       return false;
     }
 

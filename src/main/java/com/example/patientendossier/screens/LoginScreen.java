@@ -169,21 +169,20 @@ public class LoginScreen {
       return false;
     }
 
-//      String passwordPattern = "(?=.*?\\d)(?=.*?[a-zA-Z])(?=.*?\\W).{8,}";
-//
-//      if(!password.matches(passwordPattern)) {
-//        util.showAlert(
-//          Alert.AlertType.ERROR,
-//          grid.getScene().getWindow(),
-//          "Error!",
-//          "Het wachtwoord moet minimaal 1 cijfer hebben, " +
-//          "1 letter hebben, " +
-//          "1 symbool hebben, " +
-//          "8 karakters hebben en " +
-//          "mag niet enkel nummers bevatten!"
-//        );
-//        return false;
-//      }
+//    String passwordPattern = "(?=.*?\\d)(?=.*?[a-zA-Z])(?=.*?\\W).{8,}";
+//    if(!password.matches(passwordPattern)) {
+//      util.showAlert(
+//        Alert.AlertType.ERROR,
+//        grid.getScene().getWindow(),
+//        "Error!",
+//        "Het wachtwoord moet minimaal 1 cijfer hebben, " +
+//        "1 letter hebben, " +
+//        "1 symbool hebben, " +
+//        "8 karakters hebben en " +
+//        "mag niet enkel nummers bevatten!"
+//      );
+//      return false;
+//    }
 
     return true;
   }
