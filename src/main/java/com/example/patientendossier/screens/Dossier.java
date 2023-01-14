@@ -4,7 +4,6 @@ import com.example.patientendossier.Patient;
 import com.example.patientendossier.Utility;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -259,7 +258,7 @@ public class Dossier {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw voornaam in!");
       return false;
     }
-    String regexFirstname = "/(^[a-zA-Z][a-zA-Z\\s]{0,20}[a-zA-Z]$)/";
+    String regexFirstname = "^[a-zA-Z][a-zA-Z\\s]*$";
     if (!firstname.matches(regexFirstname)) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige voornaam in!");
       return false;
@@ -270,7 +269,7 @@ public class Dossier {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw achternaam in!");
       return false;
     }
-    String regexLastname = "/(^[a-zA-Z][a-zA-Z\\s]{0,20}[a-zA-Z]$)/";
+    String regexLastname = "^[a-zA-Z][a-zA-Z\\s]*$";
     if (!lastname.matches(regexLastname)) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige achternaam in!");
       return false;
