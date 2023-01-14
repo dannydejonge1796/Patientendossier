@@ -30,6 +30,7 @@ public class Login {
     try {
       if (result.next()) {
         return new Patient(
+          this.db,
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),

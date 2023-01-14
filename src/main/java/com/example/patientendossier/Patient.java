@@ -1,10 +1,12 @@
 package com.example.patientendossier;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class Patient {
 
+  private Database db;
   private Integer number;
   private String firstname;
   private String lastname;
@@ -13,7 +15,8 @@ public class Patient {
   private String email;
   private String password;
 
-  public Patient(Integer number, String firstname, String lastname, LocalDate birthdate, Integer phonenumber, String email, String password) {
+  public Patient(Database db, Integer number, String firstname, String lastname, LocalDate birthdate, Integer phonenumber, String email, String password) {
+    this.db = db;
     this.number = number;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -25,6 +28,23 @@ public class Patient {
 
   public void store() {
 
+  }
+
+  public void update()
+  {
+    String query =
+      "UPDATE patient " +
+      "SET " +
+        "firstname = '" + this.firstname + "', " +
+        "lastname = '" + this.lastname + "', " +
+        "birthdate = '" + this.birthdate + "', " +
+        "phonenumber = '" + this.phonenumber + "', " +
+        "email = '" + this.email + "', " +
+        "password = '" + this.password + "' " +
+      "WHERE number = '" + this.number + "'"
+    ;
+
+    db.storeData(query);
   }
 
   public Integer getNumber() {

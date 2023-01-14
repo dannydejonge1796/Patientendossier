@@ -1,5 +1,6 @@
 package com.example.patientendossier.screens;
 
+import com.example.patientendossier.Database;
 import com.example.patientendossier.Patient;
 import com.example.patientendossier.Utility;
 import javafx.geometry.HPos;
@@ -82,6 +83,20 @@ public class Dossier {
 
     profileItems.get(0).setOnAction(e -> {});
 
+    Text txtAppointments = new Text("Afspraken");
+    txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+    vbox.getChildren().add(txtAppointments);
+
+    ArrayList<Hyperlink> appointmentItems = new ArrayList<>();
+    appointmentItems.add(new Hyperlink("Afspraken"));
+
+    for (Hyperlink item : appointmentItems) {
+      vbox.getChildren().add(item);
+      VBox.setMargin(item, new Insets(0, 0, 0, 20));
+    }
+
+    appointmentItems.get(0).setOnAction(e -> {});
+
     Text txtReport = new Text("Verslagen");
     txtReport.setFont(Font.font("Arial", FontWeight.BOLD, 12));
     vbox.getChildren().add(txtReport);
@@ -109,20 +124,6 @@ public class Dossier {
     }
 
     resultItems.get(0).setOnAction(e -> {});
-
-    Text txtAppointments = new Text("Afspraken");
-    txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-    vbox.getChildren().add(txtAppointments);
-
-    ArrayList<Hyperlink> appointmentItems = new ArrayList<>();
-    appointmentItems.add(new Hyperlink("Afspraken"));
-
-    for (Hyperlink item : appointmentItems) {
-      vbox.getChildren().add(item);
-      VBox.setMargin(item, new Insets(0, 0, 0, 20));
-    }
-
-    appointmentItems.get(0).setOnAction(e -> {});
 
     Text txtMedicInfo = new Text("Medische gegevens");
     txtMedicInfo.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -247,7 +248,7 @@ public class Dossier {
       patient.setBirthdate(birth);
       patient.setPhonenumber(Integer.parseInt(phone));
       patient.setEmail(email);
-      patient.store();
+      patient.update();
 
       this.borderPane.setCenter(addProfilePane());
     }

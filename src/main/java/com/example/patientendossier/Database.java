@@ -34,6 +34,16 @@ public class Database {
     return null;
   }
 
+  public void storeData(String query)
+  {
+    try {
+      Statement stm = this.conn.createStatement();
+      stm.execute(query);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public Connection getConn() {
     return conn;
   }
