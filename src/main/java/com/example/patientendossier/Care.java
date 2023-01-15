@@ -1,5 +1,7 @@
 package com.example.patientendossier;
 
+import java.util.ArrayList;
+
 public class Care {
 
   private Database db;
@@ -10,6 +12,7 @@ public class Care {
   private Integer phonenumber;
   private String email;
   private String password;
+  private ArrayList<Patient> patients;
 
   public Care(Database db, Integer number, String firstname, String lastname, String profession, Integer phonenumber, String email, String password) {
     this.db = db;
@@ -20,6 +23,16 @@ public class Care {
     this.phonenumber = phonenumber;
     this.email = email;
     this.password = password;
+    this.patients = addPatients();
+  }
+
+  private ArrayList<Patient> addPatients()
+  {
+    ArrayList<Patient> patients = new ArrayList<>();
+
+
+
+    return patients;
   }
 
   public Integer getNumber() {
