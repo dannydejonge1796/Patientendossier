@@ -2,7 +2,6 @@ package com.example.patientendossier;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class Login {
 
@@ -35,6 +34,37 @@ public class Login {
           result.getString("firstname"),
           result.getString("lastname"),
           result.getDate("birthdate").toLocalDate(),
+          result.getInt("phonenumber"),
+          result.getString("email"),
+          result.getString("password")
+        );
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return null;
+  }
+
+  public Care loginCare()
+  {
+    String query =
+      "SELECT * " +
+      "FROM care " +
+      "WHERE email = '" + this.email + "' " +
+      "AND password = '" + this.password + "'"
+    ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      if (result.next()) {
+        return new Care(
+          this.db,
+          result.getInt("number"),
+          result.getString("firstname"),
+          result.getString("lastname"),
+          result.getString("profession"),
           result.getInt("phonenumber"),
           result.getString("email"),
           result.getString("password")

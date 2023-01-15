@@ -1,9 +1,6 @@
 package com.example.patientendossier.screens;
 
-import com.example.patientendossier.Database;
-import com.example.patientendossier.Login;
-import com.example.patientendossier.Patient;
-import com.example.patientendossier.Utility;
+import com.example.patientendossier.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,9 +48,7 @@ public class LoginScreen {
     grid.add(btnLogin, 0, 6);
 
     btnLogin.setOnAction(e -> {
-
       Utility util = new Utility();
-
       boolean validated = this.validateFormFields(grid);
 
       if (validated) {
@@ -100,6 +95,7 @@ public class LoginScreen {
     grid.add(btnLogin, 0, 6);
 
     btnLogin.setOnAction(e -> {
+      Utility util = new Utility();
       boolean validated = this.validateFormFields(grid);
       if (validated) {
         TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
@@ -107,6 +103,14 @@ public class LoginScreen {
 
         TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
         String password = tfPassword.getText();
+
+        Care care = new Login(this.db, email, password).loginCare();
+
+        if (care == null) {
+          util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
+        } else {
+          this.stage.setScene(new PatientList(this.stage, this.db, care).getPatientListScene());
+        }
       }
     });
 
@@ -184,5 +188,9 @@ public class LoginScreen {
 
   public Scene getPatientLoginScene() {
     return patientLoginScene;
+  }
+
+  public Scene getCarerLoginScene() {
+    return carerLoginScene;
   }
 }
