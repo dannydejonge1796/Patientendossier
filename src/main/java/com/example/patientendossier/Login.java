@@ -21,8 +21,8 @@ public class Login {
     String query =
       "SELECT * " +
       "FROM patient " +
-      "WHERE email = '" + email + "' " +
-      "AND password = '" + password + "'"
+      "WHERE email = '" + this.email + "' " +
+      "AND password = '" + this.password + "'"
     ;
 
     ResultSet result = db.getData(query);

@@ -1,6 +1,7 @@
 package com.example.patientendossier.screens;
 
 import com.example.patientendossier.Database;
+import com.example.patientendossier.Login;
 import com.example.patientendossier.Patient;
 import com.example.patientendossier.Utility;
 import javafx.geometry.HPos;
@@ -22,13 +23,15 @@ import java.util.ArrayList;
 public class Dossier {
 
   private Stage stage;
+  private Database db;
   private Patient patient;
   private Scene dossierScene;
   private BorderPane borderPane;
   private String role;
 
-  public Dossier(Stage stage, Patient patient, String role) {
+  public Dossier(Stage stage, Database db, Patient patient, String role) {
     this.stage = stage;
+    this.db = db;
     this.patient = patient;
     this.role = role;
     this.borderPane = new BorderPane();
@@ -53,8 +56,13 @@ public class Dossier {
     hbox.setStyle("-fx-border-width: 2");
     hbox.setStyle("-fx-border-color: black");
 
-    Button btnBack = new Button("Uitloggen");
-    hbox.getChildren().add(btnBack);
+    if (this.role.equals("patient")) {
+      Button btnLogout = new Button("Uitloggen");
+      hbox.getChildren().add(btnLogout);
+      btnLogout.setOnAction(e -> {
+        stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene());
+      });
+    }
 
     return hbox;
   }
