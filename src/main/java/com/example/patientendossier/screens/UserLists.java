@@ -92,7 +92,7 @@ public class UserLists {
     lblMyPatients.setFont(Font.font(24));
     vBox.getChildren().add(lblMyPatients);
 
-    ArrayList<Patient> patients = care.getPatients();
+    ArrayList<Patient> patients = this.care.getPatients();
     ObservableList<Patient> olPatients = FXCollections.observableArrayList();
     olPatients.addAll(patients);
 
@@ -135,8 +135,8 @@ public class UserLists {
     });
 
     btnToDossier.setOnAction(e -> {
-      Patient patient = table.getSelectionModel().getSelectedItem();
-      System.out.println(patient);
+      Patient selectedPatient = table.getSelectionModel().getSelectedItem();
+      System.out.println(selectedPatient);
     });
 
     return vBox;
@@ -146,7 +146,58 @@ public class UserLists {
   {
     VBox vBox = new VBox();
     vBox.setPadding(new Insets(25, 25, 25, 25));
-    vBox.setSpacing(10);
+    vBox.setSpacing(20);
+
+    Label lblCares = new Label("Zorgverleners");
+    lblCares.setFont(Font.font(24));
+    vBox.getChildren().add(lblCares);
+
+    ArrayList<Care> cares = this.care.getAllCares();
+    ObservableList<Care> olCares = FXCollections.observableArrayList();
+    olCares.addAll(cares);
+
+    TableView<Care> table = new TableView<>();
+
+    table.setItems(olCares);
+    //Creating columns
+    TableColumn<Care, String> colNumber = new TableColumn<>("Zorgverlener nummer");
+    TableColumn<Care, String> colFirstname = new TableColumn<>("Voornaam");
+    TableColumn<Care, String> colLastname = new TableColumn<>("Achternaam");
+    TableColumn<Care, String> colProfession = new TableColumn<>("Beroep");
+    TableColumn<Care, String> colPhonenumber = new TableColumn<>("Telefoonnummer");
+    TableColumn<Care, String> colEmail = new TableColumn<>("Email");
+
+    colNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
+    colFirstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+    colLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+    colProfession.setCellValueFactory(new PropertyValueFactory<>("profession"));
+    colPhonenumber.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
+    colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+    table.getColumns().add(colNumber);
+    table.getColumns().add(colFirstname);
+    table.getColumns().add(colLastname);
+    table.getColumns().add(colProfession);
+    table.getColumns().add(colPhonenumber);
+    table.getColumns().add(colEmail);
+
+    table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    table.getSortOrder().add(colLastname);
+
+    vBox.getChildren().add(table);
+
+    Button btn = new Button("#");
+    btn.setDisable(true);
+    vBox.getChildren().add(btn);
+
+    table.setOnMouseClicked(e -> {
+      btn.setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
+
+    btn.setOnAction(e -> {
+      Care selectedCare = table.getSelectionModel().getSelectedItem();
+      System.out.println(selectedCare);
+    });
 
     return vBox;
   }

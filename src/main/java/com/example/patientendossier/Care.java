@@ -72,6 +72,39 @@ public class Care {
     return patients;
   }
 
+  public ArrayList<Care> getAllCares()
+  {
+    ArrayList<Care> cares = new ArrayList<>();
+
+    String query =
+      "SELECT * " +
+      "FROM care"
+    ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        cares.add(new Care(
+          this.db,
+          result.getInt("careNumber"),
+          result.getString("firstname"),
+          result.getString("lastname"),
+          result.getString("profession"),
+          result.getInt("phonenumber"),
+          result.getString("email"),
+          result.getString("password")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return cares;
+  }
+
+
+
   public Integer getNumber() {
     return number;
   }
