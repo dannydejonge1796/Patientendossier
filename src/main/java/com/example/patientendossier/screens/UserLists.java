@@ -3,14 +3,16 @@ package com.example.patientendossier.screens;
 import com.example.patientendossier.Care;
 import com.example.patientendossier.Database;
 import com.example.patientendossier.Patient;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -84,13 +86,58 @@ public class UserLists {
   {
     VBox vBox = new VBox();
     vBox.setPadding(new Insets(25, 25, 25, 25));
-    vBox.setSpacing(10);
+    vBox.setSpacing(20);
+
+    Label lblMyPatients = new Label("Mijn patiënten");
+    lblMyPatients.setFont(Font.font(24));
+    vBox.getChildren().add(lblMyPatients);
 
     ArrayList<Patient> patients = care.getPatients();
+    ObservableList<Patient> olPatients = FXCollections.observableArrayList();
+    olPatients.addAll(patients);
 
-    for (Patient patient : patients) {
-      System.out.println(patient.getNumber());
-    }
+    TableView<Patient> table = new TableView<>();
+
+    table.setItems(olPatients);
+    //Creating columns
+    TableColumn<Patient, String> colNumber = new TableColumn<>("Patiënt nummer");
+    TableColumn<Patient, String> colFirstname = new TableColumn<>("Voornaam");
+    TableColumn<Patient, String> colLastname = new TableColumn<>("Achternaam");
+    TableColumn<Patient, String> colBirthdate = new TableColumn<>("Geboortedatum");
+    TableColumn<Patient, String> colPhonenumber = new TableColumn<>("Telefoonnummer");
+    TableColumn<Patient, String> colEmail = new TableColumn<>("Email");
+
+    colNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
+    colFirstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+    colLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+    colBirthdate.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
+    colPhonenumber.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
+    colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+    table.getColumns().add(colNumber);
+    table.getColumns().add(colFirstname);
+    table.getColumns().add(colLastname);
+    table.getColumns().add(colBirthdate);
+    table.getColumns().add(colPhonenumber);
+    table.getColumns().add(colEmail);
+
+    table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    table.getSortOrder().add(colLastname);
+
+    vBox.getChildren().add(table);
+
+    Button btnToDossier = new Button("Naar dossier");
+    btnToDossier.setDisable(true);
+    vBox.getChildren().add(btnToDossier);
+
+    table.setOnMouseClicked(e -> {
+      btnToDossier.setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
+
+    btnToDossier.setOnAction(e -> {
+      Patient patient = table.getSelectionModel().getSelectedItem();
+      System.out.println(patient);
+    });
 
     return vBox;
   }
