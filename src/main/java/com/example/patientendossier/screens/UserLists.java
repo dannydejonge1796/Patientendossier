@@ -2,6 +2,7 @@ package com.example.patientendossier.screens;
 
 import com.example.patientendossier.Care;
 import com.example.patientendossier.Database;
+import com.example.patientendossier.Patient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +11,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class UserLists {
 
@@ -82,6 +85,12 @@ public class UserLists {
     VBox vBox = new VBox();
     vBox.setPadding(new Insets(25, 25, 25, 25));
     vBox.setSpacing(10);
+
+    ArrayList<Patient> patients = care.getPatients();
+
+    for (Patient patient : patients) {
+      System.out.println(patient.getNumber());
+    }
 
     return vBox;
   }

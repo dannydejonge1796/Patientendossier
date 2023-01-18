@@ -1,5 +1,7 @@
 package com.example.patientendossier;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Care {
@@ -30,7 +32,42 @@ public class Care {
   {
     ArrayList<Patient> patients = new ArrayList<>();
 
+    String query =
+      "SELECT " +
+        "patient.patientNumber, " +
+        "patient.firstname, " +
+        "patient.lastname, " +
+        "patient.birthdate, " +
+        "patient.phonenumber, " +
+        "patient.email, " +
+        "patient.password " +
+      "FROM " +
+        "patient AS patient, " +
+        "care AS care, " +
+        "carePatient AS carePatient " +
+      "WHERE care.careNumber = '" + this.number + "' " +
+      "AND care.careNumber = carePatient.careNumber " +
+      "AND patient.patientNumber = carePatient.patientNumber"
+    ;
 
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        patients.add(new Patient(
+          this.db,
+          result.getInt("patientNumber"),
+          result.getString("firstname"),
+          result.getString("lastname"),
+          result.getDate("birthdate").toLocalDate(),
+          result.getInt("phonenumber"),
+          result.getString("email"),
+          result.getString("password")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
 
     return patients;
   }
@@ -89,5 +126,9 @@ public class Care {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public ArrayList<Patient> getPatients() {
+    return patients;
   }
 }
