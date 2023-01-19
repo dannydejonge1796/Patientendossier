@@ -1,13 +1,13 @@
 package com.example.patientendossier.screens;
 
-import com.example.patientendossier.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.example.patientendossier.Care;
+import com.example.patientendossier.Database;
+import com.example.patientendossier.Patient;
+import com.example.patientendossier.Utility;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -38,7 +38,7 @@ public class Dossier {
   private Scene setDossierScene()
   {
     this.borderPane.setBottom(addBottomMenu());
-    this.borderPane.setLeft(addLeftMenu(borderPane));
+    this.borderPane.setLeft(addLeftMenu());
     this.borderPane.setCenter(addProfilePane());
 
     return new Scene(this.borderPane);
@@ -61,21 +61,17 @@ public class Dossier {
     if (this.care == null) {
       Button btnLogout = new Button("Uitloggen");
       hbox.getChildren().add(btnLogout);
-      btnLogout.setOnAction(e -> {
-        this.stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene());
-      });
+      btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene()));
     } else {
       Button btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> {
-        this.stage.setScene(new UserLists(this.stage, this.db, this.care).getListScene());
-      });
+      btnBack.setOnAction(e -> this.stage.setScene(new UserLists(this.stage, this.db, this.care).getListScene()));
     }
 
     return hbox;
   }
 
-  private VBox addLeftMenu(BorderPane borderPane)
+  private VBox addLeftMenu()
   {
     VBox vbox = new VBox();
     vbox.setMinWidth(250);
@@ -97,9 +93,7 @@ public class Dossier {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    profileItems.get(0).setOnAction(e -> {
-      borderPane.setCenter(addProfilePane());
-    });
+    profileItems.get(0).setOnAction(e -> this.borderPane.setCenter(addProfilePane()));
 
     Text txtAppointments = new Text("Afspraken");
     txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -256,15 +250,27 @@ public class Dossier {
       txtAuthorize.setFont(Font.font("Arial", FontWeight.BOLD, 16));
       vBox.getChildren().add(txtAuthorize);
 
-      TableView<Care> table = care.getCareTableView(patient.getCareOfPatient());
+      ArrayList<Care> caresOfPatient = patient.getCareOfPatient();
+      TableView<Care> table = care.getCareTableView(caresOfPatient);
       vBox.getChildren().add(table);
 
       ArrayList<Care> cares = care.getAllCares();
 
       ComboBox<String> comboAuthorizeCare = new ComboBox<>();
-      for (Care crntCare : cares) {
-        comboAuthorizeCare.getItems().add(crntCare.getNumber().toString() + ", " + crntCare.getLastname());
+
+      for (Care currentCare : cares) {
+        boolean add = true;
+        for (Care careOfPatient : caresOfPatient) {
+          if (currentCare.getNumber().equals(careOfPatient.getNumber())) {
+            add = false;
+            break;
+          }
+        }
+        if (add) {
+          comboAuthorizeCare.getItems().add(currentCare.getNumber().toString() + ", " + currentCare.getLastname());
+        }
       }
+
       comboAuthorizeCare.getSelectionModel().selectFirst();
       vBox.getChildren().add(comboAuthorizeCare);
 
@@ -272,7 +278,13 @@ public class Dossier {
       vBox.getChildren().add(btnAuthorize);
 
       btnAuthorize.setOnAction(e -> {
+        String selectedCare = comboAuthorizeCare.getSelectionModel().getSelectedItem();
+        if (selectedCare != null) {
+          Integer selectedCareNumber = Integer.parseInt(selectedCare.split(",")[0]);
 
+          patient.addCareToPatient(selectedCareNumber);
+          this.borderPane.setCenter(addProfilePane());
+        }
       });
     }
 

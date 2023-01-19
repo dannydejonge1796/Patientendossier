@@ -27,6 +27,18 @@ public class Patient {
     this.password = password;
   }
 
+  public void addCareToPatient(Integer careNumber)
+  {
+    String query =
+      "INSERT INTO care_patient " +
+        "(careNumber, patientNumber) " +
+      "VALUES " +
+        "('" + careNumber + "', '" + this.number + "')"
+    ;
+
+    db.storeData(query);
+  }
+
   public ArrayList<Care> getCareOfPatient()
   {
     ArrayList<Care> cares = new ArrayList<>();
@@ -44,9 +56,9 @@ public class Patient {
         "patient AS patient, " +
         "care AS care, " +
         "care_patient AS carePatient " +
-      "WHERE patient.patientNumber = '" + this.number + "' " +
+      "WHERE carePatient.patientNumber = '" + this.number + "' " +
       "AND care.careNumber = carePatient.careNumber " +
-      "AND patient.patientNumber = carePatient.patientNumber"
+      "GROUP BY care.careNumber"
     ;
 
     ResultSet result = db.getData(query);
