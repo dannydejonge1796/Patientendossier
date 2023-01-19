@@ -34,7 +34,43 @@ public class Care {
     this.patients = addPatients();
   }
 
-  public TableView<Care> getTableView(ArrayList<Care> cares)
+  public TableView<Patient> getPatTableView(ArrayList<Patient> patients)
+  {
+    ObservableList<Patient> olPatients = FXCollections.observableArrayList();
+    olPatients.addAll(patients);
+
+    TableView<Patient> table = new TableView<>();
+
+    table.setItems(olPatients);
+    //Creating columns
+    TableColumn<Patient, String> colNumber = new TableColumn<>("Patiënt nummer");
+    TableColumn<Patient, String> colFirstname = new TableColumn<>("Voornaam");
+    TableColumn<Patient, String> colLastname = new TableColumn<>("Achternaam");
+    TableColumn<Patient, String> colBirthdate = new TableColumn<>("Geboortedatum");
+    TableColumn<Patient, String> colPhonenumber = new TableColumn<>("Telefoonnummer");
+    TableColumn<Patient, String> colEmail = new TableColumn<>("Email");
+
+    colNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
+    colFirstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+    colLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+    colBirthdate.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
+    colPhonenumber.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
+    colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+    table.getColumns().add(colNumber);
+    table.getColumns().add(colFirstname);
+    table.getColumns().add(colLastname);
+    table.getColumns().add(colBirthdate);
+    table.getColumns().add(colPhonenumber);
+    table.getColumns().add(colEmail);
+
+    table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    table.getSortOrder().add(colLastname);
+
+    return table;
+  }
+
+  public TableView<Care> getCareTableView(ArrayList<Care> cares)
   {
     ObservableList<Care> olCares = FXCollections.observableArrayList();
     olCares.addAll(cares);
@@ -86,7 +122,7 @@ public class Care {
       "FROM " +
         "patient AS patient, " +
         "care AS care, " +
-        "carePatient AS carePatient " +
+        "care_patient AS carePatient " +
       "WHERE care.careNumber = '" + this.number + "' " +
       "AND care.careNumber = carePatient.careNumber " +
       "AND patient.patientNumber = carePatient.patientNumber"

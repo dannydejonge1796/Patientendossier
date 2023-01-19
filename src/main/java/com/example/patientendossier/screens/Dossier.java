@@ -164,19 +164,22 @@ public class Dossier {
     return vbox;
   }
 
-  private VBox addProfilePane()
+  private ScrollPane addProfilePane()
   {
+    ScrollPane scroll = new ScrollPane();
+
     VBox vBox = new VBox();
+    vBox.setMaxWidth(980);
     vBox.setPadding(new Insets(25, 25, 25, 25));
-    vBox.setSpacing(10);
+    vBox.setSpacing(15);
 
     Text txtWelcome = new Text("Welkom in je patiëntendossier " + patient.getFirstname() + " " + patient.getLastname() + "!");
     txtWelcome.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     vBox.getChildren().add(txtWelcome);
 
     GridPane grid = new GridPane();
-    grid.setHgap(20);
-    grid.setVgap(10);
+    grid.setHgap(15);
+    grid.setVgap(15);
 
     Text txtProfile = new Text("Persoonlijke gegevens");
     txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 16));
@@ -246,18 +249,35 @@ public class Dossier {
     btnUpdatePass.setOnAction(e -> updatePassword(grid));
     GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
 
-    Text txtAuthorize = new Text("Machtig zorgverlener");
-    txtAuthorize.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-    grid.add(txtAuthorize, 0, 12);
-
-    TableView<Care> table = care.getTableView(patient.getCareOfPatient());
-    grid.add(table, 0, 13);
-
-    ComboBox<String> comboAuthorizeCare = new ComboBox<>();
-
     vBox.getChildren().add(grid);
 
-    return vBox;
+    if (this.care != null) {
+      Text txtAuthorize = new Text("Machtig zorgverlener");
+      txtAuthorize.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+      vBox.getChildren().add(txtAuthorize);
+
+      TableView<Care> table = care.getCareTableView(patient.getCareOfPatient());
+      vBox.getChildren().add(table);
+
+      ArrayList<Care> cares = care.getAllCares();
+
+      ComboBox<String> comboAuthorizeCare = new ComboBox<>();
+      for (Care crntCare : cares) {
+        comboAuthorizeCare.getItems().add(crntCare.getNumber().toString() + ", " + crntCare.getLastname());
+      }
+      comboAuthorizeCare.getSelectionModel().selectFirst();
+      vBox.getChildren().add(comboAuthorizeCare);
+
+      Button btnAuthorize = new Button("Machtig zorgverlener");
+      vBox.getChildren().add(btnAuthorize);
+
+      btnAuthorize.setOnAction(e -> {
+
+      });
+    }
+
+    scroll.setContent(vBox);
+    return scroll;
   }
 
   private void updateProfile(GridPane grid)

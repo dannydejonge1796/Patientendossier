@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Patient {
 
@@ -44,7 +43,7 @@ public class Patient {
       "FROM " +
         "patient AS patient, " +
         "care AS care, " +
-        "carePatient AS carePatient " +
+        "care_patient AS carePatient " +
       "WHERE patient.patientNumber = '" + this.number + "' " +
       "AND care.careNumber = carePatient.careNumber " +
       "AND patient.patientNumber = carePatient.patientNumber"
@@ -56,7 +55,7 @@ public class Patient {
       while (result.next()) {
         cares.add(new Care(
           this.db,
-          result.getInt("patientNumber"),
+          result.getInt("careNumber"),
           result.getString("firstname"),
           result.getString("lastname"),
           result.getString("profession"),

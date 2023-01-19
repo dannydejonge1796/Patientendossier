@@ -92,37 +92,7 @@ public class UserLists {
     lblMyPatients.setFont(Font.font(24));
     vBox.getChildren().add(lblMyPatients);
 
-    ArrayList<Patient> patients = this.care.getPatients();
-    ObservableList<Patient> olPatients = FXCollections.observableArrayList();
-    olPatients.addAll(patients);
-
-    TableView<Patient> table = new TableView<>();
-
-    table.setItems(olPatients);
-    //Creating columns
-    TableColumn<Patient, String> colNumber = new TableColumn<>("Patiënt nummer");
-    TableColumn<Patient, String> colFirstname = new TableColumn<>("Voornaam");
-    TableColumn<Patient, String> colLastname = new TableColumn<>("Achternaam");
-    TableColumn<Patient, String> colBirthdate = new TableColumn<>("Geboortedatum");
-    TableColumn<Patient, String> colPhonenumber = new TableColumn<>("Telefoonnummer");
-    TableColumn<Patient, String> colEmail = new TableColumn<>("Email");
-
-    colNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
-    colFirstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-    colLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-    colBirthdate.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
-    colPhonenumber.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
-    colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
-    table.getColumns().add(colNumber);
-    table.getColumns().add(colFirstname);
-    table.getColumns().add(colLastname);
-    table.getColumns().add(colBirthdate);
-    table.getColumns().add(colPhonenumber);
-    table.getColumns().add(colEmail);
-
-    table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    table.getSortOrder().add(colLastname);
+    TableView<Patient> table = care.getPatTableView(this.care.getPatients());
 
     vBox.getChildren().add(table);
 
@@ -152,7 +122,7 @@ public class UserLists {
     lblCares.setFont(Font.font(24));
     vBox.getChildren().add(lblCares);
 
-    TableView<Care> table = care.getTableView(this.care.getAllCares());
+    TableView<Care> table = care.getCareTableView(this.care.getAllCares());
 
     vBox.getChildren().add(table);
 
