@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Care {
 
-  private Database db;
+  private final Database db;
   private Integer number;
   private String firstname;
   private String lastname;
@@ -20,7 +20,6 @@ public class Care {
   private Integer phonenumber;
   private String email;
   private String password;
-  private ArrayList<Patient> patients;
 
   public Care(Database db, Integer number, String firstname, String lastname, String profession, Integer phonenumber, String email, String password) {
     this.db = db;
@@ -31,7 +30,6 @@ public class Care {
     this.phonenumber = phonenumber;
     this.email = email;
     this.password = password;
-    this.patients = addPatients();
   }
 
   public TableView<Patient> getPatTableView(ArrayList<Patient> patients)
@@ -106,7 +104,7 @@ public class Care {
     return table;
   }
 
-  private ArrayList<Patient> addPatients()
+  public ArrayList<Patient> getPatients()
   {
     ArrayList<Patient> patients = new ArrayList<>();
 
@@ -181,8 +179,6 @@ public class Care {
     return cares;
   }
 
-
-
   public Integer getNumber() {
     return number;
   }
@@ -237,9 +233,5 @@ public class Care {
 
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public ArrayList<Patient> getPatients() {
-    return patients;
   }
 }
