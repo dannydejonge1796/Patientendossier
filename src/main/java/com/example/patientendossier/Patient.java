@@ -1,7 +1,9 @@
 package com.example.patientendossier;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Patient {
@@ -24,6 +26,50 @@ public class Patient {
     this.phonenumber = phonenumber;
     this.email = email;
     this.password = password;
+  }
+
+  public ArrayList<Care> getCareOfPatient()
+  {
+    ArrayList<Care> cares = new ArrayList<>();
+
+    String query =
+      "SELECT " +
+        "care.careNumber, " +
+        "care.firstname, " +
+        "care.lastname, " +
+        "care.profession, " +
+        "care.phonenumber, " +
+        "care.email, " +
+        "care.password " +
+      "FROM " +
+        "patient AS patient, " +
+        "care AS care, " +
+        "carePatient AS carePatient " +
+      "WHERE patient.patientNumber = '" + this.number + "' " +
+      "AND care.careNumber = carePatient.careNumber " +
+      "AND patient.patientNumber = carePatient.patientNumber"
+    ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        cares.add(new Care(
+          this.db,
+          result.getInt("patientNumber"),
+          result.getString("firstname"),
+          result.getString("lastname"),
+          result.getString("profession"),
+          result.getInt("phonenumber"),
+          result.getString("email"),
+          result.getString("password")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return cares;
   }
 
   public void store() {

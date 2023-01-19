@@ -1,13 +1,13 @@
 package com.example.patientendossier.screens;
 
-import com.example.patientendossier.Database;
-import com.example.patientendossier.Login;
-import com.example.patientendossier.Patient;
-import com.example.patientendossier.Utility;
+import com.example.patientendossier.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -22,15 +22,15 @@ public class Dossier {
   private Stage stage;
   private Database db;
   private Patient patient;
+  private Care care;
   private Scene dossierScene;
   private BorderPane borderPane;
-  private String role;
 
-  public Dossier(Stage stage, Database db, Patient patient, String role) {
+  public Dossier(Stage stage, Database db, Patient patient, Care care) {
     this.stage = stage;
     this.db = db;
     this.patient = patient;
-    this.role = role;
+    this.care = care;
     this.borderPane = new BorderPane();
     this.dossierScene = setDossierScene();
   }
@@ -58,11 +58,17 @@ public class Dossier {
     HBox.setHgrow(region, Priority.ALWAYS);
     hbox.getChildren().add(region);
 
-    if (this.role.equals("patient")) {
+    if (this.care == null) {
       Button btnLogout = new Button("Uitloggen");
       hbox.getChildren().add(btnLogout);
       btnLogout.setOnAction(e -> {
-        stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene());
+        this.stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene());
+      });
+    } else {
+      Button btnBack = new Button("Vorige");
+      hbox.getChildren().add(btnBack);
+      btnBack.setOnAction(e -> {
+        this.stage.setScene(new UserLists(this.stage, this.db, this.care).getListScene());
       });
     }
 
@@ -91,7 +97,9 @@ public class Dossier {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    profileItems.get(0).setOnAction(e -> {});
+    profileItems.get(0).setOnAction(e -> {
+      borderPane.setCenter(addProfilePane());
+    });
 
     Text txtAppointments = new Text("Afspraken");
     txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -237,6 +245,15 @@ public class Dossier {
     grid.add(btnUpdatePass, 1, 11);
     btnUpdatePass.setOnAction(e -> updatePassword(grid));
     GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
+
+    Text txtAuthorize = new Text("Machtig zorgverlener");
+    txtAuthorize.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    grid.add(txtAuthorize, 0, 12);
+
+    TableView<Care> table = care.getTableView(patient.getCareOfPatient());
+    grid.add(table, 0, 13);
+
+    ComboBox<String> comboAuthorizeCare = new ComboBox<>();
 
     vBox.getChildren().add(grid);
 
