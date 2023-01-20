@@ -32,6 +32,31 @@ public class Care {
     this.password = password;
   }
 
+  public void unAuthorizePatient(Integer careNumber, Integer patientNumber)
+  {
+    String query =
+      "DELETE FROM care_patient " +
+      "WHERE " +
+        "careNumber = '" + careNumber + "' " +
+      "AND " +
+        "patientNumber = '" + patientNumber + "'"
+    ;
+
+    db.storeData(query);
+  }
+
+  public void authorizePatient(Integer careNumber, Integer patientNumber)
+  {
+    String query =
+      "INSERT INTO care_patient " +
+        "(careNumber, patientNumber) " +
+        "VALUES " +
+        "('" + careNumber + "', '" + patientNumber + "')"
+    ;
+
+    db.storeData(query);
+  }
+
   public TableView<Patient> getPatTableView(ArrayList<Patient> patients)
   {
     ObservableList<Patient> olPatients = FXCollections.observableArrayList();

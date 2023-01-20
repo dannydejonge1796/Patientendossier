@@ -257,11 +257,11 @@ public class Dossier {
 
       HBox hBoxBottom = new HBox();
 
-      Button btnRemoveAuthorization = new Button("Verwijder machtiging");
-      btnRemoveAuthorization.setStyle("-fx-background-color: darkred;");
-      btnRemoveAuthorization.setTextFill(Color.WHITE);
-      btnRemoveAuthorization.setDisable(true);
-      hBoxBottom.getChildren().add(btnRemoveAuthorization);
+      Button btnUnAuthorize = new Button("Verwijder machtiging");
+      btnUnAuthorize.setStyle("-fx-background-color: darkred;");
+      btnUnAuthorize.setTextFill(Color.WHITE);
+      btnUnAuthorize.setDisable(true);
+      hBoxBottom.getChildren().add(btnUnAuthorize);
 
       Region regionBottom = new Region();
       HBox.setHgrow(regionBottom, Priority.ALWAYS);
@@ -297,11 +297,18 @@ public class Dossier {
       vBox.getChildren().add(hBoxBottom);
 
       table.setOnMouseClicked(e -> {
-        btnRemoveAuthorization.setDisable(table.getSelectionModel().getSelectedItem() == null);
+        btnUnAuthorize.setDisable(table.getSelectionModel().getSelectedItem() == null);
       });
 
-      btnRemoveAuthorization.setOnAction(e -> {
+      btnUnAuthorize.setOnAction(e -> {
+        Integer selectedCareNumber = table.getSelectionModel().getSelectedItem().getNumber();
 
+        if (!selectedCareNumber.equals(this.care.getNumber())) {
+          care.unAuthorizePatient(selectedCareNumber, this.patient.getNumber());
+          this.borderPane.setCenter(addProfilePane());
+        } else {
+          new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "U kunt uzelf niet ontmachtigen vanuit het dossier!");
+        }
       });
 
       btnAuthorize.setOnAction(e -> {
@@ -309,7 +316,7 @@ public class Dossier {
         if (selectedCare != null) {
           Integer selectedCareNumber = Integer.parseInt(selectedCare.split(",")[0]);
 
-          patient.addCareToPatient(selectedCareNumber);
+          care.authorizePatient(selectedCareNumber, this.patient.getNumber());
           this.borderPane.setCenter(addProfilePane());
         }
       });

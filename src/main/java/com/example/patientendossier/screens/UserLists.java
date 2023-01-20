@@ -3,6 +3,7 @@ package com.example.patientendossier.screens;
 import com.example.patientendossier.Care;
 import com.example.patientendossier.Database;
 import com.example.patientendossier.Patient;
+import com.example.patientendossier.Utility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 
 public class UserLists {
 
+  private Tab tab1;
+  private Tab tab2;
   private Stage stage;
   private Database db;
   private Care care;
@@ -34,16 +37,15 @@ public class UserLists {
   private Scene setListScene()
   {
     BorderPane borderPane = new BorderPane();
-
     borderPane.setBottom(addBottomMenu());
 
     TabPane tabPane = new TabPane();
 
-    Tab tab1 = new Tab();
+    this.tab1 = new Tab();
     tab1.setText("Patiënten");
     tab1.setContent(addPatListPane());
 
-    Tab tab2 = new Tab();
+    this.tab2 = new Tab();
     tab2.setText("Zorgverleners");
     tab2.setContent(addCareListPane());
 
@@ -139,7 +141,10 @@ public class UserLists {
     });
 
     btnRemoveFromMyPatients.setOnAction(e -> {
+      Integer selectedPatientNumber = table.getSelectionModel().getSelectedItem().getNumber();
 
+      care.unAuthorizePatient(this.care.getNumber(), selectedPatientNumber);
+      this.tab1.setContent(addPatListPane());
     });
 
     btnAddPatient.setOnAction(e -> {
