@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
@@ -88,19 +89,47 @@ public class UserLists {
     vBox.setPadding(new Insets(25, 25, 25, 25));
     vBox.setSpacing(20);
 
+    HBox hBoxTop = new HBox();
+
     Label lblMyPatients = new Label("Mijn patiënten");
     lblMyPatients.setFont(Font.font(24));
-    vBox.getChildren().add(lblMyPatients);
+    hBoxTop.getChildren().add(lblMyPatients);
+
+    Region regionTop = new Region();
+    HBox.setHgrow(regionTop, Priority.ALWAYS);
+    hBoxTop.getChildren().add(regionTop);
+
+    Button btnAddPatient = new Button("Nieuwe patiënt aanmaken");
+    btnAddPatient.setStyle("-fx-background-color: green;");
+    btnAddPatient.setTextFill(Color.WHITE);
+    hBoxTop.getChildren().add(btnAddPatient);
+
+    vBox.getChildren().add(hBoxTop);
 
     TableView<Patient> table = care.getPatTableView(this.care.getPatients());
 
     vBox.getChildren().add(table);
 
+    HBox hBoxBottom = new HBox();
+
+    Button btnRemoveFromMyPatients = new Button("Verwijder uit mijn patiënten");
+    btnRemoveFromMyPatients.setStyle("-fx-background-color: darkred;");
+    btnRemoveFromMyPatients.setTextFill(Color.WHITE);
+    btnRemoveFromMyPatients.setDisable(true);
+    hBoxBottom.getChildren().add(btnRemoveFromMyPatients);
+
+    Region regionBottom = new Region();
+    HBox.setHgrow(regionBottom, Priority.ALWAYS);
+    hBoxBottom.getChildren().add(regionBottom);
+
     Button btnToDossier = new Button("Naar dossier");
     btnToDossier.setDisable(true);
-    vBox.getChildren().add(btnToDossier);
+    hBoxBottom.getChildren().add(btnToDossier);
+
+    vBox.getChildren().add(hBoxBottom);
 
     table.setOnMouseClicked(e -> {
+      btnRemoveFromMyPatients.setDisable(table.getSelectionModel().getSelectedItem() == null);
       btnToDossier.setDisable(table.getSelectionModel().getSelectedItem() == null);
     });
 
