@@ -147,23 +147,44 @@ public class UserLists {
     vBox.setPadding(new Insets(25, 25, 25, 25));
     vBox.setSpacing(20);
 
+    HBox hBoxTop = new HBox();
+
     Label lblCares = new Label("Zorgverleners");
     lblCares.setFont(Font.font(24));
-    vBox.getChildren().add(lblCares);
+    hBoxTop.getChildren().add(lblCares);
+
+    Region regionTop = new Region();
+    HBox.setHgrow(regionTop, Priority.ALWAYS);
+    hBoxTop.getChildren().add(regionTop);
+
+    Button btnAddCare = new Button("Nieuwe zorgverlener aanmaken");
+    btnAddCare.setStyle("-fx-background-color: green;");
+    btnAddCare.setTextFill(Color.WHITE);
+    hBoxTop.getChildren().add(btnAddCare);
+
+    vBox.getChildren().add(hBoxTop);
 
     TableView<Care> table = care.getCareTableView(this.care.getAllCares());
 
     vBox.getChildren().add(table);
 
-    Button btn = new Button("#");
-    btn.setDisable(true);
-    vBox.getChildren().add(btn);
+    HBox hBoxBottom = new HBox();
+
+    Region regionBottom = new Region();
+    HBox.setHgrow(regionBottom, Priority.ALWAYS);
+    hBoxBottom.getChildren().add(regionBottom);
+
+    Button btnUpdate = new Button("Wijzig");
+    btnUpdate.setDisable(true);
+    hBoxBottom.getChildren().add(btnUpdate);
+
+    vBox.getChildren().add(hBoxBottom);
 
     table.setOnMouseClicked(e -> {
-      btn.setDisable(table.getSelectionModel().getSelectedItem() == null);
+      btnUpdate.setDisable(table.getSelectionModel().getSelectedItem() == null);
     });
 
-    btn.setOnAction(e -> {
+    btnUpdate.setOnAction(e -> {
       Care selectedCare = table.getSelectionModel().getSelectedItem();
       System.out.println(selectedCare);
     });
