@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -254,6 +255,21 @@ public class Dossier {
       TableView<Care> table = care.getCareTableView(caresOfPatient);
       vBox.getChildren().add(table);
 
+      HBox hBoxBottom = new HBox();
+
+      Button btnRemoveAuthorization = new Button("Verwijder machtiging");
+      btnRemoveAuthorization.setStyle("-fx-background-color: darkred;");
+      btnRemoveAuthorization.setTextFill(Color.WHITE);
+      btnRemoveAuthorization.setDisable(true);
+      hBoxBottom.getChildren().add(btnRemoveAuthorization);
+
+      Region regionBottom = new Region();
+      HBox.setHgrow(regionBottom, Priority.ALWAYS);
+      hBoxBottom.getChildren().add(regionBottom);
+
+      VBox vBoxBottom = new VBox();
+      vBoxBottom.setSpacing(10);
+
       ArrayList<Care> cares = care.getAllCares();
 
       ComboBox<String> comboAuthorizeCare = new ComboBox<>();
@@ -272,10 +288,21 @@ public class Dossier {
       }
 
       comboAuthorizeCare.getSelectionModel().selectFirst();
-      vBox.getChildren().add(comboAuthorizeCare);
+      vBoxBottom.getChildren().add(comboAuthorizeCare);
 
       Button btnAuthorize = new Button("Machtig zorgverlener");
-      vBox.getChildren().add(btnAuthorize);
+      vBoxBottom.getChildren().add(btnAuthorize);
+
+      hBoxBottom.getChildren().add(vBoxBottom);
+      vBox.getChildren().add(hBoxBottom);
+
+      table.setOnMouseClicked(e -> {
+        btnRemoveAuthorization.setDisable(table.getSelectionModel().getSelectedItem() == null);
+      });
+
+      btnRemoveAuthorization.setOnAction(e -> {
+
+      });
 
       btnAuthorize.setOnAction(e -> {
         String selectedCare = comboAuthorizeCare.getSelectionModel().getSelectedItem();

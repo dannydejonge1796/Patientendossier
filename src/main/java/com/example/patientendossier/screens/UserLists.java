@@ -138,6 +138,14 @@ public class UserLists {
       this.stage.setScene(new Dossier(this.stage, this.db, selectedPatient, this.care).getDossierScene());
     });
 
+    btnRemoveFromMyPatients.setOnAction(e -> {
+
+    });
+
+    btnAddPatient.setOnAction(e -> {
+
+    });
+
     return vBox;
   }
 
@@ -187,6 +195,10 @@ public class UserLists {
     btnUpdate.setOnAction(e -> {
       Care selectedCare = table.getSelectionModel().getSelectedItem();
       System.out.println(selectedCare);
+    });
+
+    btnAddCare.setOnAction(e -> {
+
     });
 
     return vBox;
