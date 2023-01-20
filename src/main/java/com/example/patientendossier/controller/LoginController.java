@@ -1,6 +1,10 @@
-package com.example.patientendossier.screens;
+package com.example.patientendossier.controller;
 
-import com.example.patientendossier.*;
+import com.example.patientendossier.model.Care;
+import com.example.patientendossier.model.Database;
+import com.example.patientendossier.model.Login;
+import com.example.patientendossier.model.Patient;
+import com.example.patientendossier.utility.Utility;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,14 +16,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LoginScreen {
+public class LoginController {
 
   private final Stage stage;
   private final Database db;
   private final Scene patientLoginScene;
   private final Scene carerLoginScene;
 
-  public LoginScreen(Stage stage, Database db)
+  public LoginController(Stage stage, Database db)
   {
     this.stage = stage;
     this.db = db;
@@ -63,7 +67,7 @@ public class LoginScreen {
         if (patient == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new Dossier(this.stage, this.db, patient, null).getDossierScene());
+          this.stage.setScene(new DossierController(this.stage, this.db, patient, null).getDossierScene());
         }
       }
     });
@@ -109,7 +113,7 @@ public class LoginScreen {
         if (care == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new UserLists(this.stage, this.db, care).getListScene());
+          this.stage.setScene(new UsersController(this.stage, this.db, care).getListScene());
         }
       }
     });

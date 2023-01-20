@@ -1,33 +1,25 @@
-package com.example.patientendossier.screens;
+package com.example.patientendossier.controller;
 
-import com.example.patientendossier.Care;
-import com.example.patientendossier.Database;
-import com.example.patientendossier.Patient;
-import com.example.patientendossier.Utility;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.example.patientendossier.model.Care;
+import com.example.patientendossier.model.Database;
+import com.example.patientendossier.model.Patient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-
-public class UserLists {
+public class UsersController {
 
   private Tab tab1;
-  private Tab tab2;
   private Stage stage;
   private Database db;
   private Care care;
   private Scene listScene;
 
-  public UserLists(Stage stage, Database db, Care care) {
+  public UsersController(Stage stage, Database db, Care care) {
     this.stage = stage;
     this.db = db;
     this.care = care;
@@ -45,7 +37,7 @@ public class UserLists {
     tab1.setText("Patiënten");
     tab1.setContent(addPatListPane());
 
-    this.tab2 = new Tab();
+    Tab tab2 = new Tab();
     tab2.setText("Zorgverleners");
     tab2.setContent(addCareListPane());
 
@@ -79,7 +71,7 @@ public class UserLists {
     hbox.getChildren().add(btnLogout);
 
     btnLogout.setOnAction(e -> {
-      stage.setScene(new LoginScreen(this.stage, this.db).getCarerLoginScene());
+      stage.setScene(new LoginController(this.stage, this.db).getCarerLoginScene());
     });
 
     return hbox;
@@ -108,7 +100,7 @@ public class UserLists {
 
     vBox.getChildren().add(hBoxTop);
 
-    TableView<Patient> table = care.getPatTableView(this.care.getPatients());
+    TableView<Patient> table = new CareController().getPatTableView(this.care.getPatients());
 
     vBox.getChildren().add(table);
 
@@ -137,7 +129,7 @@ public class UserLists {
 
     btnToDossier.setOnAction(e -> {
       Patient selectedPatient = table.getSelectionModel().getSelectedItem();
-      this.stage.setScene(new Dossier(this.stage, this.db, selectedPatient, this.care).getDossierScene());
+      this.stage.setScene(new DossierController(this.stage, this.db, selectedPatient, this.care).getDossierScene());
     });
 
     btnRemoveFromMyPatients.setOnAction(e -> {
@@ -177,7 +169,7 @@ public class UserLists {
 
     vBox.getChildren().add(hBoxTop);
 
-    TableView<Care> table = care.getCareTableView(this.care.getAllCares());
+    TableView<Care> table = new CareController().getCareTableView(this.care.getAllCares());
 
     vBox.getChildren().add(table);
 

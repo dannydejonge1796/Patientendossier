@@ -1,9 +1,8 @@
 package com.example.patientendossier;
 
-import com.example.patientendossier.screens.LoginScreen;
+import com.example.patientendossier.model.Database;
+import com.example.patientendossier.controller.LoginController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class Index extends Application {
     stage.setHeight(720);
     stage.setResizable(false);
     Database db = new Database();
-    stage.setScene(new LoginScreen(stage, db).getPatientLoginScene());
+    stage.setScene(new LoginController(stage, db).getPatientLoginScene());
     stage.show();
   }
 

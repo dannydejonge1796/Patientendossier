@@ -1,4 +1,4 @@
-package com.example.patientendossier;
+package com.example.patientendossier.utility;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

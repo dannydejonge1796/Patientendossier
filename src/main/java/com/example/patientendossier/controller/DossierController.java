@@ -1,9 +1,9 @@
-package com.example.patientendossier.screens;
+package com.example.patientendossier.controller;
 
-import com.example.patientendossier.Care;
-import com.example.patientendossier.Database;
-import com.example.patientendossier.Patient;
-import com.example.patientendossier.Utility;
+import com.example.patientendossier.model.Care;
+import com.example.patientendossier.model.Database;
+import com.example.patientendossier.model.Patient;
+import com.example.patientendossier.utility.Utility;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Dossier {
+public class DossierController {
 
   private Stage stage;
   private Database db;
@@ -27,7 +27,7 @@ public class Dossier {
   private Scene dossierScene;
   private BorderPane borderPane;
 
-  public Dossier(Stage stage, Database db, Patient patient, Care care) {
+  public DossierController(Stage stage, Database db, Patient patient, Care care) {
     this.stage = stage;
     this.db = db;
     this.patient = patient;
@@ -62,11 +62,11 @@ public class Dossier {
     if (this.care == null) {
       Button btnLogout = new Button("Uitloggen");
       hbox.getChildren().add(btnLogout);
-      btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene()));
+      btnLogout.setOnAction(e -> this.stage.setScene(new LoginController(this.stage, this.db).getPatientLoginScene()));
     } else {
       Button btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> this.stage.setScene(new UserLists(this.stage, this.db, this.care).getListScene()));
+      btnBack.setOnAction(e -> this.stage.setScene(new UsersController(this.stage, this.db, this.care).getListScene()));
     }
 
     return hbox;
@@ -252,7 +252,7 @@ public class Dossier {
       vBox.getChildren().add(txtAuthorize);
 
       ArrayList<Care> caresOfPatient = patient.getCareOfPatient();
-      TableView<Care> table = care.getCareTableView(caresOfPatient);
+      TableView<Care> table = new CareController().getCareTableView(caresOfPatient);
       vBox.getChildren().add(table);
 
       HBox hBoxBottom = new HBox();

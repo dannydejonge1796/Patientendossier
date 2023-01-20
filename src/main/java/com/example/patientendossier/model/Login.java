@@ -1,4 +1,4 @@
-package com.example.patientendossier;
+package com.example.patientendossier.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
