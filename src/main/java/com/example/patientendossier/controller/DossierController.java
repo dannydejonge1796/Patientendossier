@@ -172,79 +172,18 @@ public class DossierController {
     txtWelcome.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     vBox.getChildren().add(txtWelcome);
 
-    GridPane grid = new GridPane();
-    grid.setHgap(15);
-    grid.setVgap(15);
+    PatientController patientController = new PatientController(this.patient);
 
-    Text txtProfile = new Text("Persoonlijke gegevens");
-    txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-    grid.add(txtProfile, 0, 0);
+    GridPane profileFormGrid = patientController.addProfileForm();
+    Button btnUpdate = (Button) new Utility().getNodeByRowColumnIndex(1,7,profileFormGrid);
+    btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, patientController));
 
-    Label lblNumber = new Label("Uw patiëntnummer:");
-    grid.add(lblNumber, 0, 1);
-    TextField tfNumber = new TextField(patient.getNumber().toString());
-    tfNumber.setPrefWidth(1200);
-    tfNumber.setEditable(false);
-    grid.add(tfNumber, 1, 1);
+    GridPane passFormGrid = patientController.addUpdatePasswordForm();
+    Button btnUpdatePass = (Button) new Utility().getNodeByRowColumnIndex(1,3,passFormGrid);
+    btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, patientController));
 
-    Label lblFirstname = new Label("Voornaam:");
-    grid.add(lblFirstname, 0, 2);
-    TextField tfFirstname = new TextField(patient.getFirstname());
-    tfFirstname.setPrefWidth(1200);
-    grid.add(tfFirstname, 1, 2);
-
-    Label lbLastname = new Label("Achternaam:");
-    grid.add(lbLastname, 0, 3);
-    TextField tfLastname = new TextField(patient.getLastname());
-    tfLastname.setPrefWidth(1200);
-    grid.add(tfLastname, 1, 3);
-
-    Label lblBirth = new Label("Geboortedatum:");
-    grid.add(lblBirth, 0, 4);
-    DatePicker dpBirth = new DatePicker();
-    dpBirth.setValue(patient.getBirthdate());
-    dpBirth.setPrefWidth(1200);
-    grid.add(dpBirth, 1, 4);
-
-    Label lblPhone = new Label("Telefoonnummer:");
-    grid.add(lblPhone, 0, 5);
-    TextField tfPhone = new TextField(patient.getPhonenumber().toString());
-    tfPhone.setPrefWidth(1200);
-    grid.add(tfPhone, 1, 5);
-
-    Label lblEmail = new Label("Email:");
-    grid.add(lblEmail, 0, 6);
-    TextField tfEmail = new TextField(patient.getEmail());
-    tfEmail.setPrefWidth(1200);
-    grid.add(tfEmail, 1, 6);
-
-    Button btnUpdate = new Button("Wijzig");
-    grid.add(btnUpdate, 1, 7);
-    btnUpdate.setOnAction(e -> updateProfile(grid));
-    GridPane.setHalignment(btnUpdate, HPos.RIGHT);
-
-    Text txtChangePass = new Text("Wachtwoord wijzigen");
-    txtChangePass.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-    grid.add(txtChangePass, 0, 8);
-
-    Label lblNewPass = new Label("Nieuw wachtwoord:");
-    grid.add(lblNewPass, 0, 9);
-    PasswordField pfNewPass = new PasswordField();
-    pfNewPass.setPrefWidth(1200);
-    grid.add(pfNewPass, 1, 9);
-
-    Label lblConfirmPass = new Label("Bevestig nieuw wachtwoord:");
-    grid.add(lblConfirmPass, 0, 10);
-    PasswordField pfConfirmPass = new PasswordField();
-    pfConfirmPass.setPrefWidth(1200);
-    grid.add(pfConfirmPass, 1, 10);
-
-    Button btnUpdatePass = new Button("Wijzig");
-    grid.add(btnUpdatePass, 1, 11);
-    btnUpdatePass.setOnAction(e -> updatePassword(grid));
-    GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
-
-    vBox.getChildren().add(grid);
+    vBox.getChildren().add(profileFormGrid);
+    vBox.getChildren().add(passFormGrid);
 
     if (this.care != null) {
       Text txtAuthorize = new Text("Machtig zorgverlener");
@@ -303,11 +242,11 @@ public class DossierController {
       btnUnAuthorize.setOnAction(e -> {
         Integer selectedCareNumber = table.getSelectionModel().getSelectedItem().getNumber();
 
-        if (!selectedCareNumber.equals(this.care.getNumber())) {
+        if (!selectedCareNumber.equals(care.getNumber())) {
           care.unAuthorizePatient(selectedCareNumber, this.patient.getNumber());
           this.borderPane.setCenter(addProfilePane());
         } else {
-          new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "U kunt uzelf niet ontmachtigen vanuit het dossier!");
+          new Utility().showAlert(Alert.AlertType.ERROR, vBox.getScene().getWindow(), "Error!", "U kunt uzelf niet ontmachtigen vanuit het dossier!");
         }
       });
 
@@ -323,12 +262,13 @@ public class DossierController {
     }
 
     scroll.setContent(vBox);
+
     return scroll;
   }
 
-  private void updateProfile(GridPane grid)
+  private void updateProfile(GridPane grid, PatientController patientController)
   {
-    boolean validated = validateProfile(grid);
+    boolean validated = patientController.validateProfile(grid);
 
     if (validated) {
       String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
@@ -348,114 +288,18 @@ public class DossierController {
     }
   }
 
-  private void updatePassword(GridPane grid)
+  private void updatePassword(GridPane grid, PatientController patientController)
   {
-    boolean validated = validateNewPassword(grid);
+    boolean validated = patientController.validateNewPassword(grid);
 
     if (validated) {
-      String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 9, grid)).getText();
+      String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, grid)).getText();
 
       patient.setPassword(newPass);
       patient.update();
 
       this.borderPane.setCenter(addProfilePane());
     }
-  }
-
-  private boolean validateProfile(GridPane grid)
-  {
-    String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
-    if (firstname.isEmpty()) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw voornaam in!");
-      return false;
-    }
-    String regexFirstname = "^[a-zA-Z][a-zA-Z\\s]*$";
-    if (!firstname.matches(regexFirstname)) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige voornaam in!");
-      return false;
-    }
-
-    String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
-    if (lastname.isEmpty()) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw achternaam in!");
-      return false;
-    }
-    String regexLastname = "^[a-zA-Z][a-zA-Z\\s]*$";
-    if (!lastname.matches(regexLastname)) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige achternaam in!");
-      return false;
-    }
-
-    LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
-    if (birth == null) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw geboortedatum in!");
-      return false;
-    }
-
-    String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
-    if (phone.isEmpty()) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw telefoonnummer in!");
-      return false;
-    }
-    String regexPhone = "^[0-9]*$";
-    if (!phone.matches(regexPhone)) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldig telefoonnummer in!");
-      return false;
-    }
-
-    String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
-    if (email.isEmpty()) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw email in!");
-      return false;
-    }
-    String emailPattern = "" +
-            "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"
-            ;
-    if(!email.matches(emailPattern)) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een geldige email in!");
-      return false;
-    }
-
-    return true;
-  }
-
-  private boolean validateNewPassword(GridPane grid)
-  {
-    String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 9, grid)).getText();
-    String confirmPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 10, grid)).getText();
-
-    if(newPass.isEmpty()) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een nieuw wachtwoord in!");
-      return false;
-    }
-
-    if(confirmPass.isEmpty()) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw wachtwoord nogmaals in om te bevestigen!");
-      return false;
-    }
-
-//    String passwordPattern = "(?=.*?\\d)(?=.*?[a-zA-Z])(?=.*?\\W).{8,}";
-//    if(!newPass.matches(passwordPattern)) {
-//      new Utility().showAlert(
-//        Alert.AlertType.ERROR,
-//        grid.getScene().getWindow(),
-//        "Error!",
-//        "Het wachtwoord moet minimaal 1 cijfer hebben, " +
-//        "1 letter hebben, " +
-//        "1 symbool hebben, " +
-//        "8 karakters hebben en " +
-//        "mag niet enkel nummers bevatten!"
-//      );
-//      return false;
-//    }
-
-    if (!newPass.equals(confirmPass)) {
-      new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De ingevoerde wachtwoorden komen niet overeen!");
-      return false;
-    }
-
-    return true;
   }
 
   public Scene getDossierScene() {

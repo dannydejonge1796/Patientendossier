@@ -86,7 +86,7 @@ public class Patient {
         "phonenumber = '" + this.phonenumber + "', " +
         "email = '" + this.email + "', " +
         "password = '" + this.password + "' " +
-      "WHERE number = '" + this.number + "'"
+      "WHERE patientNumber = '" + this.number + "'"
     ;
 
     db.storeData(query);
