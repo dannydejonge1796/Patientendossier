@@ -2,12 +2,11 @@ package com.example.patientendossier;
 
 import com.example.patientendossier.model.Database;
 import com.example.patientendossier.controller.LoginController;
-import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Index extends Application {
+public class Application extends javafx.application.Application {
   @Override
   public void start(Stage stage) throws IOException {
     stage.setTitle("Elektronisch Patiëntendossier");

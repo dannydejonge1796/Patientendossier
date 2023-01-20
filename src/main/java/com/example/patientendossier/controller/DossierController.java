@@ -66,7 +66,7 @@ public class DossierController {
     } else {
       Button btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> this.stage.setScene(new UsersController(this.stage, this.db, this.care).getListScene()));
+      btnBack.setOnAction(e -> this.stage.setScene(new UserController(this.stage, this.db, this.care).getListScene()));
     }
 
     return hbox;

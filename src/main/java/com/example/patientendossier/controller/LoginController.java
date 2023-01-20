@@ -113,7 +113,7 @@ public class LoginController {
         if (care == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new UsersController(this.stage, this.db, care).getListScene());
+          this.stage.setScene(new UserController(this.stage, this.db, care).getListScene());
         }
       }
     });

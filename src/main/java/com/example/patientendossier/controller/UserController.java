@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class UsersController {
+public class UserController {
 
   private Tab tab1;
   private Stage stage;
@@ -19,7 +19,7 @@ public class UsersController {
   private Care care;
   private Scene listScene;
 
-  public UsersController(Stage stage, Database db, Care care) {
+  public UserController(Stage stage, Database db, Care care) {
     this.stage = stage;
     this.db = db;
     this.care = care;
