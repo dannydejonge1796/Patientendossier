@@ -14,10 +14,10 @@ public class CareController {
 
   public TableView<Patient> getPatTableView(ArrayList<Patient> patients)
   {
+    TableView<Patient> table = new TableView<>();
+
     ObservableList<Patient> olPatients = FXCollections.observableArrayList();
     olPatients.addAll(patients);
-
-    TableView<Patient> table = new TableView<>();
 
     table.setItems(olPatients);
     //Creating columns

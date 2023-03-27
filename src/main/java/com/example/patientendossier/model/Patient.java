@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Patient {
 
-  private Database db;
-  private Integer number;
+  private final Database db;
+  private final Integer number;
   private String firstname;
   private String lastname;
   private LocalDate birthdate;
@@ -27,27 +27,38 @@ public class Patient {
     this.password = password;
   }
 
-//  public ArrayList<Allergy> getAllergies()
-//  {
-//    ArrayList<Allergy> allergies = new ArrayList<>();
-//
-//    String query =
-//      "SELECT " +
-//        "allergy.name, " +
-//        "allergy.description " +
-//      "FROM " +
-//        "patient AS patient, " +
-//        "allergy AS allergy, " +
-//        "allergy_patient AS allergyPatient " +
-//      "WHERE allergyPatient.patient_number = '" + this.number + "' " +
-//      "AND allergy.name = allergyPatient.allergy_name " +
-//      "GROUP BY allergy.name"
-//    ;
-//
-//    ResultSet result = db.getData(query);
-//
-//
-//  }
+  public ArrayList<Allergy> getAllergies()
+  {
+    ArrayList<Allergy> allergies = new ArrayList<>();
+
+    String query =
+      "SELECT " +
+        "allergy.name, " +
+        "allergy.description " +
+      "FROM " +
+        "patient AS patient, " +
+        "allergy AS allergy, " +
+        "allergy_patient AS allergyPatient " +
+      "WHERE allergyPatient.patient_number = '" + this.number + "' " +
+      "AND allergy.id = allergyPatient.allergy_id " +
+      "GROUP BY allergy.id"
+    ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        allergies.add(new Allergy(
+          result.getString("name"),
+          result.getString("description")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return allergies;
+  }
 
 //  public ArrayList<Medicine> getMedicines()
 //  {
@@ -78,7 +89,7 @@ public class Patient {
         "care_patient AS carePatient " +
       "WHERE carePatient.patient_number = '" + this.number + "' " +
       "AND care.number = carePatient.care_number " +
-      "GROUP BY care.careNumber"
+      "GROUP BY care.number"
     ;
 
     ResultSet result = db.getData(query);

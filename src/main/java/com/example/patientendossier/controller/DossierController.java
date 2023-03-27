@@ -153,7 +153,7 @@ public class DossierController {
     }
 
     medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineController().getMedicinePane()));
-    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyController().getAllergyPane()));
+    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyController(this.patient).getAllergyPane()));
     medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthController().getHealthPane()));
 
     return vbox;
