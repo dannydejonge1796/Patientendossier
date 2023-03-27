@@ -40,7 +40,7 @@ public class DossierController {
   {
     this.borderPane.setBottom(addBottomMenu());
     this.borderPane.setLeft(addLeftMenu());
-    this.borderPane.setCenter(addProfilePane());
+    this.borderPane.setCenter(createProfilePane());
 
     return new Scene(this.borderPane);
   }
@@ -94,7 +94,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    profileItems.get(0).setOnAction(e -> this.borderPane.setCenter(addProfilePane()));
+    profileItems.get(0).setOnAction(e -> this.borderPane.setCenter(this.createProfilePane()));
 
     Text txtAppointments = new Text("Afspraken");
     txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -108,7 +108,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    appointmentItems.get(0).setOnAction(e -> {});
+    appointmentItems.get(0).setOnAction(e -> this.borderPane.setCenter(new AppointmentController().getAppointmentPane()));
 
     Text txtReport = new Text("Verslagen");
     txtReport.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -122,7 +122,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    reportItems.get(0).setOnAction(e -> {});
+    reportItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ReportController().getReportPane()));
 
     Text txtResults = new Text("Uitslagen");
     txtResults.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -136,7 +136,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    resultItems.get(0).setOnAction(e -> {});
+    resultItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ResultController().getResultPane()));
 
     Text txtMedicInfo = new Text("Medische gegevens");
     txtMedicInfo.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -152,14 +152,14 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    medicInfoItems.get(0).setOnAction(e -> {});
-    medicInfoItems.get(1).setOnAction(e -> {});
-    medicInfoItems.get(2).setOnAction(e -> {});
+    medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineController().getMedicinePane()));
+    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyController().getAllergyPane()));
+    medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthController().getHealthPane()));
 
     return vbox;
   }
 
-  private ScrollPane addProfilePane()
+  private ScrollPane createProfilePane()
   {
     ScrollPane scroll = new ScrollPane();
 
@@ -244,7 +244,7 @@ public class DossierController {
 
         if (!selectedCareNumber.equals(care.getNumber())) {
           care.unAuthorizePatient(selectedCareNumber, this.patient.getNumber());
-          this.borderPane.setCenter(addProfilePane());
+          this.borderPane.setCenter(createProfilePane());
         } else {
           new Utility().showAlert(Alert.AlertType.ERROR, vBox.getScene().getWindow(), "Error!", "U kunt uzelf niet ontmachtigen vanuit het dossier!");
         }
@@ -256,7 +256,7 @@ public class DossierController {
           Integer selectedCareNumber = Integer.parseInt(selectedCare.split(",")[0]);
 
           care.authorizePatient(selectedCareNumber, this.patient.getNumber());
-          this.borderPane.setCenter(addProfilePane());
+          this.borderPane.setCenter(createProfilePane());
         }
       });
     }
@@ -284,7 +284,7 @@ public class DossierController {
       patient.setEmail(email);
       patient.update();
 
-      this.borderPane.setCenter(addProfilePane());
+      this.borderPane.setCenter(createProfilePane());
     }
   }
 
@@ -298,7 +298,7 @@ public class DossierController {
       patient.setPassword(newPass);
       patient.update();
 
-      this.borderPane.setCenter(addProfilePane());
+      this.borderPane.setCenter(createProfilePane());
     }
   }
 
