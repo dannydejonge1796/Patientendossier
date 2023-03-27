@@ -1,6 +1,7 @@
 package com.example.patientendossier.controller;
 
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableView;
 
 public class AllergyController {
 
@@ -12,7 +13,13 @@ public class AllergyController {
     this.allergyPane = infoPageController.getInfoPagePane();
 
     infoPageController.getLblPage().setText("Allergieën");
+//    infoPageController.gethBoxTable().getChildren().add(this.loadTableView());
   }
+
+//  private TableView<String> loadTableView()
+//  {
+//
+//  }
 
   public ScrollPane getAllergyPane() {
     return allergyPane;

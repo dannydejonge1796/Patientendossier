@@ -31,9 +31,9 @@ public class Care {
     String query =
       "DELETE FROM care_patient " +
       "WHERE " +
-        "careNumber = '" + careNumber + "' " +
+        "care_number = '" + careNumber + "' " +
       "AND " +
-        "patientNumber = '" + patientNumber + "'"
+        "patient_number = '" + patientNumber + "'"
     ;
 
     db.storeData(query);
@@ -43,7 +43,7 @@ public class Care {
   {
     String query =
       "INSERT INTO care_patient " +
-        "(careNumber, patientNumber) " +
+        "(care_number, patient_number) " +
         "VALUES " +
         "('" + careNumber + "', '" + patientNumber + "')"
     ;
@@ -57,7 +57,7 @@ public class Care {
 
     String query =
       "SELECT " +
-        "patient.patientNumber, " +
+        "patient.number, " +
         "patient.firstname, " +
         "patient.lastname, " +
         "patient.birthdate, " +
@@ -68,9 +68,9 @@ public class Care {
         "patient AS patient, " +
         "care AS care, " +
         "care_patient AS carePatient " +
-      "WHERE care.careNumber = '" + this.number + "' " +
-      "AND care.careNumber = carePatient.careNumber " +
-      "AND patient.patientNumber = carePatient.patientNumber"
+      "WHERE care.number = '" + this.number + "' " +
+      "AND care.number = carePatient.care_number " +
+      "AND patient.number = carePatient.patient_number"
     ;
 
     ResultSet result = db.getData(query);
@@ -79,7 +79,7 @@ public class Care {
       while (result.next()) {
         patients.add(new Patient(
           this.db,
-          result.getInt("patientNumber"),
+          result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
           result.getDate("birthdate").toLocalDate(),
@@ -110,7 +110,7 @@ public class Care {
       while (result.next()) {
         cares.add(new Care(
           this.db,
-          result.getInt("careNumber"),
+          result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
           result.getString("profession"),

@@ -30,7 +30,7 @@ public class Login {
       if (result.next()) {
         return new Patient(
           this.db,
-          result.getInt("patientNumber"),
+          result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
           result.getDate("birthdate").toLocalDate(),
@@ -61,7 +61,7 @@ public class Login {
       if (result.next()) {
         return new Care(
           this.db,
-          result.getInt("careNumber"),
+          result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
           result.getString("profession"),

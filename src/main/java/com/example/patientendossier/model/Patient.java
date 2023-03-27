@@ -27,13 +27,45 @@ public class Patient {
     this.password = password;
   }
 
+//  public ArrayList<Allergy> getAllergies()
+//  {
+//    ArrayList<Allergy> allergies = new ArrayList<>();
+//
+//    String query =
+//      "SELECT " +
+//        "allergy.name, " +
+//        "allergy.description " +
+//      "FROM " +
+//        "patient AS patient, " +
+//        "allergy AS allergy, " +
+//        "allergy_patient AS allergyPatient " +
+//      "WHERE allergyPatient.patient_number = '" + this.number + "' " +
+//      "AND allergy.name = allergyPatient.allergy_name " +
+//      "GROUP BY allergy.name"
+//    ;
+//
+//    ResultSet result = db.getData(query);
+//
+//
+//  }
+
+//  public ArrayList<Medicine> getMedicines()
+//  {
+//
+//  }
+//
+//  public ArrayList<Health> getHealthProblems()
+//  {
+//
+//  }
+
   public ArrayList<Care> getCareOfPatient()
   {
     ArrayList<Care> cares = new ArrayList<>();
 
     String query =
       "SELECT " +
-        "care.careNumber, " +
+        "care.number, " +
         "care.firstname, " +
         "care.lastname, " +
         "care.profession, " +
@@ -44,8 +76,8 @@ public class Patient {
         "patient AS patient, " +
         "care AS care, " +
         "care_patient AS carePatient " +
-      "WHERE carePatient.patientNumber = '" + this.number + "' " +
-      "AND care.careNumber = carePatient.careNumber " +
+      "WHERE carePatient.patient_number = '" + this.number + "' " +
+      "AND care.number = carePatient.care_number " +
       "GROUP BY care.careNumber"
     ;
 
@@ -55,7 +87,7 @@ public class Patient {
       while (result.next()) {
         cares.add(new Care(
           this.db,
-          result.getInt("careNumber"),
+          result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
           result.getString("profession"),
@@ -86,7 +118,7 @@ public class Patient {
         "phonenumber = '" + this.phonenumber + "', " +
         "email = '" + this.email + "', " +
         "password = '" + this.password + "' " +
-      "WHERE patientNumber = '" + this.number + "'"
+      "WHERE number = '" + this.number + "'"
     ;
 
     db.storeData(query);
