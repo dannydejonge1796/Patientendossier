@@ -34,7 +34,7 @@ public class Patient {
     String query =
       "SELECT " +
         "allergy.name, " +
-        "allergy.description " +
+        "allergyPatient.description " +
       "FROM " +
         "patient AS patient, " +
         "allergy AS allergy, " +

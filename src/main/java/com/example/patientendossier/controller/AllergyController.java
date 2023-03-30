@@ -21,8 +21,16 @@ public class AllergyController {
     InfoPageController infoPageController = new InfoPageController();
     this.allergyPane = infoPageController.getInfoPagePane();
 
+    infoPageController.getBtnAdd().setOnAction(e -> this.loadForm());
     infoPageController.getLblPage().setText("Allergieën");
-    infoPageController.gethBoxTable().getChildren().add(this.loadTableView());
+    infoPageController.getHBoxTable().getChildren().add(this.loadTableView());
+  }
+
+  private void loadForm()
+  {
+    DossierFormController dossierForm = new DossierFormController();
+
+
   }
 
   private TableView<Allergy> loadTableView()
