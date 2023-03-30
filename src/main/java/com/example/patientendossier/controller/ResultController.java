@@ -1,20 +1,20 @@
 package com.example.patientendossier.controller;
 
-import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 
 public class ResultController {
 
-  private final ScrollPane resultPane;
+  private final VBox resultPane;
 
   ResultController()
   {
     InfoPageController infoPageController = new InfoPageController();
-    this.resultPane = infoPageController.getInfoPagePane();
+    this.resultPane = infoPageController.getVBoxInfoPage();
 
     infoPageController.getLblPage().setText("Uitslagen");
   }
 
-  public ScrollPane getResultPane() {
+  public VBox getResultPane() {
     return resultPane;
   }
 }

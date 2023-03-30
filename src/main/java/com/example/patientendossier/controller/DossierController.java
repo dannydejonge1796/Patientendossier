@@ -152,9 +152,9 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineController().getMedicinePane()));
-    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyController(this.patient).getAllergyPane()));
-    medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthController().getHealthPane()));
+    medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineController(this, this.patient, this.care).getMedicinePane()));
+    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyController(this, this.patient, this.care).getAllergyPane()));
+    medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthController(this, this.patient, this.care).getHealthPane()));
 
     return vbox;
   }
@@ -162,9 +162,10 @@ public class DossierController {
   private ScrollPane createProfilePane()
   {
     ScrollPane scroll = new ScrollPane();
+    scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
     VBox vBox = new VBox();
-    vBox.setMaxWidth(980);
+    vBox.setMaxWidth(1000);
     vBox.setPadding(new Insets(25, 25, 25, 25));
     vBox.setSpacing(15);
 
@@ -300,6 +301,10 @@ public class DossierController {
 
       this.borderPane.setCenter(createProfilePane());
     }
+  }
+
+  public BorderPane getBorderPane() {
+    return borderPane;
   }
 
   public Scene getDossierScene() {

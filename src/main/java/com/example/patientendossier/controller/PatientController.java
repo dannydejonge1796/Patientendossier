@@ -1,23 +1,19 @@
 package com.example.patientendossier.controller;
 
-import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class PatientController {
 
-  private Patient patient;
+  private final Patient patient;
 
   public PatientController(Patient patient) {
     this.patient = patient;
@@ -40,7 +36,7 @@ public class PatientController {
     if (patient != null) {
       tfNumber.setText(patient.getNumber().toString());
     }
-    tfNumber.setPrefWidth(1200);
+    tfNumber.setPrefWidth(950);
     tfNumber.setEditable(false);
     grid.add(tfNumber, 1, 1);
 
@@ -50,7 +46,6 @@ public class PatientController {
     if (patient != null) {
       tfFirstname.setText(patient.getFirstname());
     }
-    tfFirstname.setPrefWidth(1200);
     grid.add(tfFirstname, 1, 2);
 
     Label lbLastname = new Label("Achternaam:");
@@ -59,16 +54,16 @@ public class PatientController {
     if (patient != null) {
       tfLastname.setText(patient.getLastname());
     }
-    tfLastname.setPrefWidth(1200);
     grid.add(tfLastname, 1, 3);
 
     Label lblBirth = new Label("Geboortedatum:");
     grid.add(lblBirth, 0, 4);
+
     DatePicker dpBirth = new DatePicker();
     if (patient != null) {
       dpBirth.setValue(patient.getBirthdate());
     }
-    dpBirth.setPrefWidth(1200);
+    dpBirth.setPrefWidth(950);
     grid.add(dpBirth, 1, 4);
 
     Label lblPhone = new Label("Telefoonnummer:");
@@ -77,7 +72,6 @@ public class PatientController {
     if (patient != null) {
       tfPhone.setText(patient.getPhonenumber().toString());
     }
-    tfPhone.setPrefWidth(1200);
     grid.add(tfPhone, 1, 5);
 
     Label lblEmail = new Label("Email:");
@@ -86,7 +80,6 @@ public class PatientController {
     if (patient != null) {
       tfEmail.setText(patient.getEmail());
     }
-    tfEmail.setPrefWidth(1200);
     grid.add(tfEmail, 1, 6);
 
     Button btnUpdate = new Button("Wijzig");
@@ -109,13 +102,12 @@ public class PatientController {
     Label lblNewPass = new Label("Nieuw wachtwoord:");
     grid.add(lblNewPass, 0, 1);
     PasswordField pfNewPass = new PasswordField();
-    pfNewPass.setPrefWidth(1200);
+    pfNewPass.setPrefWidth(950);
     grid.add(pfNewPass, 1, 1);
 
     Label lblConfirmPass = new Label("Bevestig nieuw wachtwoord:");
     grid.add(lblConfirmPass, 0, 2);
     PasswordField pfConfirmPass = new PasswordField();
-    pfConfirmPass.setPrefWidth(1200);
     grid.add(pfConfirmPass, 1, 2);
 
     Button btnUpdatePass = new Button("Wijzig");
@@ -171,8 +163,7 @@ public class PatientController {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw email in!");
       return false;
     }
-    String emailPattern = "" +
-            "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+    String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"
             ;
     if(!email.matches(emailPattern)) {
@@ -204,10 +195,10 @@ public class PatientController {
 //        Alert.AlertType.ERROR,
 //        grid.getScene().getWindow(),
 //        "Error!",
-//        "Het wachtwoord moet minimaal 1 cijfer hebben, " +
-//        "1 letter hebben, " +
-//        "1 symbool hebben, " +
-//        "8 karakters hebben en " +
+//        "Het wachtwoord moet minimaal 1 cijfer hebben," +
+//        "1 letter hebben," +
+//        "1 symbool hebben," +
+//        "8 karakters hebben en" +
 //        "mag niet enkel nummers bevatten!"
 //      );
 //      return false;

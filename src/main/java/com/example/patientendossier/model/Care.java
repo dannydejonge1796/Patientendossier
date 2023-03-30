@@ -26,6 +26,72 @@ public class Care {
     this.password = password;
   }
 
+  public ArrayList<String> getAllAllergyNames()
+  {
+    ArrayList<String> allergyNames = new ArrayList<>();
+
+    String query =
+            "SELECT allergy.name " +
+            "FROM allergy"
+    ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        allergyNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return allergyNames;
+  }
+
+  public ArrayList<String> getAllHealthNames()
+  {
+    ArrayList<String> healthNames = new ArrayList<>();
+
+    String query =
+            "SELECT health.name " +
+                    "FROM health"
+            ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        healthNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return healthNames;
+  }
+
+  public ArrayList<String> getAllMedicineNames()
+  {
+    ArrayList<String> medicineNames = new ArrayList<>();
+
+    String query =
+            "SELECT medicine.name " +
+                    "FROM medicine"
+            ;
+
+    ResultSet result = db.getData(query);
+
+    try {
+      while (result.next()) {
+        medicineNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return medicineNames;
+  }
+
   public void unAuthorizePatient(Integer careNumber, Integer patientNumber)
   {
     String query =

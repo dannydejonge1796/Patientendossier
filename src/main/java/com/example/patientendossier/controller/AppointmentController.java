@@ -1,20 +1,20 @@
 package com.example.patientendossier.controller;
 
-import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 
 public class AppointmentController {
 
-  private final ScrollPane appointmentPane;
+  private final VBox appointmentPane;
 
   AppointmentController()
   {
     InfoPageController infoPageController = new InfoPageController();
-    this.appointmentPane = infoPageController.getInfoPagePane();
+    this.appointmentPane = infoPageController.getVBoxInfoPage();
 
     infoPageController.getLblPage().setText("Afspraken");
   }
 
-  public ScrollPane getAppointmentPane() {
+  public VBox getAppointmentPane() {
     return appointmentPane;
   }
 }
