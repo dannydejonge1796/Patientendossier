@@ -3,6 +3,7 @@ package com.example.patientendossier.screen;
 import com.example.patientendossier.model.Allergy;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
+import com.example.patientendossier.utility.Utility;
 import com.example.patientendossier.utility.Validation;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
@@ -120,9 +121,16 @@ public class AllergyScreen {
   private boolean validateForm()
   {
     if (!new Validation().validateString(comboAllergies.getValue())) {
+      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een allergie in!");
       return false;
     }
-    return new Validation().validateString(tfDescription.getText());
+
+    if (!new Validation().validateString(tfDescription.getText())) {
+      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een geldige beschrijving in!");
+      return false;
+    }
+
+    return true;
   }
 
   private TableView<Allergy> loadTableView()
@@ -133,6 +141,8 @@ public class AllergyScreen {
 
     TableView<Allergy> table = new TableScreen().createTableView(allergies, columnNames, propertyNames);
 
+    table.setPrefWidth(960);
+
     table.setOnMouseClicked(e -> {
       infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);
       infoPageScreen.getBtnUpdate().setDisable(table.getSelectionModel().getSelectedItem() == null);
@@ -140,7 +150,7 @@ public class AllergyScreen {
 
     infoPageScreen.getBtnDelete().setOnAction(e -> {
       Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
-      this.patient.deleteAlergy(selectedAllergy);
+      this.patient.deleteAllergy(selectedAllergy);
       this.load();
       this.dossier.getBorderPane().setCenter(this.allergyPane);
     });

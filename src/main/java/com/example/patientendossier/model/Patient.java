@@ -28,7 +28,7 @@ public class Patient {
     this.password = password;
   }
 
-  public void deleteAlergy(Allergy allergy)
+  public void deleteAllergy(Allergy allergy)
   {
     String query =
             "DELETE FROM allergy_patient " +
