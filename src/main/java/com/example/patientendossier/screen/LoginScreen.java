@@ -1,8 +1,6 @@
 package com.example.patientendossier.screen;
 
-import com.example.patientendossier.Application;
 import com.example.patientendossier.model.Care;
-import com.example.patientendossier.model.Database;
 import com.example.patientendossier.model.Login;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
@@ -112,7 +110,7 @@ public class LoginScreen {
         if (care == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new UserScreen(this.stage, care).getListScene());
+          this.stage.setScene(new CareScreen(this.stage, care).getListScene());
         }
       }
     });
@@ -153,10 +151,9 @@ public class LoginScreen {
       return false;
     }
 
-    String emailPattern = "" +
-            "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+    String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"
-            ;
+    ;
 
     if(!email.matches(emailPattern)) {
       util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Het ingevoerde emailadres is ongeldig!");

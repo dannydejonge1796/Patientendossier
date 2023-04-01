@@ -4,13 +4,12 @@ import com.example.patientendossier.model.Allergy;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Validation;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 public class AllergyScreen {
 
@@ -111,28 +110,16 @@ public class AllergyScreen {
 
   private TableView<Allergy> loadTableView()
   {
-    TableView<Allergy> table = new TableView<>();
+    ArrayList<Allergy> allergies = patient.getAllergies();
+    String[] columnNames = {"Naam", "Beschrijving"};
+    String[] propertyNames = {"name", "description"};
 
-    ObservableList<Allergy> olAllergies = FXCollections.observableArrayList();
-    olAllergies.addAll(patient.getAllergies());
+    TableView<Allergy> table = new TableScreen().createTableView(allergies, columnNames, propertyNames);
 
-    table.setItems(olAllergies);
-
-    TableColumn<Allergy, String> colName = new TableColumn<>("Naam");
-    TableColumn<Allergy, String> colDescription = new TableColumn<>("Beschrijving");
-
-    colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-    colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-    table.getColumns().add(colName);
-    table.getColumns().add(colDescription);
-
-    table.setPrefWidth(950);
-
-    table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    table.getSortOrder().add(colName);
-
-    table.setOnMouseClicked(e -> infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null));
+    table.setOnMouseClicked(e -> {
+      infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);
+      infoPageScreen.getBtnUpdate().setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
 
     return table;
   }

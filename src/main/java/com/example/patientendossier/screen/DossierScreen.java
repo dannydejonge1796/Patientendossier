@@ -1,14 +1,12 @@
 package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Care;
-import com.example.patientendossier.model.Database;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -63,7 +61,7 @@ public class DossierScreen {
     } else {
       Button btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> this.stage.setScene(new UserScreen(this.stage, this.care).getListScene()));
+      btnBack.setOnAction(e -> this.stage.setScene(new CareScreen(this.stage, this.care).getListScene()));
     }
 
     return hbox;
@@ -189,14 +187,15 @@ public class DossierScreen {
       vBox.getChildren().add(txtAuthorize);
 
       ArrayList<Care> caresOfPatient = patient.getCareOfPatient();
-      TableView<Care> table = new CareScreen().getCareTableView(caresOfPatient);
+      String[] careColumnNames = {"Zorgverlener nummer", "Voornaam", "Achternaam", "Beroep", "Telefoonnummer", "Email"};
+      String[] carePropertyNames = {"number", "firstname", "lastname", "profession", "phonenumber", "email"};
+
+      TableView<Care> table = new TableScreen().createTableView(caresOfPatient, careColumnNames, carePropertyNames);
       vBox.getChildren().add(table);
 
       HBox hBoxBottom = new HBox();
 
       Button btnUnAuthorize = new Button("Verwijder machtiging");
-      btnUnAuthorize.setStyle("-fx-background-color: darkred;");
-      btnUnAuthorize.setTextFill(Color.WHITE);
       btnUnAuthorize.setDisable(true);
       hBoxBottom.getChildren().add(btnUnAuthorize);
 
