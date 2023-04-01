@@ -28,6 +28,18 @@ public class Patient {
     this.password = password;
   }
 
+  public void updateAllergy(Allergy allergy)
+  {
+    String query =
+            "UPDATE allergy_patient " +
+            "SET description = '" + allergy.getDescription() + "' " +
+            "WHERE patient_number = '" + number + "' " +
+            "AND allergy_name = '" + allergy.getName() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
   public void addAllergy(Allergy allergy)
   {
     String query =
@@ -196,10 +208,6 @@ public class Patient {
 
   public String getEmail() {
     return email;
-  }
-
-  public String getPassword() {
-    return password;
   }
 
   public void setFirstname(String firstname) {

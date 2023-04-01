@@ -54,7 +54,6 @@ public class AllergyScreen {
     lblName.setPrefWidth(200);
 
     this.comboAllergies = new ComboBox<>();
-    comboAllergies.getItems().addAll(care.getAllAllergyNames());
     comboAllergies.setPrefWidth(800);
     gridForm.add(comboAllergies, 1, 1);
 
@@ -72,22 +71,44 @@ public class AllergyScreen {
 
     if (allergy != null) {
       btnUpdate.setText("Wijzig");
+      comboAllergies.getItems().add(allergy.getName());
+      comboAllergies.setValue(allergy.getName());
+      tfDescription.setText(allergy.getDescription());
+
       btnUpdate.setOnAction(e -> {
         if (this.validateForm()) {
-          allergy.setName(comboAllergies.getValue());
           allergy.setDescription(tfDescription.getText());
-          this.patient.addAllergy(allergy);
+          this.patient.updateAllergy(allergy);
           this.load();
           this.dossier.getBorderPane().setCenter(this.allergyPane);
         }
       });
     } else {
       btnUpdate.setText("Toevoegen");
+
+      ArrayList<String> availableAllergies = new ArrayList<>();
+
+      for (String item : this.patient.getAllergyNames()) {
+        if (!this.care.getAllAllergyNames().contains(item)) {
+          availableAllergies.add(item);
+        }
+      }
+
+      for (String item : this.care.getAllAllergyNames()) {
+        if (!this.patient.getAllergyNames().contains(item)) {
+          availableAllergies.add(item);
+        }
+      }
+
+      this.comboAllergies.getItems().addAll(availableAllergies);
+
       btnUpdate.setOnAction(e -> {
         if (this.validateForm()) {
+
           String name = comboAllergies.getValue();
           String description = tfDescription.getText();
           Allergy newAllergy = new Allergy(name, description);
+
           this.patient.addAllergy(newAllergy);
           this.load();
           this.dossier.getBorderPane().setCenter(this.allergyPane);
@@ -98,10 +119,6 @@ public class AllergyScreen {
 
   private boolean validateForm()
   {
-    if (this.patient.getAllergyNames().contains(comboAllergies.getValue())) {
-      return false;
-    }
-
     if (!new Validation().validateString(comboAllergies.getValue())) {
       return false;
     }
@@ -119,6 +136,11 @@ public class AllergyScreen {
     table.setOnMouseClicked(e -> {
       infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);
       infoPageScreen.getBtnUpdate().setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
+
+    infoPageScreen.getBtnUpdate().setOnAction(e -> {
+      Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
+      this.loadForm(selectedAllergy);
     });
 
     return table;
