@@ -28,6 +28,17 @@ public class Patient {
     this.password = password;
   }
 
+  public void deleteAlergy(Allergy allergy)
+  {
+    String query =
+            "DELETE FROM allergy_patient " +
+            "WHERE patient_number = '" + this.number + "' " +
+            "AND allergy_name = '" + allergy.getName() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
   public void updateAllergy(Allergy allergy)
   {
     String query =

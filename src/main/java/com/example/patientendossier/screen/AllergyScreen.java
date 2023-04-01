@@ -138,6 +138,13 @@ public class AllergyScreen {
       infoPageScreen.getBtnUpdate().setDisable(table.getSelectionModel().getSelectedItem() == null);
     });
 
+    infoPageScreen.getBtnDelete().setOnAction(e -> {
+      Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
+      this.patient.deleteAlergy(selectedAllergy);
+      this.load();
+      this.dossier.getBorderPane().setCenter(this.allergyPane);
+    });
+
     infoPageScreen.getBtnUpdate().setOnAction(e -> {
       Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
       this.loadForm(selectedAllergy);
