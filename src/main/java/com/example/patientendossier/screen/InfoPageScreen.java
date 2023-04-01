@@ -27,7 +27,7 @@ public class InfoPageScreen {
   {
     this.vBoxInfoPage = new VBox();
     vBoxInfoPage.setMaxWidth(1000);
-    vBoxInfoPage.setPadding(new Insets(25,25,25,25));
+    vBoxInfoPage.setPadding(new Insets(20,20,20,20));
     vBoxInfoPage.setSpacing(15);
 
     HBox hBoxTop = new HBox();

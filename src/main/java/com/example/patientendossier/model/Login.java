@@ -1,16 +1,16 @@
 package com.example.patientendossier.model;
 
+import com.example.patientendossier.Application;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Login {
 
-  private Database db;
-  private String email;
-  private String password;
+  private final String email;
+  private final String password;
 
-  public Login(Database db, String email, String password) {
-    this.db = db;
+  public Login(String email, String password) {
     this.email = email;
     this.password = password;
   }
@@ -24,12 +24,11 @@ public class Login {
       "AND password = '" + this.password + "'"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       if (result.next()) {
         return new Patient(
-          this.db,
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
@@ -55,12 +54,11 @@ public class Login {
       "AND password = '" + this.password + "'"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       if (result.next()) {
         return new Care(
-          this.db,
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),

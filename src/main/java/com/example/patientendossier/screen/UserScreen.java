@@ -1,7 +1,6 @@
 package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Care;
-import com.example.patientendossier.model.Database;
 import com.example.patientendossier.model.Patient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,14 +13,12 @@ import javafx.stage.Stage;
 public class UserScreen {
 
   private Tab tab1;
-  private Stage stage;
-  private Database db;
-  private Care care;
-  private Scene listScene;
+  private final Stage stage;
+  private final Care care;
+  private final Scene listScene;
 
-  public UserScreen(Stage stage, Database db, Care care) {
+  public UserScreen(Stage stage, Care care) {
     this.stage = stage;
-    this.db = db;
     this.care = care;
     this.listScene = this.setListScene();
   }
@@ -70,9 +67,7 @@ public class UserScreen {
     Button btnLogout = new Button("Uitloggen");
     hbox.getChildren().add(btnLogout);
 
-    btnLogout.setOnAction(e -> {
-      stage.setScene(new LoginScreen(this.stage, this.db).getCarerLoginScene());
-    });
+    btnLogout.setOnAction(e -> stage.setScene(new LoginScreen(this.stage).getCarerLoginScene()));
 
     return hbox;
   }
@@ -129,7 +124,7 @@ public class UserScreen {
 
     btnToDossier.setOnAction(e -> {
       Patient selectedPatient = table.getSelectionModel().getSelectedItem();
-      this.stage.setScene(new DossierScreen(this.stage, this.db, selectedPatient, this.care).getDossierScene());
+      this.stage.setScene(new DossierScreen(this.stage, selectedPatient, this.care).getDossierScene());
     });
 
     btnRemoveFromMyPatients.setOnAction(e -> {
@@ -185,9 +180,7 @@ public class UserScreen {
 
     vBox.getChildren().add(hBoxBottom);
 
-    table.setOnMouseClicked(e -> {
-      btnUpdate.setDisable(table.getSelectionModel().getSelectedItem() == null);
-    });
+    table.setOnMouseClicked(e -> btnUpdate.setDisable(table.getSelectionModel().getSelectedItem() == null));
 
     btnUpdate.setOnAction(e -> {
       Care selectedCare = table.getSelectionModel().getSelectedItem();

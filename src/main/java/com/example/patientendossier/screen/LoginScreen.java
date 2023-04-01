@@ -1,5 +1,6 @@
 package com.example.patientendossier.screen;
 
+import com.example.patientendossier.Application;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Database;
 import com.example.patientendossier.model.Login;
@@ -19,14 +20,12 @@ import javafx.stage.Stage;
 public class LoginScreen {
 
   private final Stage stage;
-  private final Database db;
   private final Scene patientLoginScene;
   private final Scene carerLoginScene;
 
-  public LoginScreen(Stage stage, Database db)
+  public LoginScreen(Stage stage)
   {
     this.stage = stage;
-    this.db = db;
     this.patientLoginScene = setPatientLoginScene();
     this.carerLoginScene = setCarerLoginScene();
   }
@@ -62,12 +61,12 @@ public class LoginScreen {
         TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
         String password = tfPassword.getText();
 
-        Patient patient = new Login(this.db, email, password).loginPatient();
+        Patient patient = new Login(email, password).loginPatient();
 
         if (patient == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new DossierScreen(this.stage, this.db, patient, null).getDossierScene());
+          this.stage.setScene(new DossierScreen(this.stage, patient, null).getDossierScene());
         }
       }
     });
@@ -108,12 +107,12 @@ public class LoginScreen {
         TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
         String password = tfPassword.getText();
 
-        Care care = new Login(this.db, email, password).loginCare();
+        Care care = new Login(email, password).loginCare();
 
         if (care == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new UserScreen(this.stage, this.db, care).getListScene());
+          this.stage.setScene(new UserScreen(this.stage, care).getListScene());
         }
       }
     });

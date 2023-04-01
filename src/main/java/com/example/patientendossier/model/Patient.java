@@ -1,5 +1,7 @@
 package com.example.patientendossier.model;
 
+import com.example.patientendossier.Application;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -7,7 +9,6 @@ import java.util.ArrayList;
 
 public class Patient {
 
-  private final Database db;
   private final Integer number;
   private String firstname;
   private String lastname;
@@ -16,8 +17,8 @@ public class Patient {
   private String email;
   private String password;
 
-  public Patient(Database db, Integer number, String firstname, String lastname, LocalDate birthdate, Integer phonenumber, String email, String password) {
-    this.db = db;
+  public Patient(Integer number, String firstname, String lastname, LocalDate birthdate, Integer phonenumber, String email, String password)
+  {
     this.number = number;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -25,6 +26,45 @@ public class Patient {
     this.phonenumber = phonenumber;
     this.email = email;
     this.password = password;
+  }
+
+  public void addAllergy(Allergy allergy)
+  {
+    String query =
+            "INSERT INTO allergy_patient (allergy_name, patient_number, description)" +
+            "VALUES ('" + allergy.getName() + "', '" + number + "', '" + allergy.getDescription() + "')"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public ArrayList<String> getAllergyNames()
+  {
+    ArrayList<String> allergyNames = new ArrayList<>();
+
+    String query =
+            "SELECT " +
+                    "allergy.name " +
+            "FROM " +
+                    "patient AS patient, " +
+                    "allergy AS allergy, " +
+                    "allergy_patient AS allergyPatient " +
+            "WHERE allergyPatient.patient_number = '" + this.number + "' " +
+            "AND allergy.name = allergyPatient.allergy_name " +
+            "GROUP BY allergy.name"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        allergyNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return allergyNames;
   }
 
   public ArrayList<Allergy> getAllergies()
@@ -40,11 +80,11 @@ public class Patient {
         "allergy AS allergy, " +
         "allergy_patient AS allergyPatient " +
       "WHERE allergyPatient.patient_number = '" + this.number + "' " +
-      "AND allergy.id = allergyPatient.allergy_id " +
-      "GROUP BY allergy.id"
+      "AND allergy.name = allergyPatient.allergy_name " +
+      "GROUP BY allergy.name"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
@@ -92,12 +132,11 @@ public class Patient {
       "GROUP BY care.number"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
         cares.add(new Care(
-          this.db,
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
@@ -132,7 +171,7 @@ public class Patient {
       "WHERE number = '" + this.number + "'"
     ;
 
-    db.storeData(query);
+    Application.db.storeData(query);
   }
 
   public Integer getNumber() {

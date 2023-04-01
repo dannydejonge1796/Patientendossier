@@ -21,8 +21,8 @@ public class DossierFormScreen {
   private void createFormPane()
   {
     this.vBoxFormPage = new VBox();
-    vBoxFormPage.setMaxWidth(980);
-    vBoxFormPage.setPadding(new Insets(25,25,25,25));
+    vBoxFormPage.setMaxWidth(1000);
+    vBoxFormPage.setPadding(new Insets(20,20,20,20));
     vBoxFormPage.setSpacing(15);
 
     this.lblPage = new Label();

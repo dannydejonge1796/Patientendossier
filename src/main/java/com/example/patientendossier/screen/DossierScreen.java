@@ -19,16 +19,14 @@ import java.util.ArrayList;
 
 public class DossierScreen {
 
-  private Stage stage;
-  private Database db;
-  private Patient patient;
-  private Care care;
-  private Scene dossierScene;
-  private BorderPane borderPane;
+  private final Stage stage;
+  private final Patient patient;
+  private final Care care;
+  private final Scene dossierScene;
+  private final BorderPane borderPane;
 
-  public DossierScreen(Stage stage, Database db, Patient patient, Care care) {
+  public DossierScreen(Stage stage, Patient patient, Care care) {
     this.stage = stage;
-    this.db = db;
     this.patient = patient;
     this.care = care;
     this.borderPane = new BorderPane();
@@ -61,11 +59,11 @@ public class DossierScreen {
     if (this.care == null) {
       Button btnLogout = new Button("Uitloggen");
       hbox.getChildren().add(btnLogout);
-      btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene()));
+      btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage).getPatientLoginScene()));
     } else {
       Button btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> this.stage.setScene(new UserScreen(this.stage, this.db, this.care).getListScene()));
+      btnBack.setOnAction(e -> this.stage.setScene(new UserScreen(this.stage, this.care).getListScene()));
     }
 
     return hbox;

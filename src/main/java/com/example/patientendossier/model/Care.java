@@ -1,12 +1,13 @@
 package com.example.patientendossier.model;
 
+import com.example.patientendossier.Application;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Care {
 
-  private final Database db;
   private Integer number;
   private String firstname;
   private String lastname;
@@ -15,8 +16,8 @@ public class Care {
   private String email;
   private String password;
 
-  public Care(Database db, Integer number, String firstname, String lastname, String profession, Integer phonenumber, String email, String password) {
-    this.db = db;
+  public Care(Integer number, String firstname, String lastname, String profession, Integer phonenumber, String email, String password)
+  {
     this.number = number;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -35,7 +36,7 @@ public class Care {
             "FROM allergy"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
@@ -57,7 +58,7 @@ public class Care {
                     "FROM health"
             ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
@@ -79,7 +80,7 @@ public class Care {
                     "FROM medicine"
             ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
@@ -102,7 +103,7 @@ public class Care {
         "patient_number = '" + patientNumber + "'"
     ;
 
-    db.storeData(query);
+    Application.db.storeData(query);
   }
 
   public void authorizePatient(Integer careNumber, Integer patientNumber)
@@ -114,7 +115,7 @@ public class Care {
         "('" + careNumber + "', '" + patientNumber + "')"
     ;
 
-    db.storeData(query);
+    Application.db.storeData(query);
   }
 
   public ArrayList<Patient> getPatients()
@@ -139,12 +140,11 @@ public class Care {
       "AND patient.number = carePatient.patient_number"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
         patients.add(new Patient(
-          this.db,
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
@@ -170,12 +170,11 @@ public class Care {
       "FROM care"
     ;
 
-    ResultSet result = db.getData(query);
+    ResultSet result = Application.db.getData(query);
 
     try {
       while (result.next()) {
         cares.add(new Care(
-          this.db,
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
