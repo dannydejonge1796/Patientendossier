@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Database;
@@ -16,14 +16,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class LoginScreen {
 
   private final Stage stage;
   private final Database db;
   private final Scene patientLoginScene;
   private final Scene carerLoginScene;
 
-  public LoginController(Stage stage, Database db)
+  public LoginScreen(Stage stage, Database db)
   {
     this.stage = stage;
     this.db = db;
@@ -67,7 +67,7 @@ public class LoginController {
         if (patient == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new DossierController(this.stage, this.db, patient, null).getDossierScene());
+          this.stage.setScene(new DossierScreen(this.stage, this.db, patient, null).getDossierScene());
         }
       }
     });
@@ -113,7 +113,7 @@ public class LoginController {
         if (care == null) {
           util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
-          this.stage.setScene(new UserController(this.stage, this.db, care).getListScene());
+          this.stage.setScene(new UserScreen(this.stage, this.db, care).getListScene());
         }
       }
     });

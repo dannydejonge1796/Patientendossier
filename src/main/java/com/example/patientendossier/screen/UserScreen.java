@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Database;
@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class UserController {
+public class UserScreen {
 
   private Tab tab1;
   private Stage stage;
@@ -19,7 +19,7 @@ public class UserController {
   private Care care;
   private Scene listScene;
 
-  public UserController(Stage stage, Database db, Care care) {
+  public UserScreen(Stage stage, Database db, Care care) {
     this.stage = stage;
     this.db = db;
     this.care = care;
@@ -71,7 +71,7 @@ public class UserController {
     hbox.getChildren().add(btnLogout);
 
     btnLogout.setOnAction(e -> {
-      stage.setScene(new LoginController(this.stage, this.db).getCarerLoginScene());
+      stage.setScene(new LoginScreen(this.stage, this.db).getCarerLoginScene());
     });
 
     return hbox;
@@ -100,7 +100,7 @@ public class UserController {
 
     vBox.getChildren().add(hBoxTop);
 
-    TableView<Patient> table = new CareController().getPatTableView(this.care.getPatients());
+    TableView<Patient> table = new CareScreen().getPatTableView(this.care.getPatients());
 
     vBox.getChildren().add(table);
 
@@ -129,7 +129,7 @@ public class UserController {
 
     btnToDossier.setOnAction(e -> {
       Patient selectedPatient = table.getSelectionModel().getSelectedItem();
-      this.stage.setScene(new DossierController(this.stage, this.db, selectedPatient, this.care).getDossierScene());
+      this.stage.setScene(new DossierScreen(this.stage, this.db, selectedPatient, this.care).getDossierScene());
     });
 
     btnRemoveFromMyPatients.setOnAction(e -> {
@@ -169,7 +169,7 @@ public class UserController {
 
     vBox.getChildren().add(hBoxTop);
 
-    TableView<Care> table = new CareController().getCareTableView(this.care.getAllCares());
+    TableView<Care> table = new CareScreen().getCareTableView(this.care.getAllCares());
 
     vBox.getChildren().add(table);
 

@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Allergy;
 import com.example.patientendossier.model.Care;
@@ -10,30 +10,31 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class AllergyController {
+public class AllergyScreen {
 
-  private final DossierController dossier;
+  private final DossierScreen dossier;
   private final Patient patient;
   private final Care care;
   private final VBox allergyPane;
+  private final InfoPageScreen infoPageScreen;
 
-  AllergyController(DossierController dossier, Patient patient, Care care)
+  public AllergyScreen(DossierScreen dossier, Patient patient, Care care)
   {
     this.dossier = dossier;
     this.patient = patient;
     this.care = care;
 
-    InfoPageController infoPageController = new InfoPageController();
-    this.allergyPane = infoPageController.getVBoxInfoPage();
+    this.infoPageScreen = new InfoPageScreen();
+    this.allergyPane = infoPageScreen.getVBoxInfoPage();
 
-    infoPageController.getBtnAdd().setOnAction(e -> this.loadForm(null));
-    infoPageController.getLblPage().setText("Allergieën");
-    infoPageController.getHBoxTable().getChildren().add(this.loadTableView());
+    infoPageScreen.getBtnAdd().setOnAction(e -> this.loadForm(null));
+    infoPageScreen.getLblPage().setText("Allergieën");
+    infoPageScreen.getHBoxTable().getChildren().add(this.loadTableView());
   }
 
   private void loadForm(Allergy allergy)
   {
-    DossierFormController dossierForm = new DossierFormController();
+    DossierFormScreen dossierForm = new DossierFormScreen();
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
 
     dossierForm.getLblPage().setText("Allergieën");
@@ -80,6 +81,10 @@ public class AllergyController {
 
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     table.getSortOrder().add(colName);
+
+    table.setOnMouseClicked(e -> {
+      infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
 
     return table;
   }

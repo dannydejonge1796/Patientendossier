@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class InfoPageController {
+public class InfoPageScreen {
 
   private VBox vBoxInfoPage;
   private Label lblPage;
@@ -18,7 +18,7 @@ public class InfoPageController {
   private Button btnDelete;
   private HBox hBoxTable;
 
-  public InfoPageController()
+  public InfoPageScreen()
   {
     this.createInfoPagePane();
   }

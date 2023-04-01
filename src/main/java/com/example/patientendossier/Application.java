@@ -1,6 +1,6 @@
 package com.example.patientendossier;
 
-import com.example.patientendossier.controller.LoginController;
+import com.example.patientendossier.screen.LoginScreen;
 import com.example.patientendossier.model.Database;
 import javafx.stage.Stage;
 
@@ -12,7 +12,7 @@ public class Application extends javafx.application.Application {
     stage.setHeight(720);
     stage.setResizable(false);
     Database db = new Database();
-    stage.setScene(new LoginController(stage, db).getPatientLoginScene());
+    stage.setScene(new LoginScreen(stage, db).getPatientLoginScene());
     stage.show();
   }
 

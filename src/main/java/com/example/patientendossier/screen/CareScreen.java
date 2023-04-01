@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
@@ -10,7 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
 
-public class CareController {
+public class CareScreen {
 
   public TableView<Patient> getPatTableView(ArrayList<Patient> patients)
   {

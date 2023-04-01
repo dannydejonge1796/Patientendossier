@@ -1,10 +1,9 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Database;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class DossierController {
+public class DossierScreen {
 
   private Stage stage;
   private Database db;
@@ -27,7 +26,7 @@ public class DossierController {
   private Scene dossierScene;
   private BorderPane borderPane;
 
-  public DossierController(Stage stage, Database db, Patient patient, Care care) {
+  public DossierScreen(Stage stage, Database db, Patient patient, Care care) {
     this.stage = stage;
     this.db = db;
     this.patient = patient;
@@ -62,11 +61,11 @@ public class DossierController {
     if (this.care == null) {
       Button btnLogout = new Button("Uitloggen");
       hbox.getChildren().add(btnLogout);
-      btnLogout.setOnAction(e -> this.stage.setScene(new LoginController(this.stage, this.db).getPatientLoginScene()));
+      btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage, this.db).getPatientLoginScene()));
     } else {
       Button btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> this.stage.setScene(new UserController(this.stage, this.db, this.care).getListScene()));
+      btnBack.setOnAction(e -> this.stage.setScene(new UserScreen(this.stage, this.db, this.care).getListScene()));
     }
 
     return hbox;
@@ -108,7 +107,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    appointmentItems.get(0).setOnAction(e -> this.borderPane.setCenter(new AppointmentController().getAppointmentPane()));
+    appointmentItems.get(0).setOnAction(e -> this.borderPane.setCenter(new AppointmentScreen().getAppointmentPane()));
 
     Text txtReport = new Text("Verslagen");
     txtReport.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -122,7 +121,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    reportItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ReportController().getReportPane()));
+    reportItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ReportScreen().getReportPane()));
 
     Text txtResults = new Text("Uitslagen");
     txtResults.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -136,7 +135,7 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    resultItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ResultController().getResultPane()));
+    resultItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ResultScreen().getResultPane()));
 
     Text txtMedicInfo = new Text("Medische gegevens");
     txtMedicInfo.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -152,9 +151,9 @@ public class DossierController {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineController(this, this.patient, this.care).getMedicinePane()));
-    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyController(this, this.patient, this.care).getAllergyPane()));
-    medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthController(this, this.patient, this.care).getHealthPane()));
+    medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineScreen(this, this.patient, this.care).getMedicinePane()));
+    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyScreen(this, this.patient, this.care).getAllergyPane()));
+    medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthScreen(this, this.patient, this.care).getHealthPane()));
 
     return vbox;
   }
@@ -173,15 +172,15 @@ public class DossierController {
     txtWelcome.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     vBox.getChildren().add(txtWelcome);
 
-    PatientController patientController = new PatientController(this.patient);
+    PatientScreen patientScreen = new PatientScreen(this.patient);
 
-    GridPane profileFormGrid = patientController.addProfileForm();
+    GridPane profileFormGrid = patientScreen.addProfileForm();
     Button btnUpdate = (Button) new Utility().getNodeByRowColumnIndex(1,7,profileFormGrid);
-    btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, patientController));
+    btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, patientScreen));
 
-    GridPane passFormGrid = patientController.addUpdatePasswordForm();
+    GridPane passFormGrid = patientScreen.addUpdatePasswordForm();
     Button btnUpdatePass = (Button) new Utility().getNodeByRowColumnIndex(1,3,passFormGrid);
-    btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, patientController));
+    btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, patientScreen));
 
     vBox.getChildren().add(profileFormGrid);
     vBox.getChildren().add(passFormGrid);
@@ -192,7 +191,7 @@ public class DossierController {
       vBox.getChildren().add(txtAuthorize);
 
       ArrayList<Care> caresOfPatient = patient.getCareOfPatient();
-      TableView<Care> table = new CareController().getCareTableView(caresOfPatient);
+      TableView<Care> table = new CareScreen().getCareTableView(caresOfPatient);
       vBox.getChildren().add(table);
 
       HBox hBoxBottom = new HBox();
@@ -267,9 +266,9 @@ public class DossierController {
     return scroll;
   }
 
-  private void updateProfile(GridPane grid, PatientController patientController)
+  private void updateProfile(GridPane grid, PatientScreen patientScreen)
   {
-    boolean validated = patientController.validateProfile(grid);
+    boolean validated = patientScreen.validateProfile(grid);
 
     if (validated) {
       String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
@@ -289,9 +288,9 @@ public class DossierController {
     }
   }
 
-  private void updatePassword(GridPane grid, PatientController patientController)
+  private void updatePassword(GridPane grid, PatientScreen patientScreen)
   {
-    boolean validated = patientController.validateNewPassword(grid);
+    boolean validated = patientScreen.validateNewPassword(grid);
 
     if (validated) {
       String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, grid)).getText();

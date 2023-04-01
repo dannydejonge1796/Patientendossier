@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -7,13 +7,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class DossierFormController {
+public class DossierFormScreen {
 
   private VBox vBoxFormPage;
   private Label lblPage;
   private GridPane gridForm;
 
-  public DossierFormController()
+  public DossierFormScreen()
   {
     this.createFormPane();
   }

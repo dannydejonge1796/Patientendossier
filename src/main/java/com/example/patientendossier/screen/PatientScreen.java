@@ -1,4 +1,4 @@
-package com.example.patientendossier.controller;
+package com.example.patientendossier.screen;
 
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
@@ -11,11 +11,11 @@ import javafx.scene.text.Text;
 
 import java.time.LocalDate;
 
-public class PatientController {
+public class PatientScreen {
 
   private final Patient patient;
 
-  public PatientController(Patient patient) {
+  public PatientScreen(Patient patient) {
     this.patient = patient;
   }
 
