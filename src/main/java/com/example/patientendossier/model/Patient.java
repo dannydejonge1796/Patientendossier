@@ -222,13 +222,103 @@ public void deleteMedicine(Medicine medicine)
 
     return medicines;
   }
-//
-//  public ArrayList<Health> getHealthProblems()
-//  {
-//
-//  }
 
-  public ArrayList<Care> getCareOfPatient()
+  public void deleteHealth(Health health)
+  {
+    String query =
+            "DELETE FROM health_patient " +
+                    "WHERE patient_number = '" + this.number + "' " +
+                    "AND health_name = '" + health.getName() + "'"
+            ;
+
+    Application.db.storeData(query);
+  }
+
+  public void updateHealth(Health health)
+  {
+    String query =
+            "UPDATE health_patient " +
+                    "SET description = '" + health.getDescription() + "' " +
+                    "WHERE patient_number = '" + this.number + "' " +
+                    "AND health_name = '" + health.getName() + "'"
+            ;
+
+    Application.db.storeData(query);
+  }
+
+  public void addHealth(Health health)
+  {
+    String query =
+            "INSERT INTO health_patient (health_name, patient_number, description)" +
+                    "VALUES ('" + health.getName() + "', '" + number + "', " +
+                    "'" + health.getDescription() + "')"
+            ;
+
+    Application.db.storeData(query);
+  }
+
+  public ArrayList<String> getHealthNames()
+  {
+    ArrayList<String> healthNames = new ArrayList<>();
+
+    String query =
+            "SELECT " +
+                    "health.name " +
+                    "FROM " +
+                    "patient AS patient, " +
+                    "health AS health, " +
+                    "health_patient AS healthPatient " +
+                    "WHERE healthPatient.patient_number = '" + this.number + "' " +
+                    "AND health.name = healthPatient.health_name " +
+                    "GROUP BY health.name"
+            ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        healthNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return healthNames;
+  }
+
+  public ArrayList<Health> getHealths()
+  {
+    ArrayList<Health> healths = new ArrayList<>();
+
+    String query =
+            "SELECT " +
+                    "health.name, " +
+                    "healthPatient.description " +
+                    "FROM " +
+                    "patient AS patient, " +
+                    "health AS health, " +
+                    "health_patient AS healthPatient " +
+                    "WHERE healthPatient.patient_number = '" + this.number + "' " +
+                    "AND health.name = healthPatient.health_name " +
+                    "GROUP BY health.name";
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        healths.add(new Health(
+                result.getString("name"),
+                result.getString("description")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return healths;
+  }
+
+    public ArrayList<Care> getCareOfPatient()
   {
     ArrayList<Care> cares = new ArrayList<>();
 
