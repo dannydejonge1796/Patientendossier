@@ -103,7 +103,7 @@ public class DossierScreen {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    appointmentItems.get(0).setOnAction(e -> this.borderPane.setCenter(new AppointmentScreen().getAppointmentPane()));
+    appointmentItems.get(0).setOnAction(e -> this.borderPane.setCenter(new AppointmentScreen(this, this.patient, this.care).getAppointmentPane()));
 
     Text txtReport = new Text("Verslagen");
     txtReport.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -232,9 +232,7 @@ public class DossierScreen {
       hBoxBottom.getChildren().add(vBoxBottom);
       vBox.getChildren().add(hBoxBottom);
 
-      table.setOnMouseClicked(e -> {
-        btnUnAuthorize.setDisable(table.getSelectionModel().getSelectedItem() == null);
-      });
+      table.setOnMouseClicked(e -> btnUnAuthorize.setDisable(table.getSelectionModel().getSelectedItem() == null));
 
       btnUnAuthorize.setOnAction(e -> {
         Integer selectedCareNumber = table.getSelectionModel().getSelectedItem().getNumber();
