@@ -89,12 +89,6 @@ public class AllergyScreen {
 
       ArrayList<String> availableAllergies = new ArrayList<>();
 
-      for (String item : this.patient.getAllergyNames()) {
-        if (!this.care.getAllAllergyNames().contains(item)) {
-          availableAllergies.add(item);
-        }
-      }
-
       for (String item : this.care.getAllAllergyNames()) {
         if (!this.patient.getAllergyNames().contains(item)) {
           availableAllergies.add(item);

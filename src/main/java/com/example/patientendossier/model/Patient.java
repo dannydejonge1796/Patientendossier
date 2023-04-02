@@ -123,10 +123,105 @@ public class Patient {
     return allergies;
   }
 
-//  public ArrayList<Medicine> getMedicines()
-//  {
-//
-//  }
+public void deleteMedicine(Medicine medicine)
+{
+  String query =
+          "DELETE FROM medicine_patient " +
+                  "WHERE patient_number = '" + this.number + "' " +
+                  "AND medicine_name = '" + medicine.getName() + "'"
+          ;
+
+  Application.db.storeData(query);
+}
+
+  public void updateMedicine(Medicine medicine)
+  {
+    String query =
+            "UPDATE medicine_patient " +
+                    "SET description = '" + medicine.getDescription() + "', " +
+                    "dosage = '" + medicine.getDosage() + "' " +
+                    "WHERE patient_number = '" + this.number + "' " +
+                    "AND medicine_name = '" + medicine.getName() + "'"
+            ;
+
+    Application.db.storeData(query);
+  }
+
+  public void addMedicine(Medicine medicine)
+  {
+    String query =
+            "INSERT INTO medicine_patient (medicine_name, patient_number, description, dosage)" +
+            "VALUES ('" + medicine.getName() + "', '" + number + "', " +
+                    "'" + medicine.getDescription() + "', " +
+                    "'" + medicine.getDosage() + "')"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public ArrayList<String> getMedicineNames()
+  {
+    ArrayList<String> medicineNames = new ArrayList<>();
+
+    String query =
+            "SELECT " +
+                    "medicine.name " +
+                    "FROM " +
+                    "patient AS patient, " +
+                    "medicine AS medicine, " +
+                    "medicine_patient AS medicinePatient " +
+                    "WHERE medicinePatient.patient_number = '" + this.number + "' " +
+                    "AND medicine.name = medicinePatient.medicine_name " +
+                    "GROUP BY medicine.name"
+            ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        medicineNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return medicineNames;
+  }
+
+  public ArrayList<Medicine> getMedicines()
+  {
+    ArrayList<Medicine> medicines = new ArrayList<>();
+
+    String query =
+            "SELECT " +
+                    "medicine.name, " +
+                    "medicinePatient.description, " +
+                    "medicinePatient.dosage " +
+                    "FROM " +
+                    "patient AS patient, " +
+                    "medicine AS medicine, " +
+                    "medicine_patient AS medicinePatient " +
+                    "WHERE medicinePatient.patient_number = '" + this.number + "' " +
+                    "AND medicine.name = medicinePatient.medicine_name " +
+                    "GROUP BY medicine.name"
+            ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        medicines.add(new Medicine(
+                result.getString("name"),
+                result.getString("description"),
+                result.getString("dosage")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return medicines;
+  }
 //
 //  public ArrayList<Health> getHealthProblems()
 //  {
