@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 01 apr 2023 om 14:41
+-- Gegenereerd op: 02 apr 2023 om 15:29
 -- Serverversie: 10.4.27-MariaDB
--- PHP-versie: 8.2.0
+-- PHP-versie: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -56,7 +56,7 @@ INSERT INTO `allergy` (`name`) VALUES
 CREATE TABLE `allergy_patient` (
   `allergy_name` varchar(255) NOT NULL,
   `patient_number` int(10) NOT NULL,
-  `description` varchar(255) NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -68,6 +68,21 @@ INSERT INTO `allergy_patient` (`allergy_name`, `patient_number`, `description`) 
 ('Hooikoorts', 1234567890, 'pollen van'),
 ('Huisstofmijt', 1234567890, 'sfdgsdfgsdfg'),
 ('Latexallergie', 1234567890, 'lkgfhlksdhglhfdsghlsdflgsdfklgsdflk');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `appointment`
+--
+
+CREATE TABLE `appointment` (
+  `number` int(10) NOT NULL,
+  `patient_number` int(10) NOT NULL,
+  `care_number` int(10) NOT NULL,
+  `description` text NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -120,6 +135,22 @@ CREATE TABLE `health` (
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `health`
+--
+
+INSERT INTO `health` (`name`) VALUES
+('Alzheimer'),
+('Artritis'),
+('Astma'),
+('Beroerte'),
+('Glaucoom'),
+('Hartfalen'),
+('Migraine'),
+('Osteoporose'),
+('Type 2 diabetes'),
+('Ziekte van Parkinson');
+
 -- --------------------------------------------------------
 
 --
@@ -129,8 +160,15 @@ CREATE TABLE `health` (
 CREATE TABLE `health_patient` (
   `health_name` varchar(255) NOT NULL,
   `patient_number` int(10) NOT NULL,
-  `description` varchar(255) NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `health_patient`
+--
+
+INSERT INTO `health_patient` (`health_name`, `patient_number`, `description`) VALUES
+('Alzheimer', 1234567890, 'fgdhdfhdfgh');
 
 -- --------------------------------------------------------
 
@@ -167,9 +205,19 @@ INSERT INTO `medicine` (`name`) VALUES
 CREATE TABLE `medicine_patient` (
   `patient_number` int(10) NOT NULL,
   `medicine_name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `dosage` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `medicine_patient`
+--
+
+INSERT INTO `medicine_patient` (`patient_number`, `medicine_name`, `description`, `dosage`) VALUES
+(1234567890, 'Furosemide', 'dgfhdgf', 'hdfghdfgh'),
+(1234567890, 'Ibuprofen', 'fdsgd', 'gsdfgsdfg'),
+(1234567890, 'Metformine', 'sfdgfdg', 'sdfgsdfgsd'),
+(1234567890, 'Salbutamol', 'fsgdfdg', 'sfgdg');
 
 -- --------------------------------------------------------
 
@@ -209,6 +257,12 @@ ALTER TABLE `allergy`
 --
 ALTER TABLE `allergy_patient`
   ADD PRIMARY KEY (`allergy_name`,`patient_number`);
+
+--
+-- Indexen voor tabel `appointment`
+--
+ALTER TABLE `appointment`
+  ADD PRIMARY KEY (`number`);
 
 --
 -- Indexen voor tabel `care`
