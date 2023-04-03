@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 02 apr 2023 om 15:29
+-- Gegenereerd op: 03 apr 2023 om 13:52
 -- Serverversie: 10.4.27-MariaDB
--- PHP-versie: 8.0.25
+-- PHP-versie: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,10 +79,18 @@ CREATE TABLE `appointment` (
   `number` int(10) NOT NULL,
   `patient_number` int(10) NOT NULL,
   `care_number` int(10) NOT NULL,
+  `care_lastname` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `appointment`
+--
+
+INSERT INTO `appointment` (`number`, `patient_number`, `care_number`, `care_lastname`, `description`, `date`, `time`) VALUES
+(3, 1234567890, 987654321, 'Care', 'sfdghdfghghdgfhdf', '2023-04-03', '13:10:26');
 
 -- --------------------------------------------------------
 
