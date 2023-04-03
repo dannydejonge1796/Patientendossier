@@ -27,6 +27,26 @@ public class Care {
     this.password = password;
   }
 
+  public Integer getHighestAppointmentNumber()
+  {
+    String query =
+            "SELECT MAX(number) as highest_number " +
+            "FROM appointment"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      if (result.next()) {
+        return result.getInt("highest_number");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    return null;
+  }
+
   public ArrayList<String> getAllAllergyNames()
   {
     ArrayList<String> allergyNames = new ArrayList<>();
@@ -159,6 +179,30 @@ public class Care {
     }
 
     return patients;
+  }
+
+  public ArrayList<String> getCareStrings()
+  {
+    ArrayList<String> careStrings = new ArrayList<>();
+
+    String query =
+            "SELECT " +
+                    "care.number," +
+                    "care.lastname " +
+            "FROM care"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        careStrings.add(result.getString("number") + ", " + result.getString("lastname"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return careStrings;
   }
 
   public ArrayList<Care> getAllCares()

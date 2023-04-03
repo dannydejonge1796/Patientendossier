@@ -1,6 +1,5 @@
 package com.example.patientendossier.screen;
 
-import com.example.patientendossier.model.Allergy;
 import com.example.patientendossier.model.Appointment;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
@@ -46,7 +45,7 @@ public class AppointmentScreen {
 
     infoPageScreen.getBtnAdd().setOnAction(e -> this.loadForm(null));
     infoPageScreen.getLblPage().setText("Afspraken");
-//    infoPageScreen.getHBoxTable().getChildren().add(this.loadTableView());
+    infoPageScreen.getHBoxTable().getChildren().add(this.loadTableView());
   }
 
   private void loadForm(Appointment appointment)
@@ -95,10 +94,10 @@ public class AppointmentScreen {
 
     selectedTime = LocalTime.now();
 
-    SpinnerValueFactory<Integer> hourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, selectedTime.getHour());
-    SpinnerValueFactory<Integer> minuteFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, selectedTime.getMinute());
-    this.hourSpinner = new Spinner<>(hourFactory);
-    this.minuteSpinner = new Spinner<>(minuteFactory);
+    this.hourSpinner = new Spinner<>();
+    this.minuteSpinner = new Spinner<>();
+    this.hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, selectedTime.getHour()));
+    this.minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, selectedTime.getMinute()));
     hourSpinner.setEditable(true);
     minuteSpinner.setEditable(true);
 
@@ -122,93 +121,113 @@ public class AppointmentScreen {
     gridForm.add(btnUpdate, 1, 5);
     GridPane.setHalignment(btnUpdate, HPos.RIGHT);
 
-//    if (appointment != null) {
-//      btnUpdate.setText("Wijzig");
-//      comboAllergies.getItems().add(allergy.getName());
-//      comboAllergies.setValue(allergy.getName());
-//      tfDescription.setText(allergy.getDescription());
-//
-//      btnUpdate.setOnAction(e -> {
-//        if (this.validateForm()) {
-//          allergy.setDescription(tfDescription.getText());
-//          this.patient.updateAllergy(allergy);
-//          this.load();
-//          this.dossier.getBorderPane().setCenter(this.allergyPane);
-//        }
-//      });
-//    } else {
-//      btnUpdate.setText("Toevoegen");
-//
-//      ArrayList<String> availableAllergies = new ArrayList<>();
-//
-//      for (String item : this.care.getAllAllergyNames()) {
-//        if (!this.patient.getAllergyNames().contains(item)) {
-//          availableAllergies.add(item);
-//        }
-//      }
-//
-//      this.comboAllergies.getItems().addAll(availableAllergies);
-//
-//      btnUpdate.setOnAction(e -> {
-//        if (this.validateForm()) {
-//
-//          String name = comboAllergies.getValue();
-//          String description = tfDescription.getText();
-//          Allergy newAllergy = new Allergy(name, description);
-//
-//          this.patient.addAllergy(newAllergy);
-//          this.load();
-//          this.dossier.getBorderPane().setCenter(this.allergyPane);
-//        }
-//      });
-//    }
+    if (appointment != null) {
+      btnUpdate.setText("Wijzig");
+
+      this.comboCareNames.getItems().addAll(care.getCareStrings());
+      this.comboCareNames.setValue(appointment.getCareNumber() + ", " + appointment.getCareLastname());
+
+      this.tfDescription.setText(appointment.getDescription());
+
+      this.dpDate.setValue(appointment.getDate());
+
+      this.hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, appointment.getTime().getHour()));
+      this.minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, appointment.getTime().getMinute()));
+
+      btnUpdate.setOnAction(e -> {
+        if (this.validateForm()) {
+
+          String[] stringParts = comboCareNames.getValue().split(",\\s*");
+
+          Integer formCareNumber = Integer.parseInt(stringParts[0]);
+          String lastname = stringParts[1];
+
+          appointment.setCareNumber(formCareNumber);
+          appointment.setCareLastname(lastname);
+          appointment.setDescription(tfDescription.getText());
+          appointment.setDate(dpDate.getValue());
+          appointment.setTime(selectedTime);
+
+          this.patient.updateAppointment(appointment);
+          this.load();
+          this.dossier.getBorderPane().setCenter(this.appointmentPane);
+        }
+      });
+    } else {
+      btnUpdate.setText("Toevoegen");
+
+      this.comboCareNames.getItems().addAll(care.getCareStrings());
+
+      btnUpdate.setOnAction(e -> {
+        if (this.validateForm()) {
+
+          Integer appointmentNumber = care.getHighestAppointmentNumber() + 1;
+          Integer patientNumber = patient.getNumber();
+
+          String[] stringParts = comboCareNames.getValue().split(",\\s*");
+
+          Integer careNumber = Integer.parseInt(stringParts[0]);
+          String careLastName = stringParts[1];
+          String description = tfDescription.getText();
+          LocalDate date = dpDate.getValue();
+          LocalTime time = selectedTime;
+
+          Appointment newAppointment = new Appointment(
+                  appointmentNumber, patientNumber, careNumber, careLastName, description, date, time
+          );
+
+          this.patient.addAppointment(newAppointment);
+          this.load();
+          this.dossier.getBorderPane().setCenter(this.appointmentPane);
+        }
+      });
+    }
   }
 
-//  private boolean validateForm()
-//  {
-//    if (!new Validation().validateString(comboAllergies.getValue())) {
-//      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een allergie in!");
-//      return false;
-//    }
-//
-//    if (!new Validation().validateString(tfDescription.getText())) {
-//      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een geldige beschrijving in!");
-//      return false;
-//    }
-//
-//    return true;
-//  }
+  private boolean validateForm()
+  {
+    if (!new Validation().validateString(comboCareNames.getValue())) {
+      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een zorgverlener in!");
+      return false;
+    }
 
-//  private TableView<Allergy> loadTableView()
-//  {
-//    ArrayList<Allergy> allergies = patient.getAllergies();
-//    String[] columnNames = {"Naam", "Beschrijving"};
-//    String[] propertyNames = {"name", "description"};
-//
-//    TableView<Allergy> table = new TableScreen().createTableView(allergies, columnNames, propertyNames);
-//
-//    table.setPrefWidth(960);
-//
-//    table.setOnMouseClicked(e -> {
-//      infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);
-//      infoPageScreen.getBtnUpdate().setDisable(table.getSelectionModel().getSelectedItem() == null);
-//    });
-//
-//    infoPageScreen.getBtnDelete().setOnAction(e -> {
-//      Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
-//      this.patient.deleteAllergy(selectedAllergy);
-//      this.load();
-//      this.dossier.getBorderPane().setCenter(this.allergyPane);
-//    });
-//
-//    infoPageScreen.getBtnUpdate().setOnAction(e -> {
-//      Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
-//      this.loadForm(selectedAllergy);
-//    });
-//
-//    return table;
-//  }
+    if (!new Validation().validateString(tfDescription.getText())) {
+      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een geldige beschrijving in!");
+      return false;
+    }
 
+    return true;
+  }
+
+  private TableView<Appointment> loadTableView()
+  {
+    ArrayList<Appointment> appointments = patient.getAppointments();
+    String[] columnNames = {"Nummer", "Patiënt nummer", "Zorgverlener nummer", "Zorgverlener", "Beschrijving", "Datum", "Tijd"};
+    String[] propertyNames = {"number", "patientNumber", "careNumber", "careLastname", "description", "date", "time"};
+
+    TableView<Appointment> table = new TableScreen().createTableView(appointments, columnNames, propertyNames);
+
+    table.setPrefWidth(960);
+
+    table.setOnMouseClicked(e -> {
+      infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);
+      infoPageScreen.getBtnUpdate().setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
+
+    infoPageScreen.getBtnDelete().setOnAction(e -> {
+      Appointment selectedAppointment = table.getSelectionModel().getSelectedItem();
+      this.patient.deleteAppointment(selectedAppointment);
+      this.load();
+      this.dossier.getBorderPane().setCenter(this.appointmentPane);
+    });
+
+    infoPageScreen.getBtnUpdate().setOnAction(e -> {
+      Appointment selectedAppointment = table.getSelectionModel().getSelectedItem();
+      this.loadForm(selectedAppointment);
+    });
+
+    return table;
+  }
 
   public VBox getAppointmentPane() {
     return appointmentPane;

@@ -28,6 +28,78 @@ public class Patient {
     this.password = password;
   }
 
+  public void deleteAppointment(Appointment appointment)
+  {
+    String query =
+            "DELETE FROM appointment " +
+            "WHERE number = '" + appointment.getNumber() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public ArrayList<Appointment> getAppointments()
+  {
+    ArrayList<Appointment> appointments = new ArrayList<>();
+
+    String query =
+            "SELECT * " +
+            "FROM appointment " +
+            "WHERE patient_number = '" + this.number + "'"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        appointments.add(new Appointment(
+                result.getInt("number"),
+                result.getInt("patient_number"),
+                result.getInt("care_number"),
+                result.getString("care_lastname"),
+                result.getString("description"),
+                result.getDate("date").toLocalDate(),
+                result.getTime("time").toLocalTime()
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen deze data mislukt!");
+    }
+
+    return appointments;
+  }
+
+  public void addAppointment(Appointment appointment)
+  {
+    String query =
+            "INSERT INTO appointment (number, patient_number, care_number, care_lastname, description, date, time)" +
+            "VALUES ('" + appointment.getNumber() + "', " +
+                    "'" + appointment.getPatientNumber() + "', " +
+                    "'" + appointment.getCareNumber() + "', " +
+                    "'" + appointment.getCareLastname() + "', " +
+                    "'" + appointment.getDescription() + "', " +
+                    "'" + appointment.getDate() + "', " +
+                    "'" + appointment.getTime() + "')"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public void updateAppointment(Appointment appointment)
+  {
+    String query =
+            "UPDATE appointment " +
+            "SET care_number = '" + appointment.getCareNumber() + "', " +
+            "care_lastname = '" + appointment.getCareLastname() + "', " +
+            "description = '" + appointment.getDescription() + "', " +
+            "date = '" + appointment.getDate() + "', " +
+            "time = '" + appointment.getTime() + "' " +
+            "WHERE number = '" + appointment.getNumber() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
   public void deleteAllergy(Allergy allergy)
   {
     String query =
