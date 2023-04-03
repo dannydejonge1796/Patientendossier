@@ -27,6 +27,37 @@ public class Care {
     this.password = password;
   }
 
+  public ArrayList<Appointment> getAppointments()
+  {
+    ArrayList<Appointment> appointments = new ArrayList<>();
+
+    String query =
+            "SELECT * " +
+                    "FROM appointment " +
+                    "WHERE care_number = '" + this.number + "'"
+            ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        appointments.add(new Appointment(
+                result.getInt("number"),
+                result.getInt("patient_number"),
+                result.getInt("care_number"),
+                result.getString("care_lastname"),
+                result.getString("description"),
+                result.getDate("date").toLocalDate(),
+                result.getTime("time").toLocalTime()
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen deze data mislukt!");
+    }
+
+    return appointments;
+  }
+
   public Integer getHighestAppointmentNumber()
   {
     String query =

@@ -1,5 +1,6 @@
 package com.example.patientendossier.screen;
 
+import com.example.patientendossier.model.Appointment;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import javafx.geometry.Insets;
@@ -39,7 +40,11 @@ public class CareScreen {
     tab2.setText("Zorgverleners");
     tab2.setContent(addCareListPane());
 
-    tabPane.getTabs().addAll(tab1, tab2);
+    Tab tab3 = new Tab();
+    tab3.setText("Afspraken");
+    tab3.setContent(addAppointmentPane());
+
+    tabPane.getTabs().addAll(tab1, tab2, tab3);
 
     SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
     selectionModel.select(0);
@@ -49,6 +54,28 @@ public class CareScreen {
     borderPane.setCenter(tabPane);
 
     return new Scene(borderPane);
+  }
+
+  private VBox addAppointmentPane()
+  {
+    VBox vBox = new VBox();
+    vBox.setPadding(new Insets(25, 25, 25, 25));
+    vBox.setSpacing(20);
+
+    Label lblMyPatients = new Label("Mijn afspraken");
+    lblMyPatients.setFont(Font.font(24));
+
+    vBox.getChildren().add(lblMyPatients);
+
+    ArrayList<Appointment> appointments = this.care.getAppointments();
+    String[] columnNames = {"Nummer", "Patiënt nummer", "Zorgverlener nummer", "Zorgverlener", "Beschrijving", "Datum", "Tijd"};
+    String[] propertyNames = {"number", "patientNumber", "careNumber", "careLastname", "description", "date", "time"};
+
+    TableView<Appointment> table = new TableScreen().createTableView(appointments, columnNames, propertyNames);
+
+    vBox.getChildren().add(table);
+
+    return vBox;
   }
 
   private HBox addBottomMenu()
