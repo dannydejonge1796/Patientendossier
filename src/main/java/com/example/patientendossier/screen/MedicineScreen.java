@@ -37,6 +37,12 @@ public class MedicineScreen {
     this.infoPageScreen = new InfoPageScreen();
     this.medicinePane = infoPageScreen.getVBoxInfoPage();
 
+    if (this.care != null) {
+      infoPageScreen.getBtnAdd().setVisible(true);
+      infoPageScreen.getBtnDelete().setVisible(true);
+      infoPageScreen.getBtnUpdate().setVisible(true);
+    }
+
     infoPageScreen.getBtnAdd().setOnAction(e -> this.loadForm(null));
     infoPageScreen.getLblPage().setText("Medicijnen");
     infoPageScreen.getHBoxTable().getChildren().add(this.loadTableView());

@@ -7,11 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.jar.JarEntry;
 
 public class InfoPageScreen {
 
@@ -44,6 +41,7 @@ public class InfoPageScreen {
     HBox.setHgrow(hBoxLblPage, Priority.SOMETIMES);
 
     this.btnAdd = new Button("Toevoegen");
+    this.btnAdd.setVisible(false);
 
     hBoxTop.getChildren().addAll(hBoxLblPage, this.btnAdd);
     vBoxInfoPage.getChildren().add(hBoxTop);
@@ -55,12 +53,14 @@ public class InfoPageScreen {
     HBox hBoxBottom = new HBox();
 
     this.btnDelete = new Button("Verwijderen");
+    this.btnDelete.setVisible(false);
     this.btnDelete.setDisable(true);
 
     Region regionBottom = new Region();
     HBox.setHgrow(regionBottom, Priority.ALWAYS);
 
     this.btnUpdate = new Button("Wijzigen");
+    this.btnUpdate.setVisible(false);
     this.btnUpdate.setDisable(true);
 
     hBoxBottom.getChildren().addAll(btnDelete, regionBottom, btnUpdate);

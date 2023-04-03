@@ -43,6 +43,12 @@ public class AppointmentScreen {
     this.infoPageScreen = new InfoPageScreen();
     this.appointmentPane = infoPageScreen.getVBoxInfoPage();
 
+    if (this.care != null) {
+      infoPageScreen.getBtnAdd().setVisible(true);
+      infoPageScreen.getBtnDelete().setVisible(true);
+      infoPageScreen.getBtnUpdate().setVisible(true);
+    }
+
     infoPageScreen.getBtnAdd().setOnAction(e -> this.loadForm(null));
     infoPageScreen.getLblPage().setText("Afspraken");
     infoPageScreen.getHBoxTable().getChildren().add(this.loadTableView());
