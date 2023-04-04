@@ -117,7 +117,7 @@ public class DossierScreen {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    reportItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ReportScreen().getReportPane()));
+    reportItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ReportScreen(this, this.patient, this.care).getReportPane()));
 
     Text txtResults = new Text("Uitslagen");
     txtResults.setFont(Font.font("Arial", FontWeight.BOLD, 12));

@@ -28,6 +28,72 @@ public class Patient {
     this.password = password;
   }
 
+  public void addReport(Report report)
+  {
+    String query =
+            "INSERT INTO report (id, patient_number, filename, description, made_by)" +
+            "VALUES ('" + report.getId() + "', " +
+            "'" + report.getPatientNumber() + "', " +
+            "'" + report.getFilename() + "', " +
+            "'" + report.getDescription() + "', " +
+            "'" + report.getMadeBy() + "')"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public void updateReport(Report report)
+  {
+    String query =
+        "UPDATE report " +
+        "SET description = '" + report.getDescription() + "', " +
+        "made_by = '" + report.getMadeBy() + "' " +
+        "filename = '" + report.getFilename() + "' " +
+        "WHERE id = '" + report.getId() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public void deleteReport(Report report)
+  {
+    String query =
+            "DELETE FROM report " +
+            "WHERE id = '" + report.getId() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public ArrayList<Report> getReports()
+  {
+    ArrayList<Report> reports = new ArrayList<>();
+
+    String query =
+            "SELECT * " +
+            "FROM report " +
+            "WHERE patient_number = '" + this.number + "'"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        reports.add(new Report(
+                result.getInt("id"),
+                result.getInt("patient_number"),
+                result.getString("filename"),
+                result.getString("description"),
+                result.getString("made_by")
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return reports;
+  }
+
   public void deleteAppointment(Appointment appointment)
   {
     String query =
