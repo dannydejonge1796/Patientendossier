@@ -9,16 +9,9 @@ import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
 
 public class ReportScreen {
 
@@ -27,10 +20,7 @@ public class ReportScreen {
   private final Care care;
   private VBox reportPane;
   private InfoPageScreen infoPageScreen;
-  private FileChooser fileChooser;
-  private TextField tfDescription;
-  private File selectedFile;
-  private String fileFormat;
+  private TextArea taDescription;
 
   public ReportScreen(DossierScreen dossier, Patient patient, Care care)
   {
@@ -66,56 +56,26 @@ public class ReportScreen {
 
     GridPane gridForm = dossierForm.getGridForm();
 
-    Label lblFile = new Label("Bestand");
-    gridForm.add(lblFile, 0, 1);
-    lblFile.setPrefWidth(200);
-
-    VBox vBoxUpload = new VBox();
-    vBoxUpload.setSpacing(5);
-
-    Button uploadButton = new Button("Upload");
-    Label fileStatus = new Label("Selecteer een bestand");
-
-    vBoxUpload.getChildren().addAll(uploadButton, fileStatus);
-
-    gridForm.add(vBoxUpload, 1, 1);
-
-    this.selectedFile = null;
-
-    uploadButton.setOnAction(event -> {
-      // Create a FileChooser
-      this.fileChooser = new FileChooser();
-      fileChooser.setTitle("Select document");
-      fileChooser.getExtensionFilters().addAll(
-              new FileChooser.ExtensionFilter("Word Documents", "*.docx", "*.doc"),
-              new FileChooser.ExtensionFilter("PDF Documents", "*.pdf")
-      );
-      // Show the file chooser dialog
-      selectedFile = fileChooser.showOpenDialog(this.dossier.getBorderPane().getScene().getWindow());
-      if (selectedFile != null) {
-        fileStatus.setText(selectedFile.getAbsolutePath());
-      }
-    });
-
     Label lblDescription = new Label("Beschrijving");
-    gridForm.add(lblDescription, 0, 2);
+    gridForm.add(lblDescription, 0, 1);
     lblDescription.setPrefWidth(200);
 
-    this.tfDescription = new TextField();
-    tfDescription.setPrefWidth(800);
-    gridForm.add(tfDescription, 1, 2);
+    this.taDescription = new TextArea();
+    taDescription.setPrefWidth(800);
+    gridForm.add(taDescription, 1, 1);
 
     Button btnUpdate = new Button();
-    gridForm.add(btnUpdate, 1, 3);
+    gridForm.add(btnUpdate, 1, 2);
     GridPane.setHalignment(btnUpdate, HPos.RIGHT);
 
     if (report != null) {
       btnUpdate.setText("Wijzig");
-      tfDescription.setText(report.getDescription());
+      taDescription.setText(report.getDescription());
 
       btnUpdate.setOnAction(e -> {
         if (this.validateForm()) {
-          report.setDescription(tfDescription.getText());
+          report.setDescription(taDescription.getText());
+          report.setDate(LocalDate.now());
           report.setMadeBy(this.care.getLastname());
 
           this.patient.updateReport(report);
@@ -129,44 +89,12 @@ public class ReportScreen {
       btnUpdate.setOnAction(event -> {
         if (this.validateForm()) {
 
-          if (selectedFile != null) {
-            StringBuilder builder = new StringBuilder();
-            // Copy the selected file to the resources folder
-            try {
-              Path sourcePath = Paths.get(selectedFile.getAbsolutePath());
-              Path resourcesPath = Paths.get(Objects.requireNonNull(getClass().getResource("/reports/")).toURI());
-
-              String fileName = sourcePath.getFileName().toString();
-              int dotIndex = fileName.lastIndexOf('.');
-              if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
-                fileFormat = fileName.substring(dotIndex + 1);
-              }
-
-              String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-              Random random = new Random();
-              for (int i = 0; i < 16; i++) {
-                int index = random.nextInt(ALPHA_NUMERIC_STRING.length());
-                char randomChar = ALPHA_NUMERIC_STRING.charAt(index);
-                builder.append(randomChar);
-              }
-
-              Path destinationPath = Paths.get(resourcesPath.toString(), builder + fileFormat);
-              Files.copy(sourcePath, destinationPath);
-              // Handle the copied file
-              fileStatus.setText(selectedFile.getAbsolutePath());
-              String filename = builder + fileFormat;
-            } catch (IOException | NullPointerException | SecurityException | IllegalArgumentException | java.net.URISyntaxException e) {
-              System.err.println("Error copying file: " + e.getMessage());
-            }
-          }
-
           Integer id = this.care.getHighestReportId() + 1;
+          LocalDate date = LocalDate.now();
           Integer patientNumber = this.patient.getNumber();
-
-          String description = tfDescription.getText();
+          String description = taDescription.getText();
           String madeBy = this.care.getLastname();
-          Report newReport = new Report(id, patientNumber, filename, description, madeBy);
+          Report newReport = new Report(id, patientNumber, description, madeBy, date);
 
           this.patient.addReport(newReport);
           this.load();
@@ -178,7 +106,7 @@ public class ReportScreen {
 
   private boolean validateForm()
   {
-    if (!new Validation().validateString(tfDescription.getText())) {
+    if (!new Validation().validateString(taDescription.getText())) {
       new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een geldige beschrijving in!");
       return false;
     }
@@ -189,8 +117,8 @@ public class ReportScreen {
   private TableView<Report> loadTableView()
   {
     ArrayList<Report> reports = patient.getReports();
-    String[] columnNames = {"Bestand", "Beschrijving", "Door"};
-    String[] propertyNames = {"filename", "description", "madeBy"};
+    String[] columnNames = {"Beschrijving", "Gemaakt door", "Datum"};
+    String[] propertyNames = {"description", "madeBy", "date"};
 
     TableView<Report> table = new TableScreen().createTableView(reports, columnNames, propertyNames);
 

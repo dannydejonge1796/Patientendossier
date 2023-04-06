@@ -1,19 +1,21 @@
 package com.example.patientendossier.model;
 
+import java.time.LocalDate;
+
 public class Report {
 
   private final Integer id;
   private final Integer patientNumber;
-  private String filename;
   private String description;
   private String madeBy;
+  private LocalDate date;
 
-  public Report(Integer id, Integer patientNumber, String filename, String description, String madeBy) {
+  public Report(Integer id, Integer patientNumber, String description, String madeBy, LocalDate date) {
     this.id = id;
     this.patientNumber = patientNumber;
-    this.filename = filename;
     this.description = description;
     this.madeBy = madeBy;
+    this.date = date;
   }
 
   public Integer getPatientNumber() {
@@ -24,10 +26,6 @@ public class Report {
     return id;
   }
 
-  public String getFilename() {
-    return filename;
-  }
-
   public String getDescription() {
     return description;
   }
@@ -36,15 +34,19 @@ public class Report {
     return madeBy;
   }
 
-  public void setFilename(String filename) {
-    this.filename = filename;
-  }
-
   public void setDescription(String description) {
     this.description = description;
   }
 
   public void setMadeBy(String madeBy) {
     this.madeBy = madeBy;
+  }
+
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
   }
 }

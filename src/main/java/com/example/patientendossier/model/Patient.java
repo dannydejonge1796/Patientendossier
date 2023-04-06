@@ -31,10 +31,10 @@ public class Patient {
   public void addReport(Report report)
   {
     String query =
-            "INSERT INTO report (id, patient_number, filename, description, made_by)" +
+            "INSERT INTO report (id, patient_number, date, description, made_by)" +
             "VALUES ('" + report.getId() + "', " +
             "'" + report.getPatientNumber() + "', " +
-            "'" + report.getFilename() + "', " +
+            "'" + report.getDate() + "', " +
             "'" + report.getDescription() + "', " +
             "'" + report.getMadeBy() + "')"
     ;
@@ -45,11 +45,11 @@ public class Patient {
   public void updateReport(Report report)
   {
     String query =
-        "UPDATE report " +
-        "SET description = '" + report.getDescription() + "', " +
-        "made_by = '" + report.getMadeBy() + "' " +
-        "filename = '" + report.getFilename() + "' " +
-        "WHERE id = '" + report.getId() + "'"
+    "UPDATE report " +
+            "SET description = '" + report.getDescription() + "', " +
+            "made_by = '" + report.getMadeBy() + "', " +
+            "date = '" + report.getDate() + "' " +
+            "WHERE id = '" + report.getId() + "'"
     ;
 
     Application.db.storeData(query);
@@ -82,9 +82,9 @@ public class Patient {
         reports.add(new Report(
                 result.getInt("id"),
                 result.getInt("patient_number"),
-                result.getString("filename"),
                 result.getString("description"),
-                result.getString("made_by")
+                result.getString("made_by"),
+                result.getDate("date").toLocalDate()
         ));
       }
     } catch (SQLException e) {

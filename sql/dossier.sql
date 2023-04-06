@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 03 apr 2023 om 13:52
+-- Gegenereerd op: 06 apr 2023 om 12:21
 -- Serverversie: 10.4.27-MariaDB
 -- PHP-versie: 8.1.12
 
@@ -250,6 +250,34 @@ CREATE TABLE `patient` (
 INSERT INTO `patient` (`number`, `firstname`, `lastname`, `birthdate`, `phonenumber`, `email`, `password`) VALUES
 (1234567890, 'Danny', 'de Jonge', '1996-10-17', 1234567890, 'd@gmail.com', '123');
 
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `report`
+--
+
+CREATE TABLE `report` (
+  `id` int(10) NOT NULL,
+  `patient_number` int(10) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `made_by` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `result`
+--
+
+CREATE TABLE `result` (
+  `id` int(10) NOT NULL,
+  `patient_number` int(10) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `made_by` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexen voor geëxporteerde tabellen
 --
@@ -313,6 +341,18 @@ ALTER TABLE `medicine_patient`
 --
 ALTER TABLE `patient`
   ADD PRIMARY KEY (`number`);
+
+--
+-- Indexen voor tabel `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `result`
+--
+ALTER TABLE `result`
+  ADD PRIMARY KEY (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
