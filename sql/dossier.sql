@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 06 apr 2023 om 12:21
+-- Gegenereerd op: 06 apr 2023 om 15:06
 -- Serverversie: 10.4.27-MariaDB
--- PHP-versie: 8.1.12
+-- PHP-versie: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -259,10 +259,17 @@ INSERT INTO `patient` (`number`, `firstname`, `lastname`, `birthdate`, `phonenum
 CREATE TABLE `report` (
   `id` int(10) NOT NULL,
   `patient_number` int(10) NOT NULL,
-  `filename` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `made_by` varchar(255) NOT NULL
+  `made_by` varchar(255) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `report`
+--
+
+INSERT INTO `report` (`id`, `patient_number`, `description`, `made_by`, `date`) VALUES
+(1, 1234567890, 'blabla', 'Care', '2023-04-06');
 
 -- --------------------------------------------------------
 
@@ -273,9 +280,9 @@ CREATE TABLE `report` (
 CREATE TABLE `result` (
   `id` int(10) NOT NULL,
   `patient_number` int(10) NOT NULL,
-  `filename` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `made_by` varchar(255) NOT NULL
+  `made_by` varchar(255) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
