@@ -92,9 +92,9 @@ public class ReportScreen {
           Integer id = this.care.getHighestReportId() + 1;
           LocalDate date = LocalDate.now();
           Integer patientNumber = this.patient.getNumber();
-          String description = taReport.getText();
+          String reportText = taReport.getText();
           String madeBy = this.care.getLastname();
-          Report newReport = new Report(id, patientNumber, description, madeBy, date);
+          Report newReport = new Report(id, patientNumber, reportText, madeBy, date);
 
           this.patient.addReport(newReport);
           this.load();

@@ -27,6 +27,26 @@ public class Care {
     this.password = password;
   }
 
+  public Integer getHighestResultId()
+  {
+    String query =
+            "SELECT MAX(id) as highest_id " +
+            "FROM result"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      if (result.next()) {
+        return result.getInt("highest_id");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    return null;
+  }
+
   public Integer getHighestReportId()
   {
     String query =

@@ -28,6 +28,72 @@ public class Patient {
     this.password = password;
   }
 
+  public void addResult(Result result)
+  {
+    String query =
+            "INSERT INTO result (id, patient_number, date, result, made_by)" +
+            "VALUES ('" + result.getId() + "', " +
+            "'" + result.getPatientNumber() + "', " +
+            "'" + result.getDate() + "', " +
+            "'" + result.getResult() + "', " +
+            "'" + result.getMadeBy() + "')"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public void updateResult(Result result)
+  {
+    String query =
+            "UPDATE result " +
+            "SET result = '" + result.getResult() + "', " +
+            "made_by = '" + result.getMadeBy() + "', " +
+            "date = '" + result.getDate() + "' " +
+            "WHERE id = '" + result.getId() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public void deleteResult(Result result)
+  {
+    String query =
+            "DELETE FROM result " +
+            "WHERE id = '" + result.getId() + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
+  public ArrayList<Result> getResults()
+  {
+    ArrayList<Result> results = new ArrayList<>();
+
+    String query =
+            "SELECT * " +
+            "FROM result " +
+            "WHERE patient_number = '" + this.number + "'"
+    ;
+
+    ResultSet result = Application.db.getData(query);
+
+    try {
+      while (result.next()) {
+        results.add(new Result(
+                result.getInt("id"),
+                result.getInt("patient_number"),
+                result.getString("result"),
+                result.getString("made_by"),
+                result.getDate("date").toLocalDate()
+        ));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return results;
+  }
+
   public void addReport(Report report)
   {
     String query =

@@ -131,7 +131,7 @@ public class DossierScreen {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    resultItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ResultScreen().getResultPane()));
+    resultItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ResultScreen(this, this.patient, this.care).getResultPane()));
 
     Text txtMedicInfo = new Text("Medische gegevens");
     txtMedicInfo.setFont(Font.font("Arial", FontWeight.BOLD, 12));
