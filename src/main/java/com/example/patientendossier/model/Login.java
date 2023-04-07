@@ -62,6 +62,7 @@ public class Login {
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
+          result.getDate("birthdate").toLocalDate(),
           result.getString("profession"),
           result.getInt("phonenumber"),
           result.getString("email"),
@@ -69,7 +70,7 @@ public class Login {
         );
       }
     } catch (SQLException e) {
-      System.out.println("Ophalen data mislukt!");
+      e.printStackTrace();
     }
 
     return null;

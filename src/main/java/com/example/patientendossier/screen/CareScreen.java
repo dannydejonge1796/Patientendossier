@@ -170,9 +170,9 @@ public class CareScreen {
       dossierFormScreen.getLblPage().setText("Patiënt toevoegen");
       dossierFormScreen.getFormPane().getChildren().clear();
 
-      PatientScreen patientScreen = new PatientScreen(null);
-      GridPane gridProfile = patientScreen.getProfileForm();
-      GridPane gridPassword = patientScreen.getUpdatePasswordForm();
+      ProfileFormScreen profileFormScreen = new ProfileFormScreen(null, null);
+      GridPane gridProfile = profileFormScreen.getProfileForm();
+      GridPane gridPassword = profileFormScreen.getUpdatePasswordForm();
 
       dossierFormScreen.getFormPane().getChildren().add(gridProfile);
       dossierFormScreen.getFormPane().getChildren().add(gridPassword);
@@ -180,7 +180,7 @@ public class CareScreen {
       Button btnSavePatient = new Button("Toevoegen");
       dossierFormScreen.getFormPane().getChildren().add(btnSavePatient);
       btnSavePatient.setOnAction(e2 -> {
-        if (patientScreen.validateProfile(gridProfile) && patientScreen.validateNewPassword(gridPassword)) {
+        if (profileFormScreen.validateProfile(gridProfile) && profileFormScreen.validateNewPassword(gridPassword)) {
 
           Random random = new Random();
           StringBuilder stringBuilder = new StringBuilder();
@@ -253,8 +253,8 @@ public class CareScreen {
     vBox.getChildren().add(hBoxTop);
 
     ArrayList<Care> cares = this.care.getAllCares();
-    String[] careColumnNames = {"Zorgverlener nummer", "Voornaam", "Achternaam", "Beroep", "Telefoonnummer", "Email"};
-    String[] carePropertyNames = {"number", "firstname", "lastname", "profession", "phonenumber", "email"};
+    String[] careColumnNames = {"Zorgverlener nummer", "Voornaam", "Achternaam", "Geboortedatum", "Beroep", "Telefoonnummer", "Email"};
+    String[] carePropertyNames = {"number", "firstname", "lastname", "birthdate", "profession", "phonenumber", "email"};
 
     TableView<Care> table = new TableScreen().createTableView(cares, careColumnNames, carePropertyNames);
 

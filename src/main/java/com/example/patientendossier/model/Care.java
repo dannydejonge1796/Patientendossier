@@ -4,6 +4,7 @@ import com.example.patientendossier.Application;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Care {
@@ -11,16 +12,18 @@ public class Care {
   private Integer number;
   private String firstname;
   private String lastname;
+  private LocalDate birthdate;
   private String profession;
   private Integer phonenumber;
   private String email;
   private String password;
 
-  public Care(Integer number, String firstname, String lastname, String profession, Integer phonenumber, String email, String password)
+  public Care(Integer number, String firstname, String lastname, LocalDate birthdate, String profession, Integer phonenumber, String email, String password)
   {
     this.number = number;
     this.firstname = firstname;
     this.lastname = lastname;
+    this.birthdate = birthdate;
     this.profession = profession;
     this.phonenumber = phonenumber;
     this.email = email;
@@ -293,6 +296,7 @@ public class Care {
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
+          result.getDate("birthdate").toLocalDate(),
           result.getString("profession"),
           result.getInt("phonenumber"),
           result.getString("email"),
@@ -360,5 +364,13 @@ public class Care {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public LocalDate getBirthdate() {
+    return birthdate;
+  }
+
+  public void setBirthdate(LocalDate birthdate) {
+    this.birthdate = birthdate;
   }
 }

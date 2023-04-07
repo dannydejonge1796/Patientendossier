@@ -170,15 +170,15 @@ public class DossierScreen {
     txtWelcome.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     vBox.getChildren().add(txtWelcome);
 
-    PatientScreen patientScreen = new PatientScreen(this.patient);
+    ProfileFormScreen profileFormScreen = new ProfileFormScreen(this.patient, null);
 
-    GridPane profileFormGrid = patientScreen.getProfileForm();
+    GridPane profileFormGrid = profileFormScreen.getProfileForm();
     Button btnUpdate = (Button) new Utility().getNodeByRowColumnIndex(1,7,profileFormGrid);
-    btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, patientScreen));
+    btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, profileFormScreen));
 
-    GridPane passFormGrid = patientScreen.getUpdatePasswordForm();
+    GridPane passFormGrid = profileFormScreen.getUpdatePasswordForm();
     Button btnUpdatePass = (Button) new Utility().getNodeByRowColumnIndex(1,3,passFormGrid);
-    btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, patientScreen));
+    btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, profileFormScreen));
 
     vBox.getChildren().add(profileFormGrid);
     vBox.getChildren().add(passFormGrid);
@@ -189,8 +189,8 @@ public class DossierScreen {
       vBox.getChildren().add(txtAuthorize);
 
       ArrayList<Care> caresOfPatient = patient.getCareOfPatient();
-      String[] careColumnNames = {"Zorgverlener nummer", "Voornaam", "Achternaam", "Beroep", "Telefoonnummer", "Email"};
-      String[] carePropertyNames = {"number", "firstname", "lastname", "profession", "phonenumber", "email"};
+      String[] careColumnNames = {"Zorgverlener nummer", "Voornaam", "Achternaam", "Geboortedatum", "Beroep", "Telefoonnummer", "Email"};
+      String[] carePropertyNames = {"number", "firstname", "lastname", "birthdate", "profession", "phonenumber", "email"};
 
       TableView<Care> table = new TableScreen().createTableView(caresOfPatient, careColumnNames, carePropertyNames);
       vBox.getChildren().add(table);
@@ -263,9 +263,9 @@ public class DossierScreen {
     return scroll;
   }
 
-  private void updateProfile(GridPane grid, PatientScreen patientScreen)
+  private void updateProfile(GridPane grid, ProfileFormScreen profileFormScreen)
   {
-    boolean validated = patientScreen.validateProfile(grid);
+    boolean validated = profileFormScreen.validateProfile(grid);
 
     if (validated) {
       String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
@@ -285,9 +285,9 @@ public class DossierScreen {
     }
   }
 
-  private void updatePassword(GridPane grid, PatientScreen patientScreen)
+  private void updatePassword(GridPane grid, ProfileFormScreen profileFormScreen)
   {
-    boolean validated = patientScreen.validateNewPassword(grid);
+    boolean validated = profileFormScreen.validateNewPassword(grid);
 
     if (validated) {
       String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, grid)).getText();

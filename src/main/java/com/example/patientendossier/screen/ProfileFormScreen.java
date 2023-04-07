@@ -1,5 +1,6 @@
 package com.example.patientendossier.screen;
 
+import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
 import javafx.geometry.HPos;
@@ -11,12 +12,14 @@ import javafx.scene.text.Text;
 
 import java.time.LocalDate;
 
-public class PatientScreen {
+public class ProfileFormScreen {
 
   private final Patient patient;
+  private final Care care;
 
-  public PatientScreen(Patient patient) {
+  public ProfileFormScreen(Patient patient, Care care) {
     this.patient = patient;
+    this.care = care;
   }
 
   public GridPane getProfileForm()
@@ -24,6 +27,11 @@ public class PatientScreen {
     GridPane grid = new GridPane();
     grid.setHgap(15);
     grid.setVgap(15);
+
+    int compensation = 0;
+    if (care != null) {
+      compensation = 1;
+    }
 
     Text txtProfile = new Text("Persoonlijke gegevens");
     txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 16));
@@ -47,14 +55,14 @@ public class PatientScreen {
     grid.add(dpBirth, 1, 4);
 
     Label lblPhone = new Label("Telefoonnummer:");
-    grid.add(lblPhone, 0, 5);
+    grid.add(lblPhone, 0, 5 + compensation);
     TextField tfPhone = new TextField();
-    grid.add(tfPhone, 1, 5);
+    grid.add(tfPhone, 1, 5 + compensation);
 
     Label lblEmail = new Label("Email:");
-    grid.add(lblEmail, 0, 6);
+    grid.add(lblEmail, 0, 6 + compensation);
     TextField tfEmail = new TextField();
-    grid.add(tfEmail, 1, 6);
+    grid.add(tfEmail, 1, 6 + compensation);
 
     if (patient != null) {
       Label lblNumber = new Label("Uw patiëntnummer:");
@@ -73,8 +81,32 @@ public class PatientScreen {
       tfEmail.setText(patient.getEmail());
 
       Button btnUpdate = new Button("Wijzig");
-      grid.add(btnUpdate, 1, 7);
+      grid.add(btnUpdate, 1, 7 + compensation);
       GridPane.setHalignment(btnUpdate, HPos.RIGHT);
+    }
+
+    if (care != null) {
+      Label lblNumber = new Label("Zorgverlener nummer:");
+      grid.add(lblNumber, 0, 1);
+
+      TextField tfNumber = new TextField();
+      tfNumber.setPrefWidth(950);
+      tfNumber.setEditable(false);
+      grid.add(tfNumber, 1, 1);
+
+      Label lblProfession = new Label("Beroep");
+      grid.add(lblProfession, 0, 5);
+
+      TextField tfProfession = new TextField();
+      grid.add(tfProfession, 1, 5);
+
+      tfNumber.setText(care.getNumber().toString());
+      tfFirstname.setText(care.getFirstname());
+      tfLastname.setText(care.getLastname());
+      tfProfession.setText(care.getProfession());
+      dpBirth.setValue(care.getBirthdate());
+      tfPhone.setText(care.getPhonenumber().toString());
+      tfEmail.setText(care.getEmail());
     }
 
     return grid;

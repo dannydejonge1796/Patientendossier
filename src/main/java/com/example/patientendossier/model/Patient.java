@@ -531,6 +531,7 @@ public void deleteMedicine(Medicine medicine)
         "care.number, " +
         "care.firstname, " +
         "care.lastname, " +
+        "care.birthdate, " +
         "care.profession, " +
         "care.phonenumber, " +
         "care.email, " +
@@ -552,6 +553,7 @@ public void deleteMedicine(Medicine medicine)
           result.getInt("number"),
           result.getString("firstname"),
           result.getString("lastname"),
+          result.getDate("birthdate").toLocalDate(),
           result.getString("profession"),
           result.getInt("phonenumber"),
           result.getString("email"),
