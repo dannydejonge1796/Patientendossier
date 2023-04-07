@@ -52,6 +52,12 @@ public class ResultScreen {
     DossierFormScreen dossierForm = new DossierFormScreen();
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
 
+    Button btnBack = this.dossier.getBtnBack();
+    btnBack.setOnAction(e -> {
+      dossier.getBorderPane().setCenter(new ResultScreen(this.dossier, this.patient, this.care).getResultPane());
+      dossier.setBtnBack();
+    });
+
     dossierForm.getLblPage().setText("Uitslagen");
 
     GridPane gridForm = dossierForm.getGridForm();

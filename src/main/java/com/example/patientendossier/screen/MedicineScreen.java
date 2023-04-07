@@ -53,6 +53,12 @@ public class MedicineScreen {
     DossierFormScreen dossierForm = new DossierFormScreen();
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
 
+    Button btnBack = this.dossier.getBtnBack();
+    btnBack.setOnAction(e -> {
+      dossier.getBorderPane().setCenter(new MedicineScreen(this.dossier, this.patient, this.care).getMedicinePane());
+      dossier.setBtnBack();
+    });
+
     dossierForm.getLblPage().setText("Medicijnen");
 
     GridPane gridForm = dossierForm.getGridForm();

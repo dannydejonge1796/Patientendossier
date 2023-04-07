@@ -59,6 +59,12 @@ public class AppointmentScreen {
     DossierFormScreen dossierForm = new DossierFormScreen();
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
 
+    Button btnBack = this.dossier.getBtnBack();
+    btnBack.setOnAction(e -> {
+      dossier.getBorderPane().setCenter(new AppointmentScreen(this.dossier, this.patient, this.care).getAppointmentPane());
+      dossier.setBtnBack();
+    });
+
     dossierForm.getLblPage().setText("Afspraken");
 
     GridPane gridForm = dossierForm.getGridForm();

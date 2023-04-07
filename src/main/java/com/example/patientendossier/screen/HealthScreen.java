@@ -52,6 +52,12 @@ public class HealthScreen {
     DossierFormScreen dossierForm = new DossierFormScreen();
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
 
+    Button btnBack = this.dossier.getBtnBack();
+    btnBack.setOnAction(e -> {
+      dossier.getBorderPane().setCenter(new HealthScreen(this.dossier, this.patient, this.care).getHealthPane());
+      dossier.setBtnBack();
+    });
+
     dossierForm.getLblPage().setText("Gezondheidsproblemen");
 
     GridPane gridForm = dossierForm.getGridForm();

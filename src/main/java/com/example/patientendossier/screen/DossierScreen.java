@@ -22,8 +22,10 @@ public class DossierScreen {
   private final Care care;
   private final Scene dossierScene;
   private final BorderPane borderPane;
+  private Button btnBack;
 
-  public DossierScreen(Stage stage, Patient patient, Care care) {
+  public DossierScreen(Stage stage, Patient patient, Care care)
+  {
     this.stage = stage;
     this.patient = patient;
     this.care = care;
@@ -33,41 +35,36 @@ public class DossierScreen {
 
   private Scene setDossierScene()
   {
-    this.borderPane.setBottom(addBottomMenu());
-    this.borderPane.setLeft(addLeftMenu());
-    this.borderPane.setCenter(createProfilePane());
+    this.borderPane.setBottom(this.getBottomMenu());
+    this.borderPane.setLeft(this.getLeftMenu());
+    this.borderPane.setCenter(this.getProfilePane());
 
     return new Scene(this.borderPane);
   }
 
-  private HBox addBottomMenu()
+  private HBox getBottomMenu()
   {
-    HBox hbox = new HBox();
-    hbox.setPadding(new Insets(10, 25, 10, 25));
-    hbox.setPrefWidth(1200);
-    hbox.setSpacing(10);
-    hbox.setStyle("-fx-border-style: solid inside");
-    hbox.setStyle("-fx-border-width: 2");
-    hbox.setStyle("-fx-border-color: black");
-
-    Region region = new Region();
-    HBox.setHgrow(region, Priority.ALWAYS);
-    hbox.getChildren().add(region);
+    HBox hbox = new GlobalElements().getHBoxOne();
 
     if (this.care == null) {
       Button btnLogout = new Button("Uitloggen");
       hbox.getChildren().add(btnLogout);
       btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage).getPatientLoginScene()));
     } else {
-      Button btnBack = new Button("Vorige");
+      this.btnBack = new Button("Vorige");
       hbox.getChildren().add(btnBack);
-      btnBack.setOnAction(e -> this.stage.setScene(new CareScreen(this.stage, this.care).getListScene()));
+      this.setBtnBack();
     }
 
     return hbox;
   }
 
-  private VBox addLeftMenu()
+  public void setBtnBack()
+  {
+    btnBack.setOnAction(e -> this.stage.setScene(new CareScreen(this.stage, this.care).getListScene()));
+  }
+
+  private VBox getLeftMenu()
   {
     VBox vbox = new VBox();
     vbox.setMinWidth(250);
@@ -89,7 +86,12 @@ public class DossierScreen {
       VBox.setMargin(item, new Insets(0, 0, 0, 20));
     }
 
-    profileItems.get(0).setOnAction(e -> this.borderPane.setCenter(this.createProfilePane()));
+    profileItems.get(0).setOnAction(e -> {
+      this.borderPane.setCenter(this.getProfilePane());
+      if (care != null) {
+        this.setBtnBack();
+      }
+    });
 
     Text txtAppointments = new Text("Afspraken");
     txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -154,7 +156,7 @@ public class DossierScreen {
     return vbox;
   }
 
-  private ScrollPane createProfilePane()
+  private ScrollPane getProfilePane()
   {
     ScrollPane scroll = new ScrollPane();
     scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -239,7 +241,7 @@ public class DossierScreen {
 
         if (!selectedCareNumber.equals(care.getNumber())) {
           care.unAuthorizePatient(selectedCareNumber, this.patient.getNumber());
-          this.borderPane.setCenter(createProfilePane());
+          this.borderPane.setCenter(this.getProfilePane());
         } else {
           new Utility().showAlert(Alert.AlertType.ERROR, vBox.getScene().getWindow(), "Error!", "U kunt uzelf niet ontmachtigen vanuit het dossier!");
         }
@@ -251,7 +253,7 @@ public class DossierScreen {
           Integer selectedCareNumber = Integer.parseInt(selectedCare.split(",")[0]);
 
           care.authorizePatient(selectedCareNumber, this.patient.getNumber());
-          this.borderPane.setCenter(createProfilePane());
+          this.borderPane.setCenter(this.getProfilePane());
         }
       });
     }
@@ -279,7 +281,7 @@ public class DossierScreen {
       patient.setEmail(email);
       patient.update();
 
-      this.borderPane.setCenter(createProfilePane());
+      this.borderPane.setCenter(this.getProfilePane());
     }
   }
 
@@ -293,8 +295,12 @@ public class DossierScreen {
       patient.setPassword(newPass);
       patient.update();
 
-      this.borderPane.setCenter(createProfilePane());
+      this.borderPane.setCenter(this.getProfilePane());
     }
+  }
+
+  public Button getBtnBack() {
+    return btnBack;
   }
 
   public BorderPane getBorderPane() {
