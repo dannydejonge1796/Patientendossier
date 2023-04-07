@@ -20,7 +20,7 @@ public class ReportScreen {
   private final Care care;
   private VBox reportPane;
   private InfoPageScreen infoPageScreen;
-  private TextArea taDescription;
+  private TextArea taReport;
 
   public ReportScreen(DossierScreen dossier, Patient patient, Care care)
   {
@@ -56,13 +56,13 @@ public class ReportScreen {
 
     GridPane gridForm = dossierForm.getGridForm();
 
-    Label lblDescription = new Label("Beschrijving");
-    gridForm.add(lblDescription, 0, 1);
-    lblDescription.setPrefWidth(200);
+    Label lblReport = new Label("Verslag");
+    gridForm.add(lblReport, 0, 1);
+    lblReport.setPrefWidth(200);
 
-    this.taDescription = new TextArea();
-    taDescription.setPrefWidth(800);
-    gridForm.add(taDescription, 1, 1);
+    this.taReport = new TextArea();
+    taReport.setPrefWidth(800);
+    gridForm.add(taReport, 1, 1);
 
     Button btnUpdate = new Button();
     gridForm.add(btnUpdate, 1, 2);
@@ -70,11 +70,11 @@ public class ReportScreen {
 
     if (report != null) {
       btnUpdate.setText("Wijzig");
-      taDescription.setText(report.getDescription());
+      taReport.setText(report.getReport());
 
       btnUpdate.setOnAction(e -> {
         if (this.validateForm()) {
-          report.setDescription(taDescription.getText());
+          report.setReport(taReport.getText());
           report.setDate(LocalDate.now());
           report.setMadeBy(this.care.getLastname());
 
@@ -92,7 +92,7 @@ public class ReportScreen {
           Integer id = this.care.getHighestReportId() + 1;
           LocalDate date = LocalDate.now();
           Integer patientNumber = this.patient.getNumber();
-          String description = taDescription.getText();
+          String description = taReport.getText();
           String madeBy = this.care.getLastname();
           Report newReport = new Report(id, patientNumber, description, madeBy, date);
 
@@ -106,8 +106,8 @@ public class ReportScreen {
 
   private boolean validateForm()
   {
-    if (!new Validation().validateString(taDescription.getText())) {
-      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een geldige beschrijving in!");
+    if (!new Validation().validateString(taReport.getText())) {
+      new Utility().showAlert(Alert.AlertType.ERROR, dossier.getBorderPane().getScene().getWindow(), "Error!", "Voer een verslag in!");
       return false;
     }
 
@@ -117,8 +117,8 @@ public class ReportScreen {
   private TableView<Report> loadTableView()
   {
     ArrayList<Report> reports = patient.getReports();
-    String[] columnNames = {"Beschrijving", "Gemaakt door", "Datum"};
-    String[] propertyNames = {"description", "madeBy", "date"};
+    String[] columnNames = {"Verslag", "Gemaakt door", "Datum"};
+    String[] propertyNames = {"report", "madeBy", "date"};
 
     TableView<Report> table = new TableScreen().createTableView(reports, columnNames, propertyNames);
 

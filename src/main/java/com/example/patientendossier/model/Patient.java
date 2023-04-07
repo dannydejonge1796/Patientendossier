@@ -31,11 +31,11 @@ public class Patient {
   public void addReport(Report report)
   {
     String query =
-            "INSERT INTO report (id, patient_number, date, description, made_by)" +
+            "INSERT INTO report (id, patient_number, date, report, made_by)" +
             "VALUES ('" + report.getId() + "', " +
             "'" + report.getPatientNumber() + "', " +
             "'" + report.getDate() + "', " +
-            "'" + report.getDescription() + "', " +
+            "'" + report.getReport() + "', " +
             "'" + report.getMadeBy() + "')"
     ;
 
@@ -46,7 +46,7 @@ public class Patient {
   {
     String query =
     "UPDATE report " +
-            "SET description = '" + report.getDescription() + "', " +
+            "SET report = '" + report.getReport() + "', " +
             "made_by = '" + report.getMadeBy() + "', " +
             "date = '" + report.getDate() + "' " +
             "WHERE id = '" + report.getId() + "'"
@@ -82,7 +82,7 @@ public class Patient {
         reports.add(new Report(
                 result.getInt("id"),
                 result.getInt("patient_number"),
-                result.getString("description"),
+                result.getString("report"),
                 result.getString("made_by"),
                 result.getDate("date").toLocalDate()
         ));
