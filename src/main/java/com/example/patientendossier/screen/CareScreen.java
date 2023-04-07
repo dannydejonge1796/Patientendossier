@@ -3,7 +3,6 @@ package com.example.patientendossier.screen;
 import com.example.patientendossier.model.Appointment;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
-import com.example.patientendossier.utility.Utility;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,9 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class CareScreen {
 
@@ -164,68 +161,16 @@ public class CareScreen {
     });
 
     btnAddPatient.setOnAction(e -> {
-      DossierFormScreen dossierFormScreen = new DossierFormScreen();
-      dossierFormScreen.getVBoxFormPage().setMaxWidth(1200);
-
-      dossierFormScreen.getLblPage().setText("Patiënt toevoegen");
-      dossierFormScreen.getFormPane().getChildren().clear();
-
-      ProfileFormScreen profileFormScreen = new ProfileFormScreen(null, null);
-      GridPane gridProfile = profileFormScreen.getProfileForm();
-      GridPane gridPassword = profileFormScreen.getUpdatePasswordForm();
-
-      dossierFormScreen.getFormPane().getChildren().add(gridProfile);
-      dossierFormScreen.getFormPane().getChildren().add(gridPassword);
-
-      Button btnSavePatient = new Button("Toevoegen");
-      dossierFormScreen.getFormPane().getChildren().add(btnSavePatient);
-      btnSavePatient.setOnAction(e2 -> {
-        if (profileFormScreen.validateProfile(gridProfile) && profileFormScreen.validateNewPassword(gridPassword)) {
-
-          Random random = new Random();
-          StringBuilder stringBuilder = new StringBuilder();
-          stringBuilder.append(1);
-          for (int i = 0; i < 9; i++) {
-            int randomNumber = random.nextInt(10);
-            stringBuilder.append(randomNumber);
-          }
-          String randomString = stringBuilder.toString();
-
-          int number = Integer.parseInt(randomString);
-          String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, gridProfile)).getText();
-          String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, gridProfile)).getText();
-          LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, gridProfile)).getValue();
-          String phoneString = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, gridProfile)).getText();
-          Integer phone = Integer.parseInt(phoneString);
-          String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, gridProfile)).getText();
-          String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, gridPassword)).getText();
-
-          Patient newPatient = new Patient(
-            number, firstname, lastname, birth, phone, email, newPass
-          );
-
-          newPatient.store();
-          this.care.authorizePatient(this.care.getNumber(), number);
-
-          tab1.setContent(addPatListPane());
-          this.returnToTab();
-        }
-      });
-
-      this.borderPane.setCenter(dossierFormScreen.getVBoxFormPage());
-
-      this.btnBack.setText("Vorige");
-
-      this.btnBack.setOnAction(e2 -> this.returnToTab());
+      this.prepareForm("patient", null, null);
     });
 
     return vBox;
   }
 
-  private void returnToTab()
+  private void returnToTab(int tabNumber)
   {
     SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-    selectionModel.select(0);
+    selectionModel.select(tabNumber);
 
     borderPane.setCenter(tabPane);
     this.setBtnBack();
@@ -280,10 +225,52 @@ public class CareScreen {
     });
 
     btnAddCare.setOnAction(e -> {
-
+      this.prepareForm("care", null, null);
     });
 
     return vBox;
+  }
+
+  private void prepareForm(String mode, Patient patient, Care care)
+  {
+    DossierFormScreen dossierFormScreen = new DossierFormScreen();
+    dossierFormScreen.getVBoxFormPage().setMaxWidth(1200);
+
+    if (mode.equals("patient")) {
+      dossierFormScreen.getLblPage().setText("Patiënt toevoegen");
+    } else if (mode.equals("care")) {
+      dossierFormScreen.getLblPage().setText("Zorgverlener toevoegen");
+    }
+    dossierFormScreen.getFormPane().getChildren().clear();
+
+    ProfileFormScreen profileFormScreen = new ProfileFormScreen(patient, care);
+    GridPane gridProfile = profileFormScreen.getProfileForm();
+    GridPane gridPassword = profileFormScreen.getUpdatePasswordForm();
+
+    dossierFormScreen.getFormPane().getChildren().add(gridProfile);
+    dossierFormScreen.getFormPane().getChildren().add(gridPassword);
+
+    Button btnSave = new Button("Toevoegen");
+    dossierFormScreen.getFormPane().getChildren().add(btnSave);
+    btnSave.setOnAction(e2 -> {
+      if (profileFormScreen.validateProfile(gridProfile) && profileFormScreen.validateNewPassword(gridPassword)) {
+        if (mode.equals("patient")) {
+          profileFormScreen.createNewPatient();
+          tab1.setContent(addPatListPane());
+          this.returnToTab(0);
+        } else if (mode.equals("care")) {
+          profileFormScreen.createNewCare();
+          tab1.setContent(addCareListPane());
+          this.returnToTab(1);
+        }
+      }
+    });
+
+    this.borderPane.setCenter(dossierFormScreen.getVBoxFormPage());
+
+    this.btnBack.setText("Vorige");
+    int returnTo = mode.equals("patient") ? 0 : 1;
+    this.btnBack.setOnAction(e2 -> this.returnToTab(returnTo));
   }
 
   public Scene getListScene() {

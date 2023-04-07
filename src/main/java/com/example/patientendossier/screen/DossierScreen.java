@@ -173,11 +173,11 @@ public class DossierScreen {
     ProfileFormScreen profileFormScreen = new ProfileFormScreen(this.patient, null);
 
     GridPane profileFormGrid = profileFormScreen.getProfileForm();
-    Button btnUpdate = (Button) new Utility().getNodeByRowColumnIndex(1,7,profileFormGrid);
+    Button btnUpdate = profileFormScreen.getBtnUpdateProfile();
     btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, profileFormScreen));
 
     GridPane passFormGrid = profileFormScreen.getUpdatePasswordForm();
-    Button btnUpdatePass = (Button) new Utility().getNodeByRowColumnIndex(1,3,passFormGrid);
+    Button btnUpdatePass = profileFormScreen.getBtnUpdatePassword();
     btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, profileFormScreen));
 
     vBox.getChildren().add(profileFormGrid);

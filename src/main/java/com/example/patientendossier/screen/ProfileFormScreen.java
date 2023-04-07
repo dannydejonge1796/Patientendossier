@@ -11,11 +11,24 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 public class ProfileFormScreen {
 
   private final Patient patient;
   private final Care care;
+
+  private TextField tfNumber;
+  private TextField tfFirstname;
+  private TextField tfLastname;
+  private TextField tfProfession;
+  private DatePicker dpBirth;
+  private TextField tfPhone;
+  private TextField tfEmail;
+  private PasswordField pfNewPass;
+  private PasswordField pfConfirmPass;
+  private Button btnUpdateProfile;
+  private Button btnUpdatePassword;
 
   public ProfileFormScreen(Patient patient, Care care) {
     this.patient = patient;
@@ -39,36 +52,36 @@ public class ProfileFormScreen {
 
     Label lblFirstname = new Label("Voornaam:");
     grid.add(lblFirstname, 0, 2);
-    TextField tfFirstname = new TextField();
+    this.tfFirstname = new TextField();
     grid.add(tfFirstname, 1, 2);
 
     Label lbLastname = new Label("Achternaam:");
     grid.add(lbLastname, 0, 3);
-    TextField tfLastname = new TextField();
+    this.tfLastname = new TextField();
     grid.add(tfLastname, 1, 3);
 
     Label lblBirth = new Label("Geboortedatum:");
     grid.add(lblBirth, 0, 4);
 
-    DatePicker dpBirth = new DatePicker();
+    this.dpBirth = new DatePicker();
     dpBirth.setPrefWidth(950);
     grid.add(dpBirth, 1, 4);
 
     Label lblPhone = new Label("Telefoonnummer:");
     grid.add(lblPhone, 0, 5 + compensation);
-    TextField tfPhone = new TextField();
+    this.tfPhone = new TextField();
     grid.add(tfPhone, 1, 5 + compensation);
 
     Label lblEmail = new Label("Email:");
     grid.add(lblEmail, 0, 6 + compensation);
-    TextField tfEmail = new TextField();
+    this.tfEmail = new TextField();
     grid.add(tfEmail, 1, 6 + compensation);
 
     if (patient != null) {
       Label lblNumber = new Label("Uw patiëntnummer:");
       grid.add(lblNumber, 0, 1);
 
-      TextField tfNumber = new TextField();
+      this.tfNumber = new TextField();
       tfNumber.setPrefWidth(950);
       tfNumber.setEditable(false);
       grid.add(tfNumber, 1, 1);
@@ -80,16 +93,16 @@ public class ProfileFormScreen {
       tfPhone.setText(patient.getPhonenumber().toString());
       tfEmail.setText(patient.getEmail());
 
-      Button btnUpdate = new Button("Wijzig");
-      grid.add(btnUpdate, 1, 7 + compensation);
-      GridPane.setHalignment(btnUpdate, HPos.RIGHT);
+      this.btnUpdateProfile = new Button("Wijzig");
+      grid.add(btnUpdateProfile, 1, 7 + compensation);
+      GridPane.setHalignment(btnUpdateProfile, HPos.RIGHT);
     }
 
     if (care != null) {
       Label lblNumber = new Label("Zorgverlener nummer:");
       grid.add(lblNumber, 0, 1);
 
-      TextField tfNumber = new TextField();
+      this.tfNumber = new TextField();
       tfNumber.setPrefWidth(950);
       tfNumber.setEditable(false);
       grid.add(tfNumber, 1, 1);
@@ -97,7 +110,7 @@ public class ProfileFormScreen {
       Label lblProfession = new Label("Beroep");
       grid.add(lblProfession, 0, 5);
 
-      TextField tfProfession = new TextField();
+      this.tfProfession = new TextField();
       grid.add(tfProfession, 1, 5);
 
       tfNumber.setText(care.getNumber().toString());
@@ -124,19 +137,19 @@ public class ProfileFormScreen {
 
     Label lblNewPass = new Label("Nieuw wachtwoord:");
     grid.add(lblNewPass, 0, 1);
-    PasswordField pfNewPass = new PasswordField();
+    this.pfNewPass = new PasswordField();
     pfNewPass.setPrefWidth(950);
     grid.add(pfNewPass, 1, 1);
 
     Label lblConfirmPass = new Label("Bevestig nieuw wachtwoord:");
     grid.add(lblConfirmPass, 0, 2);
-    PasswordField pfConfirmPass = new PasswordField();
+    this.pfConfirmPass = new PasswordField();
     grid.add(pfConfirmPass, 1, 2);
 
     if (patient != null) {
-      Button btnUpdatePass = new Button("Wijzig");
-      grid.add(btnUpdatePass, 1, 3);
-      GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
+      this.btnUpdatePassword = new Button("Wijzig");
+      grid.add(btnUpdatePassword, 1, 3);
+      GridPane.setHalignment(btnUpdatePassword, HPos.RIGHT);
     }
 
     return grid;
@@ -144,7 +157,7 @@ public class ProfileFormScreen {
 
   public boolean validateProfile(GridPane grid)
   {
-    String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
+    String firstname = tfFirstname.getText();
     if (firstname.isEmpty()) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw voornaam in!");
       return false;
@@ -155,7 +168,7 @@ public class ProfileFormScreen {
       return false;
     }
 
-    String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
+    String lastname = tfLastname.getText();
     if (lastname.isEmpty()) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw achternaam in!");
       return false;
@@ -166,13 +179,13 @@ public class ProfileFormScreen {
       return false;
     }
 
-    LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
+    LocalDate birth = this.dpBirth.getValue();
     if (birth == null) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw geboortedatum in!");
       return false;
     }
 
-    String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
+    String phone = tfPhone.getText();
     if (phone.isEmpty()) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw telefoonnummer in!");
       return false;
@@ -183,7 +196,7 @@ public class ProfileFormScreen {
       return false;
     }
 
-    String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
+    String email = tfEmail.getText();
     if (email.isEmpty()) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw email in!");
       return false;
@@ -201,8 +214,8 @@ public class ProfileFormScreen {
 
   public boolean validateNewPassword(GridPane grid)
   {
-    String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, grid)).getText();
-    String confirmPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
+    String newPass = this.pfNewPass.getText();
+    String confirmPass = this.pfConfirmPass.getText();
 
     if(newPass.isEmpty()) {
       new Utility().showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer een nieuw wachtwoord in!");
@@ -235,5 +248,65 @@ public class ProfileFormScreen {
     }
 
     return true;
+  }
+
+  public void createNewPatient()
+  {
+    int number = this.createRandomNumber();
+    String firstname = tfFirstname.getText();
+    String lastname = tfLastname.getText();
+    LocalDate birth = dpBirth.getValue();
+    String phoneString = tfPhone.getText();
+    Integer phone = Integer.parseInt(phoneString);
+    String email = tfEmail.getText();
+    String newPass = pfNewPass.getText();
+
+    Patient newPatient = new Patient(
+            number, firstname, lastname, birth, phone, email, newPass
+    );
+    newPatient.store();
+    this.care.authorizePatient(this.care.getNumber(), number);
+  }
+
+  public void createNewCare()
+  {
+    int number = this.createRandomNumber();
+    String firstname = tfFirstname.getText();
+    String lastname = tfLastname.getText();
+    LocalDate birth = dpBirth.getValue();
+    String profession = tfProfession.getText();
+    String phoneString = tfPhone.getText();
+    Integer phone = Integer.parseInt(phoneString);
+    String email = tfEmail.getText();
+    String newPass = pfNewPass.getText();
+
+    Care newCare = new Care(
+            number, firstname, lastname, birth, profession, phone, email, newPass
+    );
+
+    newCare.store();
+    this.care.authorizePatient(this.care.getNumber(), number);
+  }
+
+  private Integer createRandomNumber()
+  {
+    Random random = new Random();
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(1);
+    for (int i = 0; i < 9; i++) {
+      int randomNumber = random.nextInt(10);
+      stringBuilder.append(randomNumber);
+    }
+    String randomString = stringBuilder.toString();
+
+    return Integer.parseInt(randomString);
+  }
+
+  public Button getBtnUpdateProfile() {
+    return btnUpdateProfile;
+  }
+
+  public Button getBtnUpdatePassword() {
+    return btnUpdatePassword;
   }
 }

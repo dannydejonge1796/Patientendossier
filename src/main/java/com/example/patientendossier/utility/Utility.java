@@ -16,17 +16,4 @@ public class Utility {
     alert.initOwner(owner);
     alert.show();
   }
-
-  public Node getNodeByRowColumnIndex(final int column, final int row, GridPane gridPane)
-  {
-    Node result = null;
-    ObservableList<Node> children = gridPane.getChildren();
-    for(Node node : children) {
-      if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
-        result = node;
-        break;
-      }
-    }
-    return result;
-  }
 }

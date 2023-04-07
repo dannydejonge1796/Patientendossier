@@ -310,6 +310,16 @@ public class Care {
     return cares;
   }
 
+  public void store()
+  {
+
+  }
+
+  public void update()
+  {
+
+  }
+
   public Integer getNumber() {
     return number;
   }
