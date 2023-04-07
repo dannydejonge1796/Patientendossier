@@ -12,6 +12,7 @@ public class DossierFormScreen {
   private VBox vBoxFormPage;
   private Label lblPage;
   private GridPane gridForm;
+  private VBox formPane;
 
   public DossierFormScreen()
   {
@@ -29,11 +30,15 @@ public class DossierFormScreen {
     lblPage.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     vBoxFormPage.getChildren().add(lblPage);
 
+    this.formPane = new VBox();
+
     this.gridForm = new GridPane();
     gridForm.setHgap(15);
     gridForm.setVgap(15);
 
-    vBoxFormPage.getChildren().add(gridForm);
+    formPane.getChildren().add(gridForm);
+
+    vBoxFormPage.getChildren().add(formPane);
   }
 
   public VBox getVBoxFormPage() {
@@ -46,5 +51,9 @@ public class DossierFormScreen {
 
   public Label getLblPage() {
     return lblPage;
+  }
+
+  public VBox getFormPane() {
+    return formPane;
   }
 }

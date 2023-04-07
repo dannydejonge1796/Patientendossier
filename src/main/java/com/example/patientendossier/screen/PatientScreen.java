@@ -19,7 +19,7 @@ public class PatientScreen {
     this.patient = patient;
   }
 
-  public GridPane addProfileForm()
+  public GridPane getProfileForm()
   {
     GridPane grid = new GridPane();
     grid.setHgap(15);
@@ -29,73 +29,64 @@ public class PatientScreen {
     txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 16));
     grid.add(txtProfile, 0, 0);
 
-    Label lblNumber = new Label("Uw patiëntnummer:");
-    grid.add(lblNumber, 0, 1);
-
-    TextField tfNumber = new TextField();
-    if (patient != null) {
-      tfNumber.setText(patient.getNumber().toString());
-    }
-    tfNumber.setPrefWidth(950);
-    tfNumber.setEditable(false);
-    grid.add(tfNumber, 1, 1);
-
     Label lblFirstname = new Label("Voornaam:");
     grid.add(lblFirstname, 0, 2);
     TextField tfFirstname = new TextField();
-    if (patient != null) {
-      tfFirstname.setText(patient.getFirstname());
-    }
     grid.add(tfFirstname, 1, 2);
 
     Label lbLastname = new Label("Achternaam:");
     grid.add(lbLastname, 0, 3);
     TextField tfLastname = new TextField();
-    if (patient != null) {
-      tfLastname.setText(patient.getLastname());
-    }
     grid.add(tfLastname, 1, 3);
 
     Label lblBirth = new Label("Geboortedatum:");
     grid.add(lblBirth, 0, 4);
 
     DatePicker dpBirth = new DatePicker();
-    if (patient != null) {
-      dpBirth.setValue(patient.getBirthdate());
-    }
     dpBirth.setPrefWidth(950);
     grid.add(dpBirth, 1, 4);
 
     Label lblPhone = new Label("Telefoonnummer:");
     grid.add(lblPhone, 0, 5);
     TextField tfPhone = new TextField();
-    if (patient != null) {
-      tfPhone.setText(patient.getPhonenumber().toString());
-    }
     grid.add(tfPhone, 1, 5);
 
     Label lblEmail = new Label("Email:");
     grid.add(lblEmail, 0, 6);
     TextField tfEmail = new TextField();
-    if (patient != null) {
-      tfEmail.setText(patient.getEmail());
-    }
     grid.add(tfEmail, 1, 6);
 
-    Button btnUpdate = new Button("Wijzig");
-    grid.add(btnUpdate, 1, 7);
-    GridPane.setHalignment(btnUpdate, HPos.RIGHT);
+    if (patient != null) {
+      Label lblNumber = new Label("Uw patiëntnummer:");
+      grid.add(lblNumber, 0, 1);
+
+      TextField tfNumber = new TextField();
+      tfNumber.setPrefWidth(950);
+      tfNumber.setEditable(false);
+      grid.add(tfNumber, 1, 1);
+
+      tfNumber.setText(patient.getNumber().toString());
+      tfFirstname.setText(patient.getFirstname());
+      tfLastname.setText(patient.getLastname());
+      dpBirth.setValue(patient.getBirthdate());
+      tfPhone.setText(patient.getPhonenumber().toString());
+      tfEmail.setText(patient.getEmail());
+
+      Button btnUpdate = new Button("Wijzig");
+      grid.add(btnUpdate, 1, 7);
+      GridPane.setHalignment(btnUpdate, HPos.RIGHT);
+    }
 
     return grid;
   }
 
-  public GridPane addUpdatePasswordForm()
+  public GridPane getUpdatePasswordForm()
   {
     GridPane grid = new GridPane();
     grid.setHgap(15);
     grid.setVgap(15);
 
-    Text txtChangePass = new Text("Wachtwoord wijzigen");
+    Text txtChangePass = new Text("Wachtwoord");
     txtChangePass.setFont(Font.font("Arial", FontWeight.BOLD, 16));
     grid.add(txtChangePass, 0, 0);
 
@@ -110,9 +101,11 @@ public class PatientScreen {
     PasswordField pfConfirmPass = new PasswordField();
     grid.add(pfConfirmPass, 1, 2);
 
-    Button btnUpdatePass = new Button("Wijzig");
-    grid.add(btnUpdatePass, 1, 3);
-    GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
+    if (patient != null) {
+      Button btnUpdatePass = new Button("Wijzig");
+      grid.add(btnUpdatePass, 1, 3);
+      GridPane.setHalignment(btnUpdatePass, HPos.RIGHT);
+    }
 
     return grid;
   }

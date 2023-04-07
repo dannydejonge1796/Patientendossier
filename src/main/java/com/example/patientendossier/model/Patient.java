@@ -565,8 +565,18 @@ public void deleteMedicine(Medicine medicine)
     return cares;
   }
 
-  public void store() {
+  public void store()
+  {
+    String query = "INSERT INTO patient (number, firstname, lastname, birthdate, phonenumber, email, password) " +
+            "VALUES ('" + this.number + "', '" +
+            this.firstname + "', '" +
+            this.lastname + "', '" +
+            this.birthdate + "', '" +
+            this.phonenumber + "', '" +
+            this.email + "', '" +
+            this.password + "')";
 
+    Application.db.storeData(query);
   }
 
   public void update()

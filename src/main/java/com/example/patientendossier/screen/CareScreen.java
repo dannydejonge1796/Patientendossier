@@ -3,6 +3,7 @@ package com.example.patientendossier.screen;
 import com.example.patientendossier.model.Appointment;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
+import com.example.patientendossier.utility.Utility;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,7 +11,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CareScreen {
 
@@ -18,6 +21,9 @@ public class CareScreen {
   private final Stage stage;
   private final Care care;
   private final Scene listScene;
+  private BorderPane borderPane;
+  private Button btnBack;
+  private TabPane tabPane;
 
   public CareScreen(Stage stage, Care care) {
     this.stage = stage;
@@ -27,10 +33,10 @@ public class CareScreen {
 
   private Scene setListScene()
   {
-    BorderPane borderPane = new BorderPane();
+    this.borderPane = new BorderPane();
     borderPane.setBottom(addBottomMenu());
 
-    TabPane tabPane = new TabPane();
+    this.tabPane = new TabPane();
 
     this.tab1 = new Tab();
     tab1.setText("Patiënten");
@@ -82,12 +88,17 @@ public class CareScreen {
   {
     HBox hbox = new GlobalElements().getHBoxOne();
 
-    Button btnLogout = new Button("Uitloggen");
-    hbox.getChildren().add(btnLogout);
-
-    btnLogout.setOnAction(e -> stage.setScene(new LoginScreen(this.stage).getCarerLoginScene()));
+    this.btnBack = new Button();
+    hbox.getChildren().add(btnBack);
+    this.setBtnBack();
 
     return hbox;
+  }
+
+  private void setBtnBack()
+  {
+    this.btnBack.setText("Uitloggen");
+    this.btnBack.setOnAction(e -> stage.setScene(new LoginScreen(this.stage).getCarerLoginScene()));
   }
 
   private VBox addPatListPane()
@@ -153,10 +164,71 @@ public class CareScreen {
     });
 
     btnAddPatient.setOnAction(e -> {
+      DossierFormScreen dossierFormScreen = new DossierFormScreen();
+      dossierFormScreen.getVBoxFormPage().setMaxWidth(1200);
 
+      dossierFormScreen.getLblPage().setText("Patiënt toevoegen");
+      dossierFormScreen.getFormPane().getChildren().clear();
+
+      PatientScreen patientScreen = new PatientScreen(null);
+      GridPane gridProfile = patientScreen.getProfileForm();
+      GridPane gridPassword = patientScreen.getUpdatePasswordForm();
+
+      dossierFormScreen.getFormPane().getChildren().add(gridProfile);
+      dossierFormScreen.getFormPane().getChildren().add(gridPassword);
+
+      Button btnSavePatient = new Button("Toevoegen");
+      dossierFormScreen.getFormPane().getChildren().add(btnSavePatient);
+      btnSavePatient.setOnAction(e2 -> {
+        if (patientScreen.validateProfile(gridProfile) && patientScreen.validateNewPassword(gridPassword)) {
+
+          Random random = new Random();
+          StringBuilder stringBuilder = new StringBuilder();
+          stringBuilder.append(1);
+          for (int i = 0; i < 9; i++) {
+            int randomNumber = random.nextInt(10);
+            stringBuilder.append(randomNumber);
+          }
+          String randomString = stringBuilder.toString();
+
+          int number = Integer.parseInt(randomString);
+          String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, gridProfile)).getText();
+          String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, gridProfile)).getText();
+          LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, gridProfile)).getValue();
+          String phoneString = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, gridProfile)).getText();
+          Integer phone = Integer.parseInt(phoneString);
+          String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, gridProfile)).getText();
+          String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, gridPassword)).getText();
+
+          Patient newPatient = new Patient(
+            number, firstname, lastname, birth, phone, email, newPass
+          );
+
+          newPatient.store();
+          this.care.authorizePatient(this.care.getNumber(), number);
+
+          tab1.setContent(addPatListPane());
+          this.returnToTab();
+        }
+      });
+
+      this.borderPane.setCenter(dossierFormScreen.getVBoxFormPage());
+
+      this.btnBack.setText("Vorige");
+
+      this.btnBack.setOnAction(e2 -> this.returnToTab());
     });
 
     return vBox;
+  }
+
+  private void returnToTab()
+  {
+    SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+    selectionModel.select(0);
+
+    borderPane.setCenter(tabPane);
+    this.setBtnBack();
   }
 
   private VBox addCareListPane()

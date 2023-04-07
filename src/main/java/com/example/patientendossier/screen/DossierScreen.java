@@ -172,11 +172,11 @@ public class DossierScreen {
 
     PatientScreen patientScreen = new PatientScreen(this.patient);
 
-    GridPane profileFormGrid = patientScreen.addProfileForm();
+    GridPane profileFormGrid = patientScreen.getProfileForm();
     Button btnUpdate = (Button) new Utility().getNodeByRowColumnIndex(1,7,profileFormGrid);
     btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, patientScreen));
 
-    GridPane passFormGrid = patientScreen.addUpdatePasswordForm();
+    GridPane passFormGrid = patientScreen.getUpdatePasswordForm();
     Button btnUpdatePass = (Button) new Utility().getNodeByRowColumnIndex(1,3,passFormGrid);
     btnUpdatePass.setOnAction(e -> updatePassword(passFormGrid, patientScreen));
 
