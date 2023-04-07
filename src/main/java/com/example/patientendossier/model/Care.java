@@ -312,7 +312,18 @@ public class Care {
 
   public void store()
   {
+    String query = "INSERT INTO care (number, firstname, lastname, birthdate, profession, phonenumber, email, password) " +
+            "VALUES ('" + this.number + "', '" +
+            this.firstname + "', '" +
+            this.lastname + "', '" +
+            this.birthdate + "', '" +
+            this.profession + "', '" +
+            this.phonenumber + "', '" +
+            this.email + "', '" +
+            this.password + "')"
+    ;
 
+    Application.db.storeData(query);
   }
 
   public void update()

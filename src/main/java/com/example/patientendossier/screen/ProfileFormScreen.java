@@ -35,14 +35,14 @@ public class ProfileFormScreen {
     this.care = care;
   }
 
-  public GridPane getProfileForm()
+  public GridPane getProfileForm(String mode)
   {
     GridPane grid = new GridPane();
     grid.setHgap(15);
     grid.setVgap(15);
 
     int compensation = 0;
-    if (care != null) {
+    if (mode.equals("care")) {
       compensation = 1;
     }
 
@@ -66,6 +66,14 @@ public class ProfileFormScreen {
     this.dpBirth = new DatePicker();
     dpBirth.setPrefWidth(950);
     grid.add(dpBirth, 1, 4);
+
+    if (mode.equals("care")) {
+      Label lblProfession = new Label("Beroep");
+      grid.add(lblProfession, 0, 5);
+
+      this.tfProfession = new TextField();
+      grid.add(tfProfession, 1, 5);
+    }
 
     Label lblPhone = new Label("Telefoonnummer:");
     grid.add(lblPhone, 0, 5 + compensation);
@@ -99,20 +107,6 @@ public class ProfileFormScreen {
     }
 
     if (care != null) {
-      Label lblNumber = new Label("Zorgverlener nummer:");
-      grid.add(lblNumber, 0, 1);
-
-      this.tfNumber = new TextField();
-      tfNumber.setPrefWidth(950);
-      tfNumber.setEditable(false);
-      grid.add(tfNumber, 1, 1);
-
-      Label lblProfession = new Label("Beroep");
-      grid.add(lblProfession, 0, 5);
-
-      this.tfProfession = new TextField();
-      grid.add(tfProfession, 1, 5);
-
       tfNumber.setText(care.getNumber().toString());
       tfFirstname.setText(care.getFirstname());
       tfLastname.setText(care.getLastname());
@@ -250,7 +244,7 @@ public class ProfileFormScreen {
     return true;
   }
 
-  public void createNewPatient()
+  public void createNewPatient(Care authorizeCare)
   {
     int number = this.createRandomNumber();
     String firstname = tfFirstname.getText();
@@ -265,7 +259,32 @@ public class ProfileFormScreen {
             number, firstname, lastname, birth, phone, email, newPass
     );
     newPatient.store();
-    this.care.authorizePatient(this.care.getNumber(), number);
+    authorizeCare.authorizePatient(authorizeCare.getNumber(), number);
+  }
+
+  public void updatePatientProfile()
+  {
+    String firstname = tfFirstname.getText();
+    String lastname = tfLastname.getText();
+    LocalDate birth = dpBirth.getValue();
+    String phoneString = tfPhone.getText();
+    Integer phone = Integer.parseInt(phoneString);
+    String email = tfEmail.getText();
+
+    patient.setFirstname(firstname);
+    patient.setLastname(lastname);
+    patient.setBirthdate(birth);
+    patient.setPhonenumber(phone);
+    patient.setEmail(email);
+    patient.update();
+  }
+
+  public void updatePatientPassword()
+  {
+    String newPass = pfNewPass.getText();
+    patient.setPassword(newPass);
+
+    patient.update();
   }
 
   public void createNewCare()
@@ -285,7 +304,6 @@ public class ProfileFormScreen {
     );
 
     newCare.store();
-    this.care.authorizePatient(this.care.getNumber(), number);
   }
 
   private Integer createRandomNumber()

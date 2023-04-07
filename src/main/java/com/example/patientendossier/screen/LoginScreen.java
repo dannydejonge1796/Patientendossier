@@ -20,6 +20,8 @@ public class LoginScreen {
   private final Stage stage;
   private final Scene patientLoginScene;
   private final Scene carerLoginScene;
+  private TextField tfEmail;
+  private PasswordField pfPassword;
 
   public LoginScreen(Stage stage)
   {
@@ -53,11 +55,8 @@ public class LoginScreen {
       boolean validated = this.validateFormFields(grid);
 
       if (validated) {
-        TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
         String email = tfEmail.getText();
-
-        TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
-        String password = tfPassword.getText();
+        String password = pfPassword.getText();
 
         Patient patient = new Login(email, password).loginPatient();
 
@@ -99,11 +98,8 @@ public class LoginScreen {
       Utility util = new Utility();
       boolean validated = this.validateFormFields(grid);
       if (validated) {
-        TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
         String email = tfEmail.getText();
-
-        TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
-        String password = tfPassword.getText();
+        String password = pfPassword.getText();
 
         Care care = new Login(email, password).loginCare();
 
@@ -129,21 +125,20 @@ public class LoginScreen {
     Label lblEmail = new Label("Email:");
     grid.add(lblEmail, 0, 1);
 
-    TextField tfEmail = new TextField();
+    this.tfEmail = new TextField();
     grid.add(tfEmail, 0, 2);
 
     Label lblPassword = new Label("Wachtwoord:");
     grid.add(lblPassword, 0, 3);
 
-    TextField tfPassword = new TextField();
-    grid.add(tfPassword, 0, 4);
+    this.pfPassword = new PasswordField();
+    grid.add(pfPassword, 0, 4);
   }
 
   public boolean validateFormFields(GridPane grid)
   {
     Utility util = new Utility();
 
-    TextField tfEmail = (TextField) new Utility().getNodeByRowColumnIndex(0, 2, grid);
     String email = tfEmail.getText();
 
     if(email.isEmpty()) {
@@ -160,8 +155,7 @@ public class LoginScreen {
       return false;
     }
 
-    TextField tfPassword = (TextField) new Utility().getNodeByRowColumnIndex(0, 4, grid);
-    String password = tfPassword.getText();
+    String password = pfPassword.getText();
 
     if(password.isEmpty()) {
       util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "Voer uw wachtwoord in!");

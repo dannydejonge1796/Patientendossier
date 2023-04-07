@@ -12,7 +12,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DossierScreen {
@@ -172,7 +171,7 @@ public class DossierScreen {
 
     ProfileFormScreen profileFormScreen = new ProfileFormScreen(this.patient, null);
 
-    GridPane profileFormGrid = profileFormScreen.getProfileForm();
+    GridPane profileFormGrid = profileFormScreen.getProfileForm("patient");
     Button btnUpdate = profileFormScreen.getBtnUpdateProfile();
     btnUpdate.setOnAction(e -> updateProfile(profileFormGrid, profileFormScreen));
 
@@ -266,21 +265,8 @@ public class DossierScreen {
   private void updateProfile(GridPane grid, ProfileFormScreen profileFormScreen)
   {
     boolean validated = profileFormScreen.validateProfile(grid);
-
     if (validated) {
-      String firstname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 2, grid)).getText();
-      String lastname = ((TextField) new Utility().getNodeByRowColumnIndex(1, 3, grid)).getText();
-      LocalDate birth = ((DatePicker) new Utility().getNodeByRowColumnIndex(1, 4, grid)).getValue();
-      String phone = ((TextField) new Utility().getNodeByRowColumnIndex(1, 5, grid)).getText();
-      String email = ((TextField) new Utility().getNodeByRowColumnIndex(1, 6, grid)).getText();
-
-      patient.setFirstname(firstname);
-      patient.setLastname(lastname);
-      patient.setBirthdate(birth);
-      patient.setPhonenumber(Integer.parseInt(phone));
-      patient.setEmail(email);
-      patient.update();
-
+      profileFormScreen.updatePatientProfile();
       this.borderPane.setCenter(this.getProfilePane());
     }
   }
@@ -290,11 +276,7 @@ public class DossierScreen {
     boolean validated = profileFormScreen.validateNewPassword(grid);
 
     if (validated) {
-      String newPass = ((TextField) new Utility().getNodeByRowColumnIndex(1, 1, grid)).getText();
-
-      patient.setPassword(newPass);
-      patient.update();
-
+      profileFormScreen.updatePatientPassword();
       this.borderPane.setCenter(this.getProfilePane());
     }
   }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class CareScreen {
 
   private Tab tab1;
+  private Tab tab2;
   private final Stage stage;
   private final Care care;
   private final Scene listScene;
@@ -39,7 +40,7 @@ public class CareScreen {
     tab1.setText("Patiënten");
     tab1.setContent(addPatListPane());
 
-    Tab tab2 = new Tab();
+    this.tab2 = new Tab();
     tab2.setText("Zorgverleners");
     tab2.setContent(addCareListPane());
 
@@ -161,7 +162,7 @@ public class CareScreen {
     });
 
     btnAddPatient.setOnAction(e -> {
-      this.prepareForm("patient", null, null);
+      this.prepareForm("patient", null);
     });
 
     return vBox;
@@ -225,13 +226,13 @@ public class CareScreen {
     });
 
     btnAddCare.setOnAction(e -> {
-      this.prepareForm("care", null, null);
+      this.prepareForm("care", null);
     });
 
     return vBox;
   }
 
-  private void prepareForm(String mode, Patient patient, Care care)
+  private void prepareForm(String mode, Care careUpdate)
   {
     DossierFormScreen dossierFormScreen = new DossierFormScreen();
     dossierFormScreen.getVBoxFormPage().setMaxWidth(1200);
@@ -243,8 +244,8 @@ public class CareScreen {
     }
     dossierFormScreen.getFormPane().getChildren().clear();
 
-    ProfileFormScreen profileFormScreen = new ProfileFormScreen(patient, care);
-    GridPane gridProfile = profileFormScreen.getProfileForm();
+    ProfileFormScreen profileFormScreen = new ProfileFormScreen(null, careUpdate);
+    GridPane gridProfile = profileFormScreen.getProfileForm(mode);
     GridPane gridPassword = profileFormScreen.getUpdatePasswordForm();
 
     dossierFormScreen.getFormPane().getChildren().add(gridProfile);
@@ -255,12 +256,12 @@ public class CareScreen {
     btnSave.setOnAction(e2 -> {
       if (profileFormScreen.validateProfile(gridProfile) && profileFormScreen.validateNewPassword(gridPassword)) {
         if (mode.equals("patient")) {
-          profileFormScreen.createNewPatient();
+          profileFormScreen.createNewPatient(this.care);
           tab1.setContent(addPatListPane());
           this.returnToTab(0);
         } else if (mode.equals("care")) {
           profileFormScreen.createNewCare();
-          tab1.setContent(addCareListPane());
+          tab2.setContent(addCareListPane());
           this.returnToTab(1);
         }
       }
