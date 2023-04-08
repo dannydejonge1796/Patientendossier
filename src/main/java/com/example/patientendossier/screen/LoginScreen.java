@@ -26,11 +26,12 @@ public class LoginScreen {
   public LoginScreen(Stage stage)
   {
     this.stage = stage;
-    this.patientLoginScene = setPatientLoginScene();
-    this.carerLoginScene = setCarerLoginScene();
+    this.carerLoginScene = this.initCarerLoginScene();
+    this.patientLoginScene = this.initPatientLoginScene();
+
   }
 
-  private Scene setPatientLoginScene()
+  private Scene initPatientLoginScene()
   {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -45,7 +46,7 @@ public class LoginScreen {
     grid.add(hlCarerLogin, 0, 5);
     GridPane.setHalignment(hlCarerLogin, HPos.RIGHT);
 
-    hlCarerLogin.setOnAction(e -> this.stage.setScene(this.carerLoginScene));
+    hlCarerLogin.setOnAction(e -> this.stage.setScene(this.initCarerLoginScene()));
 
     Button btnLogin = new Button("Inloggen");
     grid.add(btnLogin, 0, 6);
@@ -74,7 +75,7 @@ public class LoginScreen {
     return new Scene(borderPane);
   }
 
-  private Scene setCarerLoginScene()
+  private Scene initCarerLoginScene()
   {
     GridPane grid = new GridPane();
     grid.setAlignment(Pos.CENTER);
@@ -89,7 +90,7 @@ public class LoginScreen {
     grid.add(hlPatientLogin, 0, 5);
     GridPane.setHalignment(hlPatientLogin, HPos.RIGHT);
 
-    hlPatientLogin.setOnAction(e -> this.stage.setScene(this.patientLoginScene));
+    hlPatientLogin.setOnAction(e -> this.stage.setScene(this.initPatientLoginScene()));
 
     Button btnLogin = new Button("Inloggen");
     grid.add(btnLogin, 0, 6);
