@@ -30,6 +30,7 @@ public class Patient {
 
   public void addResult(Result result)
   {
+    //Query voor het maken van een nieuwe uitslag
     String query =
             "INSERT INTO result (id, patient_number, date, result, made_by)" +
             "VALUES ('" + result.getId() + "', " +
@@ -39,11 +40,13 @@ public class Patient {
             "'" + result.getMadeBy() + "')"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void updateResult(Result result)
   {
+    //Query voor het bijwerken van een uitslag
     String query =
             "UPDATE result " +
             "SET result = '" + result.getResult() + "', " +
@@ -52,31 +55,38 @@ public class Patient {
             "WHERE id = '" + result.getId() + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void deleteResult(Result result)
   {
+    //Query voor het verwijderen van een uitslag
     String query =
             "DELETE FROM result " +
             "WHERE id = '" + result.getId() + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public ArrayList<Result> getResults()
   {
+    //Lijst met uitslag objecten initialiseren
     ArrayList<Result> results = new ArrayList<>();
 
+    //Query voor het ophalen van alle uitslagen van deze patient
     String query =
             "SELECT * " +
             "FROM result " +
             "WHERE patient_number = '" + this.number + "'"
     ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Voor elke row die is gevonden een uitslag object aanmaken en in de lijst stoppen
     try {
       while (result.next()) {
         results.add(new Result(
@@ -96,6 +106,7 @@ public class Patient {
 
   public void addReport(Report report)
   {
+    //Query voor het aanmaken van een nieuw verslag
     String query =
             "INSERT INTO report (id, patient_number, date, report, made_by)" +
             "VALUES ('" + report.getId() + "', " +
@@ -105,11 +116,13 @@ public class Patient {
             "'" + report.getMadeBy() + "')"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void updateReport(Report report)
   {
+    //Query voor het bijwerken van een verslag
     String query =
     "UPDATE report " +
             "SET report = '" + report.getReport() + "', " +
@@ -117,32 +130,38 @@ public class Patient {
             "date = '" + report.getDate() + "' " +
             "WHERE id = '" + report.getId() + "'"
     ;
-
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void deleteReport(Report report)
   {
+    //Query voor het verwijderen van een verslag
     String query =
             "DELETE FROM report " +
             "WHERE id = '" + report.getId() + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public ArrayList<Report> getReports()
   {
+    //Lijst met verslag objecten initialiseren
     ArrayList<Report> reports = new ArrayList<>();
 
+    //Query voor het ophalen van alle verslagen van deze patient
     String query =
             "SELECT * " +
             "FROM report " +
             "WHERE patient_number = '" + this.number + "'"
     ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Van alle rijen in het resultaat een verslag object maken en in de lijst stoppen
     try {
       while (result.next()) {
         reports.add(new Report(
@@ -162,26 +181,32 @@ public class Patient {
 
   public void deleteAppointment(Appointment appointment)
   {
+    //Query voor het verwijderen van een afspraak
     String query =
             "DELETE FROM appointment " +
             "WHERE number = '" + appointment.getNumber() + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public ArrayList<Appointment> getAppointments()
   {
+    //Lijst met afspraak objecten initialiseren
     ArrayList<Appointment> appointments = new ArrayList<>();
 
+    //Query voor het ophalen van alle afspraken van deze patient
     String query =
             "SELECT * " +
             "FROM appointment " +
             "WHERE patient_number = '" + this.number + "'"
     ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Voor elke gevonden afspraak een object aanmaken en in de lijst stoppen
     try {
       while (result.next()) {
         appointments.add(new Appointment(
@@ -203,6 +228,7 @@ public class Patient {
 
   public void addAppointment(Appointment appointment)
   {
+    //Query voor het aanmaken van een nieuwe afspraak
     String query =
             "INSERT INTO appointment (number, patient_number, care_number, care_lastname, description, date, time)" +
             "VALUES ('" + appointment.getNumber() + "', " +
@@ -214,11 +240,13 @@ public class Patient {
                     "'" + appointment.getTime() + "')"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void updateAppointment(Appointment appointment)
   {
+    //Query voor het bijwerken van een bestaande afspraak
     String query =
             "UPDATE appointment " +
             "SET care_number = '" + appointment.getCareNumber() + "', " +
@@ -229,22 +257,25 @@ public class Patient {
             "WHERE number = '" + appointment.getNumber() + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void deleteAllergy(Allergy allergy)
   {
+    //Query voor het verwijderen van een allergie van deze patient
     String query =
             "DELETE FROM allergy_patient " +
             "WHERE patient_number = '" + this.number + "' " +
             "AND allergy_name = '" + allergy.getName() + "'"
     ;
-
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void updateAllergy(Allergy allergy)
   {
+    //Query om een allergie van deze patient bij te werken
     String query =
             "UPDATE allergy_patient " +
             "SET description = '" + allergy.getDescription() + "' " +
@@ -252,23 +283,28 @@ public class Patient {
             "AND allergy_name = '" + allergy.getName() + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void addAllergy(Allergy allergy)
   {
+    //Query om allergie toe te voegen aan deze patient
     String query =
             "INSERT INTO allergy_patient (allergy_name, patient_number, description)" +
             "VALUES ('" + allergy.getName() + "', '" + number + "', '" + allergy.getDescription() + "')"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public ArrayList<String> getAllergyNames()
   {
+    //Lijst met namen van allergieën van deze patient initialiseren
     ArrayList<String> allergyNames = new ArrayList<>();
 
+    //Query om alle allergieën van deze patient op te halen
     String query =
             "SELECT " +
                     "allergy.name " +
@@ -281,8 +317,10 @@ public class Patient {
             "GROUP BY allergy.name"
     ;
 
+    //Data ophaal functie aanroepen van db class
     ResultSet result = Application.db.getData(query);
 
+    //Loop door de resultaten en stop de namen in de lijst
     try {
       while (result.next()) {
         allergyNames.add(result.getString("name"));
@@ -296,8 +334,10 @@ public class Patient {
 
   public ArrayList<Allergy> getAllergies()
   {
+    //Lijst om alle allergieën van deze patient op te slaan initialiseren
     ArrayList<Allergy> allergies = new ArrayList<>();
 
+    //Query voor het ophalen van alle allergieën van deze patient
     String query =
       "SELECT " +
         "allergy.name, " +
@@ -311,8 +351,10 @@ public class Patient {
       "GROUP BY allergy.name"
     ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Allergie objecten aanmaken voor alle rijen en in lijst stoppen
     try {
       while (result.next()) {
         allergies.add(new Allergy(
@@ -329,17 +371,20 @@ public class Patient {
 
 public void deleteMedicine(Medicine medicine)
 {
+  //Query voor het verwijderen van een medicijn uit een patient
   String query =
           "DELETE FROM medicine_patient " +
-                  "WHERE patient_number = '" + this.number + "' " +
-                  "AND medicine_name = '" + medicine.getName() + "'"
-          ;
+          "WHERE patient_number = '" + this.number + "' " +
+          "AND medicine_name = '" + medicine.getName() + "'"
+  ;
 
+  //Roep store functie in db class
   Application.db.storeData(query);
 }
 
   public void updateMedicine(Medicine medicine)
   {
+    //Query voor het bijwerken van een medicijn van een patient
     String query =
             "UPDATE medicine_patient " +
                     "SET description = '" + medicine.getDescription() + "', " +
@@ -348,11 +393,13 @@ public void deleteMedicine(Medicine medicine)
                     "AND medicine_name = '" + medicine.getName() + "'"
             ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void addMedicine(Medicine medicine)
   {
+    //Query voor het toevoegen van een medicijn aan een patient
     String query =
             "INSERT INTO medicine_patient (medicine_name, patient_number, description, dosage)" +
             "VALUES ('" + medicine.getName() + "', '" + number + "', " +
@@ -360,13 +407,16 @@ public void deleteMedicine(Medicine medicine)
                     "'" + medicine.getDosage() + "')"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public ArrayList<String> getMedicineNames()
   {
+    //Lijst van namen van medicijnen van de patient initialiseren
     ArrayList<String> medicineNames = new ArrayList<>();
 
+    //Query voor het ophalen van de namen van medicijnen van de patient
     String query =
             "SELECT " +
                     "medicine.name " +
@@ -379,8 +429,10 @@ public void deleteMedicine(Medicine medicine)
                     "GROUP BY medicine.name"
             ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Door resultaten lopen en namen toevoegen aan de lijst
     try {
       while (result.next()) {
         medicineNames.add(result.getString("name"));
@@ -394,8 +446,10 @@ public void deleteMedicine(Medicine medicine)
 
   public ArrayList<Medicine> getMedicines()
   {
+    //Lijst van medicijn objecten van een patient
     ArrayList<Medicine> medicines = new ArrayList<>();
 
+    //Query om alle medicijnen van een patient op te halen
     String query =
             "SELECT " +
                     "medicine.name, " +
@@ -410,8 +464,10 @@ public void deleteMedicine(Medicine medicine)
                     "GROUP BY medicine.name"
             ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Door resultaten lopen, medicijn objecten aanmaken en toevoegen aan de lijst
     try {
       while (result.next()) {
         medicines.add(new Medicine(
@@ -429,17 +485,20 @@ public void deleteMedicine(Medicine medicine)
 
   public void deleteHealth(Health health)
   {
+    //Een gezondheidsprobleem van een patient verwijderen
     String query =
             "DELETE FROM health_patient " +
                     "WHERE patient_number = '" + this.number + "' " +
                     "AND health_name = '" + health.getName() + "'"
             ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void updateHealth(Health health)
   {
+    //Een gezondheidsprobleem van een patient bijwerken
     String query =
             "UPDATE health_patient " +
                     "SET description = '" + health.getDescription() + "' " +
@@ -447,24 +506,29 @@ public void deleteMedicine(Medicine medicine)
                     "AND health_name = '" + health.getName() + "'"
             ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void addHealth(Health health)
   {
+    //Een gezondheidsprobleem toevoegen aan een patient
     String query =
             "INSERT INTO health_patient (health_name, patient_number, description)" +
                     "VALUES ('" + health.getName() + "', '" + number + "', " +
                     "'" + health.getDescription() + "')"
             ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public ArrayList<String> getHealthNames()
   {
+    //Lijst met namen van gezondheidsproblemen van een patient initialiseren
     ArrayList<String> healthNames = new ArrayList<>();
 
+    //Query voor het ophalen van alle namen van gezondheidsproblemen van een patient
     String query =
             "SELECT " +
                     "health.name " +
@@ -477,8 +541,10 @@ public void deleteMedicine(Medicine medicine)
                     "GROUP BY health.name"
             ;
 
+    //Data ophaal functie aanroepen in de db class
     ResultSet result = Application.db.getData(query);
 
+    //Door resultaten heen lopen en de namen toevoegen aan de lijst
     try {
       while (result.next()) {
         healthNames.add(result.getString("name"));
@@ -492,8 +558,10 @@ public void deleteMedicine(Medicine medicine)
 
   public ArrayList<Health> getHealths()
   {
+    //Lijst met objecten van gezondheidsproblemen van een patient initialiseren
     ArrayList<Health> healths = new ArrayList<>();
 
+    //Query voor het ophalen van alle gezondheidsproblemen van een patient
     String query =
             "SELECT " +
                     "health.name, " +
@@ -506,8 +574,10 @@ public void deleteMedicine(Medicine medicine)
                     "AND health.name = healthPatient.health_name " +
                     "GROUP BY health.name";
 
+    //Data ophaal functie aanroepen in de db class
     ResultSet result = Application.db.getData(query);
 
+    //Door de resultaten heen lopen, gezondheidsprobleem objecten aanmaken en toevoegen aan de lijst
     try {
       while (result.next()) {
         healths.add(new Health(
@@ -522,10 +592,12 @@ public void deleteMedicine(Medicine medicine)
     return healths;
   }
 
-    public ArrayList<Care> getCareOfPatient()
+  public ArrayList<Care> getCareOfPatient()
   {
+    //Lijst met care objecten van een patient initialiseren
     ArrayList<Care> cares = new ArrayList<>();
 
+    //Query om alle zorgverleners van een patient op te halen
     String query =
       "SELECT " +
         "care.number, " +
@@ -545,8 +617,10 @@ public void deleteMedicine(Medicine medicine)
       "GROUP BY care.number"
     ;
 
+    //Data ophaal functie aanroepen in db class
     ResultSet result = Application.db.getData(query);
 
+    //Door resultaten heen lopen, care objecten aanmaken en toevoegen aan de lijst
     try {
       while (result.next()) {
         cares.add(new Care(
@@ -569,6 +643,7 @@ public void deleteMedicine(Medicine medicine)
 
   public void store()
   {
+    //Query om deze patient toe te voegen aan de database
     String query = "INSERT INTO patient (number, firstname, lastname, birthdate, phonenumber, email, password) " +
             "VALUES ('" + this.number + "', '" +
             this.firstname + "', '" +
@@ -578,11 +653,13 @@ public void deleteMedicine(Medicine medicine)
             this.email + "', '" +
             this.password + "')";
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
   public void update()
   {
+    //Query om deze patient te updaten in de database
     String query =
       "UPDATE patient " +
       "SET " +
@@ -595,6 +672,7 @@ public void deleteMedicine(Medicine medicine)
       "WHERE number = '" + this.number + "'"
     ;
 
+    //Roep store functie in db class
     Application.db.storeData(query);
   }
 
