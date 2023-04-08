@@ -94,12 +94,14 @@ public class AllergyScreen {
     tfDescription.setPrefWidth(800);
     //Toevoegen aan grid
     gridForm.add(tfDescription, 1, 2);
+
     //Knop initialiseren
     Button btnUpdate = new Button();
     //Toevoegen aan grid
     gridForm.add(btnUpdate, 1, 3);
     //Knop aan de rechter kant plaatsen
     GridPane.setHalignment(btnUpdate, HPos.RIGHT);
+
     //Als er een allergy object is
     if (allergy != null) {
       //Verander knop text naar wijzig
