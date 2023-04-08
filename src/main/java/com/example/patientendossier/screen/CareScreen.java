@@ -206,6 +206,10 @@ public class CareScreen {
 
     HBox hBoxBottom = new HBox();
 
+    Button btnDeleteCare = new Button("Verwijder");
+    btnDeleteCare.setDisable(true);
+    hBoxBottom.getChildren().add(btnDeleteCare);
+
     Region regionBottom = new Region();
     HBox.setHgrow(regionBottom, Priority.ALWAYS);
     hBoxBottom.getChildren().add(regionBottom);
@@ -216,7 +220,20 @@ public class CareScreen {
 
     vBox.getChildren().add(hBoxBottom);
 
-    table.setOnMouseClicked(e -> btnUpdate.setDisable(table.getSelectionModel().getSelectedItem() == null));
+    table.setOnMouseClicked(e -> {
+      btnDeleteCare.setDisable(table.getSelectionModel().getSelectedItem() == null);
+      btnUpdate.setDisable(table.getSelectionModel().getSelectedItem() == null);
+    });
+
+    btnDeleteCare.setOnAction(e -> {
+      Care selectedCare = table.getSelectionModel().getSelectedItem();
+      care.removeCare(selectedCare.getNumber());
+      if (selectedCare.equals(this.care)) {
+        stage.setScene(new LoginScreen(this.stage).getCarerLoginScene());
+      } else {
+        this.tab2.setContent(addCareListPane());
+      }
+    });
 
     btnUpdate.setOnAction(e -> {
       Care selectedCare = table.getSelectionModel().getSelectedItem();

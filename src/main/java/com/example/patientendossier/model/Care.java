@@ -30,6 +30,16 @@ public class Care {
     this.password = password;
   }
 
+  public void removeCare(Integer careNumber)
+  {
+    String query =
+            "DELETE FROM care " +
+            "WHERE number = '" + careNumber + "'"
+    ;
+
+    Application.db.storeData(query);
+  }
+
   public Integer getHighestResultId()
   {
     String query =
