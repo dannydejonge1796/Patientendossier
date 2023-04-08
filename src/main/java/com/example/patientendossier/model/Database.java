@@ -15,16 +15,17 @@ public class Database {
     String cString = "jdbc:mysql://localhost:" + port + "/" + db + "?user=" + user + "&password=" + password;
 
     try {
+      //Connectie aanmaken met opgegeven data
       this.conn = DriverManager.getConnection(cString);
     } catch (SQLException e) {
-      //e.printStackTrace();
-      System.out.println("Kan geen verbinding maken!");
+      e.printStackTrace();
     }
   }
 
   public ResultSet getData(String query)
   {
     try {
+      //Query uitvoeren en resultaat teruggeven
       Statement stm = this.conn.createStatement();
       return stm.executeQuery(query);
     } catch (SQLException e) {
@@ -37,14 +38,11 @@ public class Database {
   public void storeData(String query)
   {
     try {
+      //Data opslaan d.m.v. query
       Statement stm = this.conn.createStatement();
       stm.execute(query);
     } catch (SQLException e) {
       e.printStackTrace();
     }
-  }
-
-  public Connection getConn() {
-    return conn;
   }
 }
