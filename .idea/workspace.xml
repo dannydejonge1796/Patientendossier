@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="402bc318-f8f9-43e8-8cde-2cb0f1de776d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Care.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Care.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/AllergyScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/AllergyScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/HealthScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/HealthScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/MedicineScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/MedicineScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/utility/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/utility/Utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/utility/Validation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/utility/Validation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +148,7 @@
       <workItem from="1680886853537" duration="323000" />
       <workItem from="1680887288237" duration="741000" />
       <workItem from="1680895507313" duration="4320000" />
-      <workItem from="1680951623787" duration="9493000" />
+      <workItem from="1680951623787" duration="14139000" />
     </task>
     <servers />
   </component>

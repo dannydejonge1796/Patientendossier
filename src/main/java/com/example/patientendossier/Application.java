@@ -14,7 +14,9 @@ public class Application extends javafx.application.Application {
     stage.setWidth(1280);
     stage.setHeight(720);
     stage.setResizable(false);
+    //Initialiseer de database
     db = new Database();
+    //Stel de scene in met het patiënten login scherm
     stage.setScene(new LoginScreen(stage).getPatientLoginScene());
     stage.show();
   }
