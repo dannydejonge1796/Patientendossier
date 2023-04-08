@@ -28,7 +28,6 @@ public class LoginScreen {
     this.stage = stage;
     this.carerLoginScene = this.initCarerLoginScene();
     this.patientLoginScene = this.initPatientLoginScene();
-
   }
 
   private Scene initPatientLoginScene()

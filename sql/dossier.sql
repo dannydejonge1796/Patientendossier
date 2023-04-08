@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 06 apr 2023 om 15:06
+-- Gegenereerd op: 08 apr 2023 om 15:50
 -- Serverversie: 10.4.27-MariaDB
 -- PHP-versie: 8.2.0
 
@@ -59,16 +59,6 @@ CREATE TABLE `allergy_patient` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Gegevens worden geëxporteerd voor tabel `allergy_patient`
---
-
-INSERT INTO `allergy_patient` (`allergy_name`, `patient_number`, `description`) VALUES
-('Cosmetica-allergie', 1234567890, 'blablabla'),
-('Hooikoorts', 1234567890, 'pollen van'),
-('Huisstofmijt', 1234567890, 'sfdgsdfgsdfg'),
-('Latexallergie', 1234567890, 'lkgfhlksdhglhfdsghlsdflgsdfklgsdflk');
-
 -- --------------------------------------------------------
 
 --
@@ -85,13 +75,6 @@ CREATE TABLE `appointment` (
   `time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Gegevens worden geëxporteerd voor tabel `appointment`
---
-
-INSERT INTO `appointment` (`number`, `patient_number`, `care_number`, `care_lastname`, `description`, `date`, `time`) VALUES
-(3, 1234567890, 987654321, 'Care', 'sfdghdfghghdgfhdf', '2023-04-03', '13:10:26');
-
 -- --------------------------------------------------------
 
 --
@@ -102,6 +85,7 @@ CREATE TABLE `care` (
   `number` int(10) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
+  `birthdate` date NOT NULL,
   `profession` varchar(255) NOT NULL,
   `phonenumber` int(10) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -112,8 +96,8 @@ CREATE TABLE `care` (
 -- Gegevens worden geëxporteerd voor tabel `care`
 --
 
-INSERT INTO `care` (`number`, `firstname`, `lastname`, `profession`, `phonenumber`, `email`, `password`) VALUES
-(987654321, 'Danny', 'Care', 'dokter', 612345678, 'danny@gmail.com', '123');
+INSERT INTO `care` (`number`, `firstname`, `lastname`, `birthdate`, `profession`, `phonenumber`, `email`, `password`) VALUES
+(1987654321, 'Danny', 'Care', '2023-04-17', 'dokter', 612345678, 'danny@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -131,7 +115,7 @@ CREATE TABLE `care_patient` (
 --
 
 INSERT INTO `care_patient` (`care_number`, `patient_number`) VALUES
-(987654321, 1234567890);
+(1987654321, 1234567890);
 
 -- --------------------------------------------------------
 
@@ -170,13 +154,6 @@ CREATE TABLE `health_patient` (
   `patient_number` int(10) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Gegevens worden geëxporteerd voor tabel `health_patient`
---
-
-INSERT INTO `health_patient` (`health_name`, `patient_number`, `description`) VALUES
-('Alzheimer', 1234567890, 'fgdhdfhdfgh');
 
 -- --------------------------------------------------------
 
@@ -217,16 +194,6 @@ CREATE TABLE `medicine_patient` (
   `dosage` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Gegevens worden geëxporteerd voor tabel `medicine_patient`
---
-
-INSERT INTO `medicine_patient` (`patient_number`, `medicine_name`, `description`, `dosage`) VALUES
-(1234567890, 'Furosemide', 'dgfhdgf', 'hdfghdfgh'),
-(1234567890, 'Ibuprofen', 'fdsgd', 'gsdfgsdfg'),
-(1234567890, 'Metformine', 'sfdgfdg', 'sdfgsdfgsd'),
-(1234567890, 'Salbutamol', 'fsgdfdg', 'sfgdg');
-
 -- --------------------------------------------------------
 
 --
@@ -259,17 +226,10 @@ INSERT INTO `patient` (`number`, `firstname`, `lastname`, `birthdate`, `phonenum
 CREATE TABLE `report` (
   `id` int(10) NOT NULL,
   `patient_number` int(10) NOT NULL,
-  `description` text NOT NULL,
+  `report` text NOT NULL,
   `made_by` varchar(255) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Gegevens worden geëxporteerd voor tabel `report`
---
-
-INSERT INTO `report` (`id`, `patient_number`, `description`, `made_by`, `date`) VALUES
-(1, 1234567890, 'blabla', 'Care', '2023-04-06');
 
 -- --------------------------------------------------------
 
@@ -280,7 +240,7 @@ INSERT INTO `report` (`id`, `patient_number`, `description`, `made_by`, `date`) 
 CREATE TABLE `result` (
   `id` int(10) NOT NULL,
   `patient_number` int(10) NOT NULL,
-  `description` text NOT NULL,
+  `result` text NOT NULL,
   `made_by` varchar(255) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -299,13 +259,15 @@ ALTER TABLE `allergy`
 -- Indexen voor tabel `allergy_patient`
 --
 ALTER TABLE `allergy_patient`
-  ADD PRIMARY KEY (`allergy_name`,`patient_number`);
+  ADD PRIMARY KEY (`allergy_name`,`patient_number`),
+  ADD KEY `allergy_patient_patient_number` (`patient_number`);
 
 --
 -- Indexen voor tabel `appointment`
 --
 ALTER TABLE `appointment`
-  ADD PRIMARY KEY (`number`);
+  ADD PRIMARY KEY (`number`),
+  ADD KEY `appointment_patient_number` (`patient_number`);
 
 --
 -- Indexen voor tabel `care`
@@ -329,7 +291,8 @@ ALTER TABLE `health`
 -- Indexen voor tabel `health_patient`
 --
 ALTER TABLE `health_patient`
-  ADD PRIMARY KEY (`health_name`,`patient_number`);
+  ADD PRIMARY KEY (`health_name`,`patient_number`),
+  ADD KEY `health_patient_patient_number` (`patient_number`);
 
 --
 -- Indexen voor tabel `medicine`
@@ -341,7 +304,8 @@ ALTER TABLE `medicine`
 -- Indexen voor tabel `medicine_patient`
 --
 ALTER TABLE `medicine_patient`
-  ADD PRIMARY KEY (`patient_number`,`medicine_name`);
+  ADD PRIMARY KEY (`patient_number`,`medicine_name`),
+  ADD KEY `medicine_patient_medcine_name` (`medicine_name`);
 
 --
 -- Indexen voor tabel `patient`
@@ -353,13 +317,58 @@ ALTER TABLE `patient`
 -- Indexen voor tabel `report`
 --
 ALTER TABLE `report`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `report_patient_number` (`patient_number`);
 
 --
 -- Indexen voor tabel `result`
 --
 ALTER TABLE `result`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `result_patient_number` (`patient_number`);
+
+--
+-- Beperkingen voor geëxporteerde tabellen
+--
+
+--
+-- Beperkingen voor tabel `allergy_patient`
+--
+ALTER TABLE `allergy_patient`
+  ADD CONSTRAINT `allergy_patient_allergy_name` FOREIGN KEY (`allergy_name`) REFERENCES `allergy` (`name`),
+  ADD CONSTRAINT `allergy_patient_patient_number` FOREIGN KEY (`patient_number`) REFERENCES `patient` (`number`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Beperkingen voor tabel `appointment`
+--
+ALTER TABLE `appointment`
+  ADD CONSTRAINT `appointment_patient_number` FOREIGN KEY (`patient_number`) REFERENCES `patient` (`number`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Beperkingen voor tabel `health_patient`
+--
+ALTER TABLE `health_patient`
+  ADD CONSTRAINT `health_patient_health_name` FOREIGN KEY (`health_name`) REFERENCES `health` (`name`),
+  ADD CONSTRAINT `health_patient_patient_number` FOREIGN KEY (`patient_number`) REFERENCES `patient` (`number`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Beperkingen voor tabel `medicine_patient`
+--
+ALTER TABLE `medicine_patient`
+  ADD CONSTRAINT `medicine_patient_medcine_name` FOREIGN KEY (`medicine_name`) REFERENCES `medicine` (`name`),
+  ADD CONSTRAINT `medicine_patient_patient_number` FOREIGN KEY (`patient_number`) REFERENCES `patient` (`number`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Beperkingen voor tabel `report`
+--
+ALTER TABLE `report`
+  ADD CONSTRAINT `report_patient_number` FOREIGN KEY (`patient_number`) REFERENCES `patient` (`number`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Beperkingen voor tabel `result`
+--
+ALTER TABLE `result`
+  ADD CONSTRAINT `result_patient_number` FOREIGN KEY (`patient_number`) REFERENCES `patient` (`number`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
