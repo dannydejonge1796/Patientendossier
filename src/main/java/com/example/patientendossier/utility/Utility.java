@@ -1,9 +1,6 @@
 package com.example.patientendossier.utility;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 
 public class Utility {

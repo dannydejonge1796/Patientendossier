@@ -18,7 +18,6 @@ public class ProfileFormScreen {
   private final Patient patient;
   private final Care care;
 
-  private TextField tfNumber;
   private TextField tfFirstname;
   private TextField tfLastname;
   private TextField tfProfession;
@@ -89,7 +88,7 @@ public class ProfileFormScreen {
       Label lblNumber = new Label("Uw patiëntnummer:");
       grid.add(lblNumber, 0, 1);
 
-      this.tfNumber = new TextField();
+      TextField tfNumber = new TextField();
       tfNumber.setPrefWidth(950);
       tfNumber.setEditable(false);
       grid.add(tfNumber, 1, 1);
@@ -107,7 +106,6 @@ public class ProfileFormScreen {
     }
 
     if (care != null) {
-      tfNumber.setText(care.getNumber().toString());
       tfFirstname.setText(care.getFirstname());
       tfLastname.setText(care.getLastname());
       tfProfession.setText(care.getProfession());
@@ -144,6 +142,11 @@ public class ProfileFormScreen {
       this.btnUpdatePassword = new Button("Wijzig");
       grid.add(btnUpdatePassword, 1, 3);
       GridPane.setHalignment(btnUpdatePassword, HPos.RIGHT);
+    }
+
+    if (care != null) {
+      pfNewPass.setText(care.getPassword());
+      pfConfirmPass.setText(care.getPassword());
     }
 
     return grid;
@@ -247,63 +250,63 @@ public class ProfileFormScreen {
   public void createNewPatient(Care authorizeCare)
   {
     int number = this.createRandomNumber();
-    String firstname = tfFirstname.getText();
-    String lastname = tfLastname.getText();
-    LocalDate birth = dpBirth.getValue();
-    String phoneString = tfPhone.getText();
-    Integer phone = Integer.parseInt(phoneString);
-    String email = tfEmail.getText();
-    String newPass = pfNewPass.getText();
 
     Patient newPatient = new Patient(
-            number, firstname, lastname, birth, phone, email, newPass
+            number,
+            tfFirstname.getText(),
+            tfLastname.getText(),
+            dpBirth.getValue(),
+            Integer.parseInt(tfPhone.getText()),
+            tfEmail.getText(),
+            pfNewPass.getText()
     );
+
     newPatient.store();
     authorizeCare.authorizePatient(authorizeCare.getNumber(), number);
   }
 
   public void updatePatientProfile()
   {
-    String firstname = tfFirstname.getText();
-    String lastname = tfLastname.getText();
-    LocalDate birth = dpBirth.getValue();
-    String phoneString = tfPhone.getText();
-    Integer phone = Integer.parseInt(phoneString);
-    String email = tfEmail.getText();
-
-    patient.setFirstname(firstname);
-    patient.setLastname(lastname);
-    patient.setBirthdate(birth);
-    patient.setPhonenumber(phone);
-    patient.setEmail(email);
+    patient.setFirstname(tfFirstname.getText());
+    patient.setLastname(tfLastname.getText());
+    patient.setBirthdate(dpBirth.getValue());
+    patient.setPhonenumber(Integer.parseInt(tfPhone.getText()));
+    patient.setEmail(tfEmail.getText());
     patient.update();
   }
 
   public void updatePatientPassword()
   {
-    String newPass = pfNewPass.getText();
-    patient.setPassword(newPass);
-
+    patient.setPassword(pfNewPass.getText());
     patient.update();
   }
 
   public void createNewCare()
   {
-    int number = this.createRandomNumber();
-    String firstname = tfFirstname.getText();
-    String lastname = tfLastname.getText();
-    LocalDate birth = dpBirth.getValue();
-    String profession = tfProfession.getText();
-    String phoneString = tfPhone.getText();
-    Integer phone = Integer.parseInt(phoneString);
-    String email = tfEmail.getText();
-    String newPass = pfNewPass.getText();
-
     Care newCare = new Care(
-            number, firstname, lastname, birth, profession, phone, email, newPass
+            this.createRandomNumber(),
+            tfFirstname.getText(),
+            tfLastname.getText(),
+            dpBirth.getValue(),
+            tfProfession.getText(),
+            Integer.parseInt(tfPhone.getText()),
+            tfEmail.getText(),
+            pfNewPass.getText()
     );
 
     newCare.store();
+  }
+
+  public void updateCare()
+  {
+    care.setFirstname(tfFirstname.getText());
+    care.setLastname(tfLastname.getText());
+    care.setBirthdate(dpBirth.getValue());
+    care.setProfession(tfProfession.getText());
+    care.setPhonenumber(Integer.parseInt(tfPhone.getText()));
+    care.setEmail(tfEmail.getText());
+    care.setPassword(pfNewPass.getText());
+    care.update();
   }
 
   private Integer createRandomNumber()

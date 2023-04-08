@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Care {
 
-  private Integer number;
+  private final Integer number;
   private String firstname;
   private String lastname;
   private LocalDate birthdate;
@@ -328,15 +328,24 @@ public class Care {
 
   public void update()
   {
+    String query =
+            "UPDATE care " +
+            "SET " +
+            "firstname = '" + this.firstname + "', " +
+            "lastname = '" + this.lastname + "', " +
+            "birthdate = '" + this.birthdate + "', " +
+            "profession = '" + this.profession + "', " +
+            "phonenumber = '" + this.phonenumber + "', " +
+            "email = '" + this.email + "', " +
+            "password = '" + this.password + "' " +
+            "WHERE number = '" + this.number + "'"
+    ;
 
+    Application.db.storeData(query);
   }
 
   public Integer getNumber() {
     return number;
-  }
-
-  public void setNumber(Integer number) {
-    this.number = number;
   }
 
   public String getFirstname() {

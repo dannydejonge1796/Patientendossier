@@ -8,9 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Care.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/model/Care.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/CareScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/CareScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/DossierScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/DossierScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/LoginScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/ProfileFormScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/ProfileFormScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/utility/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/utility/Utility.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +145,8 @@
       <workItem from="1680857743010" duration="14893000" />
       <workItem from="1680886853537" duration="323000" />
       <workItem from="1680887288237" duration="741000" />
-      <workItem from="1680895507313" duration="4094000" />
+      <workItem from="1680895507313" duration="4320000" />
+      <workItem from="1680951623787" duration="3132000" />
     </task>
     <servers />
   </component>
