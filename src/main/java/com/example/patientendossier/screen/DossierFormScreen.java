@@ -21,23 +21,29 @@ public class DossierFormScreen {
 
   private void createFormPane()
   {
+    //Nieuwe VBox aanmaken
     this.vBoxFormPage = new VBox();
     vBoxFormPage.setMaxWidth(1000);
     vBoxFormPage.setPadding(new Insets(20,20,20,20));
     vBoxFormPage.setSpacing(15);
 
+    //Nieuw label aanmaken en toevoegen
     this.lblPage = new Label();
     lblPage.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     vBoxFormPage.getChildren().add(lblPage);
 
+    //Pane voor form aanmaken
     this.formPane = new VBox();
 
+    //Grid voor form aanmaken
     this.gridForm = new GridPane();
     gridForm.setHgap(15);
     gridForm.setVgap(15);
 
+    //Grid aan form pane toevoegen
     formPane.getChildren().add(gridForm);
 
+    //Form pane aan VBox toevoegen
     vBoxFormPage.getChildren().add(formPane);
   }
 
