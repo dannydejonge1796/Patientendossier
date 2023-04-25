@@ -4,14 +4,19 @@ import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class DossierScreen {
@@ -21,7 +26,7 @@ public class DossierScreen {
   private final Care care;
   private final Scene dossierScene;
   private final BorderPane borderPane;
-  private Button btnBack;
+  private Label lblBack;
 
   public DossierScreen(Stage stage, Patient patient, Care care)
   {
@@ -34,10 +39,9 @@ public class DossierScreen {
 
   private Scene setDossierScene()
   {
-    //Menu beneden toevoegen aan border pane
-    this.borderPane.setBottom(this.getBottomMenu());
-    //Menu links toevoegen aan border pane
-    this.borderPane.setLeft(this.getLeftMenu());
+    //Nav toevoegen
+    this.borderPane.setTop(this.getNav());
+
     //Menu midden toevoegen aan border pane
     this.borderPane.setCenter(this.getProfilePane());
 
@@ -45,149 +49,115 @@ public class DossierScreen {
     return new Scene(this.borderPane);
   }
 
-  private HBox getBottomMenu()
+  private HBox getNav()
   {
-    //Herbruikbare HBox ophalen in class
-    HBox hbox = new GlobalElements().getHBoxOne();
+    //Menubar aanmaken
+    HBox hBoxNav = new HBox();
+    hBoxNav.setPrefHeight(100);
+    hBoxNav.setPadding(new Insets(0,15,0,15));
+    hBoxNav.setStyle("-fx-background-color: #21a8cc");
+    hBoxNav.setAlignment(Pos.CENTER_LEFT);
 
-    //Als je ingelogd bent als patient
-    if (this.care == null) {
-      //Uitlog knop aanmaken, toevoegen
-      Button btnLogout = new Button("Uitloggen");
-      hbox.getChildren().add(btnLogout);
-      //Terug naar login als op knop gedrukt wordt
-      btnLogout.setOnAction(e -> this.stage.setScene(new LoginScreen(this.stage).getPatientLoginScene()));
+    // Logo afbeelding toevoegen
+    InputStream inputStream = getClass().getResourceAsStream("/com/example/patientendossier/images/logo.png");
+    if (inputStream != null) {
+      ImageView logo = new ImageView(new Image(inputStream));
+      logo.setFitHeight(70); // Pas de hoogte van de afbeelding aan
+      logo.getStyleClass().add("navIcon");
+      logo.setSmooth(true);
+      logo.setPreserveRatio(true); // Behoud de originele verhoudingen van de afbeelding
+      hBoxNav.getChildren().add(logo);
     } else {
-      //Terug knop aanmaken en toevoegen
-      this.btnBack = new Button("Vorige");
-      hbox.getChildren().add(btnBack);
-      //Functie aanroepen om functionaliteit van de knop in te stellen
-      this.setBtnBack();
+      System.err.println("Unable to load logo image.");
     }
 
-    return hbox;
-  }
-
-  public void setBtnBack()
-  {
-    //Terug naar de patients / zorgverlener lijst
-    btnBack.setOnAction(e -> this.stage.setScene(new CareScreen(this.stage, this.care).getListScene()));
-  }
-
-  private VBox getLeftMenu()
-  {
-    //VBox aanmaken voor menu left
-    VBox vbox = new VBox();
-    vbox.setMinWidth(250);
-    vbox.setPadding(new Insets(25, 25, 25, 25));
-    vbox.setSpacing(5);
-    vbox.setStyle("-fx-border-style: solid inside");
-    vbox.setStyle("-fx-border-width: 2");
-    vbox.setStyle("-fx-border-color: black");
-
-    //Label profiel aanmaken en toevoegen
-    Text txtProfile = new Text("Profiel");
-    txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-    vbox.getChildren().add(txtProfile);
-
-    //Lijst met hyperlinks voor profiel categorie
-    ArrayList<Hyperlink> profileItems = new ArrayList<>();
-    profileItems.add(new Hyperlink("Persoonlijke gegevens"));
-
-    //Alle links in lijst toevoegen
-    for (Hyperlink item : profileItems) {
-      vbox.getChildren().add(item);
-      VBox.setMargin(item, new Insets(0, 0, 0, 20));
-    }
-
-    //Hyperlink actie instellen
-    profileItems.get(0).setOnAction(e -> {
-      //Juist scherm als center van border pane instellen
+    Label lblProfile = new Label("Profiel");
+    lblProfile.getStyleClass().add("navLabel");
+    lblProfile.setCursor(Cursor.HAND);
+    lblProfile.setOnMouseClicked(event -> {
+      //Juiste scherm als center van border pane instellen
       this.borderPane.setCenter(this.getProfilePane());
       //Als je ingelogd bent als zorgverlener
       if (care != null) {
         //Functie om functionaliteit knop in te stellen
-        this.setBtnBack();
+        this.setLblBack();
       }
     });
 
-    //Label afspraken aanmaken en toevoegen
-    Text txtAppointments = new Text("Afspraken");
-    txtAppointments.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-    vbox.getChildren().add(txtAppointments);
+    Label lblApp = new Label("Afspraken");
+    lblApp.getStyleClass().add("navLabel");
+    lblApp.setCursor(Cursor.HAND);
+    lblApp.setOnMouseClicked(event -> this.borderPane.setCenter(new AppointmentScreen(this, this.patient, this.care).getAppointmentPane()));
 
-    //Lijst van hyperlinks onder categorie afspraken
-    ArrayList<Hyperlink> appointmentItems = new ArrayList<>();
-    appointmentItems.add(new Hyperlink("Afspraken"));
+    Label lblReport = new Label("Verslagen");
+    lblReport.getStyleClass().add("navLabel");
+    lblReport.setCursor(Cursor.HAND);
+    lblReport.setOnMouseClicked(event -> this.borderPane.setCenter(new ReportScreen(this, this.patient, this.care).getReportPane()));
 
-    //Hyperlinks in de lijst toevoegen
-    for (Hyperlink item : appointmentItems) {
-      vbox.getChildren().add(item);
-      VBox.setMargin(item, new Insets(0, 0, 0, 20));
+    Label lblResult = new Label("Uitslagen");
+    lblResult.getStyleClass().add("navLabel");
+    lblResult.setCursor(Cursor.HAND);
+    lblResult.setOnMouseClicked(event -> this.borderPane.setCenter(new ResultScreen(this, this.patient, this.care).getResultPane()));
+
+    Label lblMedic = new Label("Medische gegevens");
+    lblMedic.getStyleClass().add("navLabel");
+    lblMedic.setCursor(javafx.scene.Cursor.HAND);
+
+    ContextMenu contextMenuMedic = new ContextMenu();
+    contextMenuMedic.getStyleClass().add("context-menu");
+    MenuItem medicineItem = new MenuItem("Medicijnen");
+    MenuItem allergyItem = new MenuItem("Allergieën");
+    MenuItem healthItem = new MenuItem("Gezondheidsproblemen");
+    contextMenuMedic.getItems().addAll(medicineItem, allergyItem, healthItem);
+
+    medicineItem.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+    allergyItem.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+    healthItem.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+
+    lblMedic.setOnMouseClicked(e -> {
+      double x = lblMedic.getScene().getWindow().getX() + lblMedic.localToScene(0, 0).getX() + 16;
+      double y = lblMedic.getScene().getWindow().getY() + lblMedic.localToScene(0, 0).getY() + (lblMedic.getHeight() * 2.8);
+      contextMenuMedic.show(lblMedic, x, y);
+    });
+
+    medicineItem.setOnAction(e -> this.borderPane.setCenter(new MedicineScreen(this, this.patient, this.care).getMedicinePane()));
+
+    allergyItem.setOnAction(e -> this.borderPane.setCenter(new AllergyScreen(this, this.patient, this.care).getAllergyPane()));
+
+    healthItem.setOnAction(e -> this.borderPane.setCenter(new HealthScreen(this, this.patient, this.care).getHealthPane()));
+
+    //Maak een label om terug te gaan
+    this.lblBack = new Label();
+
+    if (care == null) {
+      lblBack.setText("Uitloggen");
+      lblBack.setOnMouseClicked(e -> this.stage.setScene(new LoginScreen(this.stage).getPatientLoginScene()));
+    } else {
+      lblBack.setText("Vorige");
+      this.setLblBack();
     }
 
-    //Geklikte scherm als center van border pane instellen
-    appointmentItems.get(0).setOnAction(e -> this.borderPane.setCenter(new AppointmentScreen(this, this.patient, this.care).getAppointmentPane()));
+    lblBack.getStyleClass().add("navLabel");
+    lblBack.setCursor(Cursor.HAND);
 
-    //Label verslagen aanmaken en toevoegen
-    Text txtReport = new Text("Verslagen");
-    txtReport.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-    vbox.getChildren().add(txtReport);
+    // Create a separate HBox for lblBack
+    HBox lblBackContainer = new HBox();
+    HBox.setHgrow(lblBackContainer, Priority.SOMETIMES);
+    lblBackContainer.setAlignment(Pos.CENTER_RIGHT);
 
-    //Lijst van hyperlinks onder categorie verslagen
-    ArrayList<Hyperlink> reportItems = new ArrayList<>();
-    reportItems.add(new Hyperlink("Verslagen"));
+// Add lblBack to lblBackContainer
+    lblBackContainer.getChildren().add(lblBack);
 
-    //Hyperlinks in de lijst toevoegen
-    for (Hyperlink item : reportItems) {
-      vbox.getChildren().add(item);
-      VBox.setMargin(item, new Insets(0, 0, 0, 20));
-    }
+    //Menus toevoegen aan menubalk
+    hBoxNav.getChildren().addAll(lblProfile, lblApp, lblReport, lblResult, lblMedic, lblBackContainer);
 
-    //Geklikte scherm als center van border pane instellen
-    reportItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ReportScreen(this, this.patient, this.care).getReportPane()));
+    return hBoxNav;
+  }
 
-    //Label uitslagen aanmaken en toevoegen
-    Text txtResults = new Text("Uitslagen");
-    txtResults.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-    vbox.getChildren().add(txtResults);
-
-    //Lijst van hyperlinks onder categorie uitslagen
-    ArrayList<Hyperlink> resultItems = new ArrayList<>();
-    resultItems.add(new Hyperlink("Uitslagen"));
-
-    //Hyperlinks in de lijst toevoegen
-    for (Hyperlink item : resultItems) {
-      vbox.getChildren().add(item);
-      VBox.setMargin(item, new Insets(0, 0, 0, 20));
-    }
-
-    //Geklikte scherm als center van border pane instellen
-    resultItems.get(0).setOnAction(e -> this.borderPane.setCenter(new ResultScreen(this, this.patient, this.care).getResultPane()));
-
-    //Label medische gegevens aanmaken en toevoegen
-    Text txtMedicInfo = new Text("Medische gegevens");
-    txtMedicInfo.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-    vbox.getChildren().add(txtMedicInfo);
-
-    //Lijst van hyperlinks onder categorie medische gegevens aanmaken
-    ArrayList<Hyperlink> medicInfoItems = new ArrayList<>();
-    medicInfoItems.add(new Hyperlink("Medicijnen"));
-    medicInfoItems.add(new Hyperlink("Allergieën"));
-    medicInfoItems.add(new Hyperlink("Gezondheidsproblemen"));
-
-    //Hyperlinks in de lijst toevoegen
-    for (Hyperlink item : medicInfoItems) {
-      vbox.getChildren().add(item);
-      VBox.setMargin(item, new Insets(0, 0, 0, 20));
-    }
-
-    //Geklikte scherm als center van border pane instellen
-    medicInfoItems.get(0).setOnAction(e -> this.borderPane.setCenter(new MedicineScreen(this, this.patient, this.care).getMedicinePane()));
-    medicInfoItems.get(1).setOnAction(e -> this.borderPane.setCenter(new AllergyScreen(this, this.patient, this.care).getAllergyPane()));
-    medicInfoItems.get(2).setOnAction(e -> this.borderPane.setCenter(new HealthScreen(this, this.patient, this.care).getHealthPane()));
-
-    return vbox;
+  public void setLblBack()
+  {
+    //Terug naar de patients / zorgverlener lijst
+    lblBack.setOnMouseClicked(e -> this.stage.setScene(new CareScreen(this.stage, this.care).getListScene()));
   }
 
   private ScrollPane getProfilePane()
@@ -366,8 +336,8 @@ public class DossierScreen {
     }
   }
 
-  public Button getBtnBack() {
-    return btnBack;
+  public Label getLblBack() {
+    return lblBack;
   }
 
   public BorderPane getBorderPane() {

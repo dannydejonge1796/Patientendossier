@@ -13,6 +13,16 @@
     -fx-padding: 0 10 0 10;
 }
 
+.context-menu {
+    -fx-background-color: white;
+    -fx-font-size: 18;
+    -fx-border-color: lightgray;
+}
+
+.menu-item {
+    -fx-padding: 15,5,15,5;
+}
+
 .navLabel {
     -fx-padding: 0 10 0 10;
     -fx-text-fill: #ffffff;

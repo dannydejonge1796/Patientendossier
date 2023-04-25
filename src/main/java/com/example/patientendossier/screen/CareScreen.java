@@ -13,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
@@ -37,7 +36,18 @@ public class CareScreen {
   {
     //Borderpane initialiseren
     this.borderPane = new BorderPane();
+    //Nav toevoegen
+    this.borderPane.setTop(getNav());
 
+    //Patiëntlijst aan center borderpane toevoegen
+    borderPane.setCenter(addPatListPane());
+
+    //Scene teruggeven
+    return new Scene(borderPane);
+  }
+
+  private HBox getNav()
+  {
     //Menubar aanmaken
     HBox hBoxNav = new HBox();
     hBoxNav.setPrefHeight(100);
@@ -92,14 +102,7 @@ public class CareScreen {
     //Menus toevoegen aan menubalk
     hBoxNav.getChildren().addAll(lblPatient, lblCare, lblAppointment, lblBackContainer);
 
-    //Menubalk aan top borderpane toevoegen
-    borderPane.setTop(hBoxNav);
-
-    //Patiëntlijst aan center borderpane toevoegen
-    borderPane.setCenter(addPatListPane());
-
-    //Scene teruggeven
-    return new Scene(borderPane);
+    return hBoxNav;
   }
 
   private VBox addAppointmentPane()

@@ -62,13 +62,13 @@ public class HealthScreen {
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
 
     //Terug knop ophalen
-    Button btnBack = this.dossier.getBtnBack();
+    Label lblBack = this.dossier.getLblBack();
     //Actie functie van terugknop wijzigen
-    btnBack.setOnAction(e -> {
+    lblBack.setOnMouseClicked(e -> {
       //Info pagina in borderpane stoppen en wordt dan weergegeven
       dossier.getBorderPane().setCenter(new HealthScreen(this.dossier, this.patient, this.care).getHealthPane());
       //Terug knop weer andere functionaliteit geven
-      dossier.setBtnBack();
+      dossier.setLblBack();
     });
     //Pagina label text aanpassen
     dossierForm.getLblPage().setText("Gezondheidsproblemen");

@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="402bc318-f8f9-43e8-8cde-2cb0f1de776d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/patientendossier/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/AllergyScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/AllergyScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/AppointmentScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/AppointmentScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/CareScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/CareScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/DossierScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/DossierScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/HealthScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/HealthScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/MedicineScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/MedicineScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/ReportScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/ReportScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/ResultScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/ResultScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/patientendossier/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/patientendossier/style/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +162,7 @@
       <workItem from="1681888273478" duration="1697000" />
       <workItem from="1681889990278" duration="9213000" />
       <workItem from="1682327604460" duration="5622000" />
-      <workItem from="1682406682488" duration="6286000" />
+      <workItem from="1682406682488" duration="12127000" />
     </task>
     <servers />
   </component>

@@ -58,13 +58,13 @@ public class AllergyScreen {
     //Pagina wordt weergegeven
     this.dossier.getBorderPane().setCenter(dossierForm.getVBoxFormPage());
     //Terug knop ophalen
-    Button btnBack = this.dossier.getBtnBack();
+    Label lblBack = this.dossier.getLblBack();
     //Actie functie van terugknop wijzigen
-    btnBack.setOnAction(e -> {
+    lblBack.setOnMouseClicked(e -> {
       //Info pagina in borderpane stoppen en wordt dan weergegeven
       dossier.getBorderPane().setCenter(new AllergyScreen(this.dossier, this.patient, this.care).getAllergyPane());
       //Terug knop weer andere functionaliteit geven
-      dossier.setBtnBack();
+      dossier.setLblBack();
     });
     //Pagina label text aanpassen
     dossierForm.getLblPage().setText("Allergieën");
