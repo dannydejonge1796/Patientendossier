@@ -5,9 +5,8 @@ import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
@@ -41,6 +40,13 @@ public class ProfileFormScreen {
     grid.setHgap(15);
     grid.setVgap(15);
 
+    ColumnConstraints col1 = new ColumnConstraints();
+    col1.setPercentWidth(20); // Set column 1 width to 20%
+    ColumnConstraints col2 = new ColumnConstraints();
+    col2.setPercentWidth(80); // Set column 2 width to 80%
+
+    grid.getColumnConstraints().addAll(col1, col2);
+
     //Als het formulier wordt gebruikt voor zorgverleners hebben we een optelling van 1 nodig
     int compensation = 0;
     if (mode.equals("care")) {
@@ -49,7 +55,7 @@ public class ProfileFormScreen {
 
     //Label voor pagina aanmaken en toevoegen
     Text txtProfile = new Text("Persoonlijke gegevens");
-    txtProfile.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    txtProfile.getStyleClass().add("subHeader");
     grid.add(txtProfile, 0, 0);
 
     //Label voor veld aanmaken en toevoegen
@@ -72,7 +78,6 @@ public class ProfileFormScreen {
 
     //Datepicker aanmaken en toevoegen
     this.dpBirth = new DatePicker();
-    dpBirth.setPrefWidth(950);
     grid.add(dpBirth, 1, 4);
 
     //Als het form wordt gebruikt voor zorgverleners
@@ -107,7 +112,6 @@ public class ProfileFormScreen {
 
       //Text veld aanmaken die niet te wijzigen is en toevoegen
       TextField tfNumber = new TextField();
-      tfNumber.setPrefWidth(950);
       tfNumber.setEditable(false);
       grid.add(tfNumber, 1, 1);
 
@@ -146,9 +150,16 @@ public class ProfileFormScreen {
     grid.setHgap(15);
     grid.setVgap(15);
 
+    ColumnConstraints col1 = new ColumnConstraints();
+    col1.setPercentWidth(20); // Set column 1 width to 20%
+    ColumnConstraints col2 = new ColumnConstraints();
+    col2.setPercentWidth(80); // Set column 2 width to 80%
+
+    grid.getColumnConstraints().addAll(col1, col2);
+
     //Label van het form aanmaken en toevoegen
     Text txtChangePass = new Text("Wachtwoord");
-    txtChangePass.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+    txtChangePass.getStyleClass().add("subHeader");
     grid.add(txtChangePass, 0, 0);
 
     //Label voor veld aanmaken en toevoegen
@@ -156,7 +167,6 @@ public class ProfileFormScreen {
     grid.add(lblNewPass, 0, 1);
     //Wachtwoord veld aanmaken en toevoegen
     this.pfNewPass = new PasswordField();
-    pfNewPass.setPrefWidth(950);
     grid.add(pfNewPass, 1, 1);
 
     //Label voor veld aanmaken en toevoegen

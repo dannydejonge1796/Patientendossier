@@ -4,8 +4,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class DossierFormScreen {
 
@@ -23,13 +21,13 @@ public class DossierFormScreen {
   {
     //Nieuwe VBox aanmaken
     this.vBoxFormPage = new VBox();
-    vBoxFormPage.setMaxWidth(1000);
+    vBoxFormPage.setMaxWidth(1260);
     vBoxFormPage.setPadding(new Insets(20,20,20,20));
     vBoxFormPage.setSpacing(15);
 
     //Nieuw label aanmaken en toevoegen
     this.lblPage = new Label();
-    lblPage.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+    lblPage.getStyleClass().add("carePageLabel");
     vBoxFormPage.getChildren().add(lblPage);
 
     //Pane voor form aanmaken

@@ -212,7 +212,7 @@ public class MedicineScreen {
     //Laad de tabel
     TableView<Medicine> table = new TableScreen().createTableView(medicines, columnNames, propertyNames);
     //Wijzig het formaat van de tabel
-    table.setPrefWidth(960);
+    table.setPrefWidth(1260);
     //Wanneer een rij wordt aangeklikt, kunnen de knoppen beschikbaar worden gemaakt
     table.setOnMouseClicked(e -> {
       infoPageScreen.getBtnDelete().setDisable(table.getSelectionModel().getSelectedItem() == null);

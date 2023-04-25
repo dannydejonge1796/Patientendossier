@@ -420,7 +420,7 @@ public class CareScreen {
     this.borderPane.setCenter(dossierFormScreen.getVBoxFormPage());
 
     //Terug item opnieuw instellen
-    this.lblBack.setText("Vorige");
+    this.lblBack.setText("Terug");
     String returnTo = mode.equals("patient") ? "patient" : "care";
     this.lblBack.setOnMouseClicked(e2 -> this.returnToPage(returnTo));
   }

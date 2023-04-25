@@ -11,8 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -108,11 +106,7 @@ public class DossierScreen {
     MenuItem medicineItem = new MenuItem("Medicijnen");
     MenuItem allergyItem = new MenuItem("Allergieën");
     MenuItem healthItem = new MenuItem("Gezondheidsproblemen");
-    contextMenuMedic.getItems().addAll(medicineItem, allergyItem, healthItem);
-
-    medicineItem.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
-    allergyItem.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
-    healthItem.setStyle("-fx-border-color: lightgray; -fx-border-width: 0 0 1 0;");
+    contextMenuMedic.getItems().addAll(medicineItem, new SeparatorMenuItem(), allergyItem, new SeparatorMenuItem(), healthItem);
 
     lblMedic.setOnMouseClicked(e -> {
       double x = lblMedic.getScene().getWindow().getX() + lblMedic.localToScene(0, 0).getX() + 16;
@@ -133,7 +127,7 @@ public class DossierScreen {
       lblBack.setText("Uitloggen");
       lblBack.setOnMouseClicked(e -> this.stage.setScene(new LoginScreen(this.stage).getPatientLoginScene()));
     } else {
-      lblBack.setText("Vorige");
+      lblBack.setText("Terug");
       this.setLblBack();
     }
 
@@ -168,13 +162,13 @@ public class DossierScreen {
 
     //VBox aanmaken
     VBox vBox = new VBox();
-    vBox.setMaxWidth(1000);
+    vBox.setPrefWidth(1260);
     vBox.setPadding(new Insets(25, 25, 25, 25));
     vBox.setSpacing(15);
 
     //Welkomst text aanmaken en toevoegen aan VBox
     Text txtWelcome = new Text("Welkom in je patiëntendossier " + patient.getFirstname() + " " + patient.getLastname() + "!");
-    txtWelcome.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+    txtWelcome.getStyleClass().add("carePageLabel");
     vBox.getChildren().add(txtWelcome);
 
     //Profiel form class initialiseren
@@ -202,7 +196,7 @@ public class DossierScreen {
     if (this.care != null) {
       //Maak nieuw label voor sectie van machtiging en voeg deze toe
       Text txtAuthorize = new Text("Machtig zorgverlener");
-      txtAuthorize.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+      txtAuthorize.getStyleClass().add("subHeader");
       vBox.getChildren().add(txtAuthorize);
 
       //Haal alle zorgverleners van een patient op en stop ze in de lijst

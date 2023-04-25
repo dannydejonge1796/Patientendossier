@@ -176,7 +176,7 @@ public class ReportScreen {
     TableView<Report> table = new TableScreen().createTableView(reports, columnNames, propertyNames);
 
     //Wijzig het formaat van de tabel
-    table.setPrefWidth(960);
+    table.setPrefWidth(1260);
 
     //Wanneer een rij wordt aangeklikt, kunnen de knoppen beschikbaar worden gemaakt
     table.setOnMouseClicked(e -> {

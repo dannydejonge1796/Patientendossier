@@ -300,7 +300,7 @@ public class AppointmentScreen {
     TableView<Appointment> table = new TableScreen().createTableView(appointments, columnNames, propertyNames);
 
     //Wijzig het formaat van de tabel
-    table.setPrefWidth(960);
+    table.setPrefWidth(1260);
 
     //Wanneer een rij wordt aangeklikt, kunnen de knoppen beschikbaar worden gemaakt
     table.setOnMouseClicked(e -> {

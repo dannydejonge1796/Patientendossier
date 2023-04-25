@@ -44,7 +44,7 @@ public class LoginScreen {
     GridPane gridForm = new GridPane();
     gridForm.setMaxWidth(250);
     gridForm.setMaxHeight(350);
-    gridForm.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 20; -fx-background-radius: 20");
+    gridForm.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 10; -fx-background-radius: 10");
     gridForm.setAlignment(Pos.CENTER);
     gridForm.setHgap(10);
     gridForm.setVgap(20);
@@ -129,7 +129,7 @@ public class LoginScreen {
     GridPane gridForm = new GridPane();
     gridForm.setMaxWidth(300);
     gridForm.setMaxHeight(350);
-    gridForm.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 20; -fx-background-radius: 20");
+    gridForm.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 10; -fx-background-radius: 10");
     gridForm.setAlignment(Pos.CENTER);
     gridForm.setHgap(10);
     gridForm.setVgap(20);

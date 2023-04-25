@@ -7,8 +7,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class InfoPageScreen {
 
@@ -28,19 +26,19 @@ public class InfoPageScreen {
   {
     //Vbox aanmaken
     this.vBoxInfoPage = new VBox();
-    vBoxInfoPage.setMaxWidth(1000);
+    vBoxInfoPage.setMaxWidth(1260);
     vBoxInfoPage.setPadding(new Insets(20,20,20,20));
     vBoxInfoPage.setSpacing(15);
 
     //HBox voor bovenste gedeelte aanmaken
     HBox hBoxTop = new HBox();
-    hBoxTop.setPrefWidth(950);
+    hBoxTop.setPrefWidth(1260);
 
     //HBox aanmaken voor label
     HBox hBoxLblPage = new HBox();
     //Nieuwe label aanmaken en toevoegen
     this.lblPage = new Label();
-    lblPage.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+    lblPage.getStyleClass().add("carePageLabel");
     hBoxLblPage.getChildren().add(lblPage);
     //HBox in de volledige breedte laten uitstrekken
     HBox.setHgrow(hBoxLblPage, Priority.SOMETIMES);
@@ -55,7 +53,7 @@ public class InfoPageScreen {
 
     //Een pane aanmaken waar de tabel moet komen en vervolgens toevoegen
     this.hBoxTable = new HBox();
-    hBoxTable.setPrefWidth(950);
+    hBoxTable.setPrefWidth(1260);
     vBoxInfoPage.getChildren().add(hBoxTable);
 
     //Een HBox aanmaken voor het onderste gedeelte van het scherm
