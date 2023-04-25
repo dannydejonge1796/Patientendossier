@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="402bc318-f8f9-43e8-8cde-2cb0f1de776d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/patientendossier/style/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/InfoPageScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/InfoPageScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/TableScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/TableScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/CareScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/CareScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/patientendossier/screen/LoginScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,16 +60,16 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/danny/Mijn Drive (dannydejonge1796@gmail.com)/avans/Jaar 2022-2023/Periode 2/BP/Patientendossier/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/danny/Mijn Drive/avans/Jaar 2022-2023/Periode 2/BP/Patientendossier&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3954023&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -75,6 +78,7 @@
       <recent name="C:\Users\danny\Mijn Drive (dannydejonge1796@gmail.com)\avans\Jaar 2022-2023\Periode 2\BP\Patientendossier\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danny\Mijn Drive\avans\Jaar 2022-2023\Periode 2\BP\Patientendossier\src\main\resources\com\example\patientendossier" />
       <recent name="C:\Users\danny\Mijn Drive (dannydejonge1796@gmail.com)\avans\Jaar 2022-2023\Periode 2\BP\Patientendossier\src\main\resources\com.example.patientendossier" />
     </key>
   </component>
@@ -145,7 +149,15 @@
       <workItem from="1680887288237" duration="741000" />
       <workItem from="1680895507313" duration="4320000" />
       <workItem from="1680951623787" duration="16918000" />
-      <workItem from="1681032324490" duration="10636000" />
+      <workItem from="1681032324490" duration="10697000" />
+      <workItem from="1681142944476" duration="904000" />
+      <workItem from="1681145286598" duration="3424000" />
+      <workItem from="1681723316191" duration="466000" />
+      <workItem from="1681811502923" duration="986000" />
+      <workItem from="1681888273478" duration="1697000" />
+      <workItem from="1681889990278" duration="9213000" />
+      <workItem from="1682327604460" duration="5622000" />
+      <workItem from="1682406682488" duration="6286000" />
     </task>
     <servers />
   </component>

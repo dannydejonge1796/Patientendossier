@@ -9,11 +9,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.InputStream;
 
 public class LoginScreen {
 
@@ -32,35 +34,46 @@ public class LoginScreen {
 
   private Scene initPatientLoginScene()
   {
-    //Grid{ane aanmaken
-    GridPane grid = new GridPane();
-    grid.setAlignment(Pos.CENTER);
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(25, 25, 25, 25));
+    //Stackpane aanmaken
+    StackPane stackPane = new StackPane();
+
+    //Achtergrond instellen
+    this.setBackground(stackPane);
+
+    //Gridpane aanmaken
+    GridPane gridForm = new GridPane();
+    gridForm.setMaxWidth(200);
+    gridForm.setMaxHeight(400);
+    gridForm.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 20; -fx-background-radius: 20");
+    gridForm.setAlignment(Pos.CENTER);
+    gridForm.setHgap(10);
+    gridForm.setVgap(20);
+    gridForm.setPadding(new Insets(25));
+
+    stackPane.getChildren().add(gridForm);
 
     //Pagina label aanmaken en toevoegen
     Text txtPatientLogin = new Text("Inloggen voor patiënten");
     //Functie aanroepen om form velden aan de grid toe te voegen
-    addFormFields(grid, txtPatientLogin);
+    addFormFields(gridForm, txtPatientLogin);
 
     //Hyperlink om te switchen naar de zorgverlener login pagina
     Hyperlink hlCarerLogin = new Hyperlink("Bent u zorgverlener? Login hier.");
     hlCarerLogin.setOnAction(e -> this.stage.setScene(this.initCarerLoginScene()));
     //Hyperlink toevoegen
-    grid.add(hlCarerLogin, 0, 5);
+    gridForm.add(hlCarerLogin, 0, 5);
     GridPane.setHalignment(hlCarerLogin, HPos.RIGHT);
 
     //Knop om in te loggen aanmaken
     Button btnLogin = new Button("Inloggen");
-    grid.add(btnLogin, 0, 6);
+    gridForm.add(btnLogin, 0, 6);
 
     //Actie voor login knop
     btnLogin.setOnAction(e -> {
       //Utility class initialiseren
       Utility util = new Utility();
       //Als form gevalideerd is
-      if (this.validateFormFields(grid)) {
+      if (this.validateFormFields(gridForm)) {
         //Data uit velden halen
         String email = tfEmail.getText();
         String password = pfPassword.getText();
@@ -69,7 +82,7 @@ public class LoginScreen {
         //Als er geen patient gevonden is
         if (patient == null) {
           //Foutmelding
-          util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
+          util.showAlert(Alert.AlertType.ERROR, gridForm.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
           //Anders dossier inladen
           this.stage.setScene(new DossierScreen(this.stage, patient, null).getDossierScene());
@@ -79,42 +92,74 @@ public class LoginScreen {
 
     //Grid aan borderpane toevoegen
     BorderPane borderPane = new BorderPane();
-    borderPane.setCenter(grid);
+    borderPane.setCenter(stackPane);
 
     return new Scene(borderPane);
   }
 
+  private void setBackground(StackPane stackPane)
+  {
+    InputStream inputStream = getClass().getResourceAsStream("/com/example/patientendossier/images/wallpaper.jpg");
+    if (inputStream != null) {
+      // Wallpaper image laden
+      Image wallpaperImage = new Image(inputStream);
+
+      // BackgroundImage object aanmaken met de wallpaper image
+      BackgroundImage backgroundImage = new BackgroundImage(wallpaperImage,
+              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+              BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, false));
+
+      // Background object aanmaken met de BackgroundImage
+      Background background = new Background(backgroundImage);
+
+      // Background instellen op de GridPane
+      stackPane.setBackground(background);
+    }
+  }
+
   private Scene initCarerLoginScene()
   {
-    //Grid{ane aanmaken
-    GridPane grid = new GridPane();
-    grid.setAlignment(Pos.CENTER);
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(25, 25, 25, 25));
+    //Stackpane aanmaken
+    StackPane stackPane = new StackPane();
+
+    //Achtergrond instellen
+    this.setBackground(stackPane);
+
+    //Gridpane aanmaken
+    GridPane gridForm = new GridPane();
+    gridForm.setMaxWidth(250);
+    gridForm.setMaxHeight(400);
+    gridForm.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius: 20; -fx-background-radius: 20");
+    gridForm.setAlignment(Pos.CENTER);
+    gridForm.setHgap(10);
+    gridForm.setVgap(20);
+    gridForm.setPadding(new Insets(25));
+
+    stackPane.getChildren().add(gridForm);
 
     //Pagina label aanmaken en toevoegen
     Text txtCarerLogin = new Text("Inloggen voor zorgverleners");
     //Functie aanroepen om form velden aan de grid toe te voegen
-    addFormFields(grid, txtCarerLogin);
+    addFormFields(gridForm, txtCarerLogin);
 
     //Hyperlink om te switchen naar de patient login pagina
     Hyperlink hlPatientLogin = new Hyperlink("Bent u patiënt? Login hier.");
     hlPatientLogin.setOnAction(e -> this.stage.setScene(this.initPatientLoginScene()));
     //Hyperlink toevoegen
-    grid.add(hlPatientLogin, 0, 5);
+    gridForm.add(hlPatientLogin, 0, 5);
     GridPane.setHalignment(hlPatientLogin, HPos.RIGHT);
 
     //Knop om in te loggen aanmaken
     Button btnLogin = new Button("Inloggen");
-    grid.add(btnLogin, 0, 6);
+    gridForm.add(btnLogin, 0, 6);
+    btnLogin.getStyleClass().add("button");
 
     //Actie voor login knop
     btnLogin.setOnAction(e -> {
       //Utility class initialiseren
       Utility util = new Utility();
       //Als form gevalideerd is
-      if (this.validateFormFields(grid)) {
+      if (this.validateFormFields(gridForm)) {
         //Data uit velden halen
         String email = tfEmail.getText();
         String password = pfPassword.getText();
@@ -125,7 +170,7 @@ public class LoginScreen {
         //Als er geen care gevonden is
         if (care == null) {
           //Foutmelding
-          util.showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
+          util.showAlert(Alert.AlertType.ERROR, gridForm.getScene().getWindow(), "Error!", "De combinatie van email en wachtwoord is onjuist!");
         } else {
           //Anders dossier inladen
           this.stage.setScene(new CareScreen(this.stage, care).getListScene());
@@ -135,7 +180,7 @@ public class LoginScreen {
 
     //Grid aan borderpane toevoegen
     BorderPane borderPane = new BorderPane();
-    borderPane.setCenter(grid);
+    borderPane.setCenter(stackPane);
 
     return new Scene(borderPane);
   }

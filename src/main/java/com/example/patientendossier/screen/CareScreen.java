@@ -4,24 +4,28 @@ import com.example.patientendossier.model.Appointment;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class CareScreen {
 
-  private Tab tab1;
-  private Tab tab2;
   private final Stage stage;
   private final Care care;
   private final Scene listScene;
   private BorderPane borderPane;
-  private Button btnBack;
-  private TabPane tabPane;
+  private Label lblBack;
 
   public CareScreen(Stage stage, Care care) {
     this.stage = stage;
@@ -33,36 +37,66 @@ public class CareScreen {
   {
     //Borderpane initialiseren
     this.borderPane = new BorderPane();
-    //Menu beneden toevoegen
-    borderPane.setBottom(addBottomMenu());
 
-    //Tabs aanmaken
-    this.tabPane = new TabPane();
+    //Menubar aanmaken
+    HBox hBoxNav = new HBox();
+    hBoxNav.setPrefHeight(100);
+    hBoxNav.setPadding(new Insets(0,15,0,15));
+    hBoxNav.setStyle("-fx-background-color: #21a8cc");
+    hBoxNav.setAlignment(Pos.CENTER_LEFT);
 
-    this.tab1 = new Tab();
-    tab1.setText("Patiënten");
-    tab1.setContent(addPatListPane());
+    // Logo afbeelding toevoegen
+    InputStream inputStream = getClass().getResourceAsStream("/com/example/patientendossier/images/logo.png");
+    if (inputStream != null) {
+      ImageView logo = new ImageView(new Image(inputStream));
+      logo.setFitHeight(70); // Pas de hoogte van de afbeelding aan
+      logo.getStyleClass().add("navIcon");
+      logo.setSmooth(true);
+      logo.setPreserveRatio(true); // Behoud de originele verhoudingen van de afbeelding
+      hBoxNav.getChildren().add(logo);
+    } else {
+      System.err.println("Unable to load logo image.");
+    }
 
-    this.tab2 = new Tab();
-    tab2.setText("Zorgverleners");
-    tab2.setContent(addCareListPane());
+    //Maak een label voor de graphic van het menu
+    Label lblPatient = new Label("Patiënten");
+    lblPatient.getStyleClass().add("navLabel");
+    lblPatient.setCursor(Cursor.HAND);
+    lblPatient.setOnMouseClicked(event -> borderPane.setCenter(addPatListPane()));
 
-    Tab tab3 = new Tab();
-    tab3.setText("Afspraken");
-    tab3.setContent(addAppointmentPane());
+    //Maak een label voor de graphic van het menu
+    Label lblCare = new Label("Zorgverleners");
+    lblCare.getStyleClass().add("navLabel");
+    lblCare.setCursor(Cursor.HAND);
+    lblCare.setOnMouseClicked(event -> borderPane.setCenter(addCareListPane()));
 
-    //Tabs toevoegen aan de tab pane
-    tabPane.getTabs().addAll(tab1, tab2, tab3);
+    //Maak een label voor de graphic van het menu
+    Label lblAppointment = new Label("Afspraken");
+    lblAppointment.getStyleClass().add("navLabel");
+    lblAppointment.setCursor(Cursor.HAND);
+    lblAppointment.setOnMouseClicked(event -> borderPane.setCenter(addAppointmentPane()));
 
-    //Eerste tab selecteren
-    SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-    selectionModel.select(0);
+    //Maak een label om terug te gaan
+    this.lblBack = new Label("Uitloggen");
+    lblBack.getStyleClass().add("navLabel");
+    lblBack.setCursor(Cursor.HAND);
 
-    //Tabs kunnen niet worden gesloten
-    tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+    // Create a separate HBox for lblBack
+    HBox lblBackContainer = new HBox();
+    HBox.setHgrow(lblBackContainer, Priority.SOMETIMES);
+    lblBackContainer.setAlignment(Pos.CENTER_RIGHT);
 
-    //Tab pane aan borderpane toevoegen
-    borderPane.setCenter(tabPane);
+// Add lblBack to lblBackContainer
+    lblBackContainer.getChildren().add(lblBack);
+
+    //Menus toevoegen aan menubalk
+    hBoxNav.getChildren().addAll(lblPatient, lblCare, lblAppointment, lblBackContainer);
+
+    //Menubalk aan top borderpane toevoegen
+    borderPane.setTop(hBoxNav);
+
+    //Patiëntlijst aan center borderpane toevoegen
+    borderPane.setCenter(addPatListPane());
 
     //Scene teruggeven
     return new Scene(borderPane);
@@ -70,17 +104,19 @@ public class CareScreen {
 
   private VBox addAppointmentPane()
   {
+    this.setLblBack();
+
     //Vbox aanmaken
     VBox vBox = new VBox();
     vBox.setPadding(new Insets(25, 25, 25, 25));
     vBox.setSpacing(20);
 
     //Label van pagina aanmaken
-    Label lblMyPatients = new Label("Mijn afspraken");
-    lblMyPatients.setFont(Font.font(24));
+    Label lblMyApp = new Label("Mijn afspraken");
+    lblMyApp.getStyleClass().add("carePageLabel");
 
     //Label toevoegen aan vbox
-    vBox.getChildren().add(lblMyPatients);
+    vBox.getChildren().add(lblMyApp);
 
     //Lijst met alle afspraak objecten van een zorgverlener aanmaken
     ArrayList<Appointment> appointments = this.care.getAppointments();
@@ -96,29 +132,18 @@ public class CareScreen {
     return vBox;
   }
 
-  private HBox addBottomMenu()
+  private void setLblBack()
   {
-    //HBox ophalen die vaker gebruikt wordt uit global elements class
-    HBox hbox = new GlobalElements().getHBoxOne();
-
-    //Uitlog knop toevoegen
-    this.btnBack = new Button();
-    hbox.getChildren().add(btnBack);
-    this.setBtnBack();
-
-    return hbox;
-  }
-
-  private void setBtnBack()
-  {
-    //Text knop instellen
-    this.btnBack.setText("Uitloggen");
+    //Text label instellen
+    this.lblBack.setText("Uitloggen");
     //Actie terug naar zorgverlener login instellen
-    this.btnBack.setOnAction(e -> stage.setScene(new LoginScreen(this.stage).getCarerLoginScene()));
+    this.lblBack.setOnMouseClicked(e -> stage.setScene(new LoginScreen(this.stage).getCarerLoginScene()));
   }
 
   private VBox addPatListPane()
   {
+    this.setLblBack();
+
     //Vbox aanmaken
     VBox vBox = new VBox();
     vBox.setPadding(new Insets(25, 25, 25, 25));
@@ -129,7 +154,7 @@ public class CareScreen {
 
     //Pagina label instellen
     Label lblMyPatients = new Label("Mijn patiënten");
-    lblMyPatients.setFont(Font.font(24));
+    lblMyPatients.getStyleClass().add("carePageLabel");
     //Label toevoegen
     hBoxTop.getChildren().add(lblMyPatients);
 
@@ -195,7 +220,7 @@ public class CareScreen {
       //Bevoegdheid van de zorgverlener verwijderen
       care.unAuthorizePatient(this.care.getNumber(), selectedPatientNumber);
       //Lijst met patients herladen
-      this.tab1.setContent(addPatListPane());
+      this.borderPane.setCenter(addPatListPane());
     });
 
     //Patient toevoegen form inladen
@@ -204,20 +229,23 @@ public class CareScreen {
     return vBox;
   }
 
-  private void returnToTab(int tabNumber)
+  private void returnToPage(String page)
   {
-    //Tab selecteren
-    SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-    selectionModel.select(tabNumber);
+    //Borderpane instellen met de juiste pagina
+    switch (page) {
+      case "patient" -> borderPane.setCenter(addPatListPane());
+      case "care" -> borderPane.setCenter(addCareListPane());
+      case "appointment" -> borderPane.setCenter(addAppointmentPane());
+    }
 
-    //Borderpane instellen met de tab pane
-    borderPane.setCenter(tabPane);
     //Functionaliteit van terug knop wijzigen
-    this.setBtnBack();
+    this.setLblBack();
   }
 
   private VBox addCareListPane()
   {
+    this.setLblBack();
+
     //VBox aanmaken
     VBox vBox = new VBox();
     vBox.setPadding(new Insets(25, 25, 25, 25));
@@ -228,7 +256,7 @@ public class CareScreen {
 
     //Label van de pagina aanmaken en toevoegen
     Label lblCares = new Label("Zorgverleners");
-    lblCares.setFont(Font.font(24));
+    lblCares.getStyleClass().add("carePageLabel");
     hBoxTop.getChildren().add(lblCares);
 
     //Region aanmaken en toevoegen voor ruimte tussen het label en de knop
@@ -293,7 +321,7 @@ public class CareScreen {
         stage.setScene(new LoginScreen(this.stage).getCarerLoginScene());
       } else {
         //Anders herlaad de zorgverlener lijst
-        this.tab2.setContent(addCareListPane());
+        this.borderPane.setCenter(addCareListPane());
       }
     });
 
@@ -368,22 +396,19 @@ public class CareScreen {
           //Deze care meegeven om patient te linken aan deze care
           profileFormScreen.createNewPatient(this.care);
           //Herlaad pagina
-          tab1.setContent(addPatListPane());
-          this.returnToTab(0);
+          this.returnToPage("patient");
           //Als modus care is maar er geen care object is
         } else if (mode.equals("care") && careUpdate == null) {
           //Functie voor het maken van een nieuwe care aanroepen
           profileFormScreen.createNewCare();
           //Herlaad pagina
-          tab2.setContent(addCareListPane());
-          this.returnToTab(1);
+          this.returnToPage("care");
           //Als er nu wel een care object is meegegeven
         } else if (mode.equals("care")) {
           //Functie aanroepen om de care te updaten
           profileFormScreen.updateCare();
           //Herlaad pagina
-          tab2.setContent(addCareListPane());
-          this.returnToTab(1);
+          this.returnToPage("care");
         }
       }
     });
@@ -391,10 +416,10 @@ public class CareScreen {
     //Form pagina instellen als het center van de borderpane
     this.borderPane.setCenter(dossierFormScreen.getVBoxFormPage());
 
-    //Terug knop opnieuw instellen
-    this.btnBack.setText("Vorige");
-    int returnTo = mode.equals("patient") ? 0 : 1;
-    this.btnBack.setOnAction(e2 -> this.returnToTab(returnTo));
+    //Terug item opnieuw instellen
+    this.lblBack.setText("Vorige");
+    String returnTo = mode.equals("patient") ? "patient" : "care";
+    this.lblBack.setOnMouseClicked(e2 -> this.returnToPage(returnTo));
   }
 
   public Scene getListScene() {

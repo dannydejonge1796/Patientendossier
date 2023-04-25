@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+* {
+    -fx-font-family: "Lato";
+}
+
+.button {
+    -fx-background-color: #ff0000; /* Set button background color to red */
+    -fx-text-fill: #ffffff; /* Set button text color to white */
+}
+
+.navIcon {
+    -fx-padding: 0 10 0 10;
+}
+
+.navLabel {
+    -fx-padding: 0 10 0 10;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+.carePageLabel {
+    -fx-font-size: 24;
+}
+
+/* Set background color for table view */
+.table-view {
+    -fx-background-color: #ffffe6;
+}
+
+/* Set alternating row colors */
+.table-row-cell:odd {
+    -fx-background-color: #ffffe6;
+}
+
+/* Set text color for table cells */
+.table-cell {
+    -fx-text-fill: #333333;
+}
+
+/* Set hover effect on table rows */
+.table-row-cell:hover {
+    -fx-background-color: lightgray;
+}
+
+/* Set selection color for selected table rows */
+.table-row-cell:selected {
+    -fx-background-color: lightgray;
+}
+
+.table-view .column-header {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: lightgray;
+}
+
+.table-view .column-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
