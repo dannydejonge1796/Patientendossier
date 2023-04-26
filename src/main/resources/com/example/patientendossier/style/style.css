@@ -13,6 +13,10 @@
     -fx-padding: 0 10 0 10;
 }
 
+.separator {
+    -fx-border-color: lightgray;
+}
+
 .context-menu {
     -fx-background-color: white;
     -fx-font-size: 18;
