@@ -109,6 +109,7 @@ public class MedicineScreen {
     gridForm.add(tfDosage, 1, 3);
     //Knop initialiseren
     Button btnUpdate = new Button();
+    btnUpdate.getStyleClass().add("btnPrimary");
     //Toevoegen aan grid
     gridForm.add(btnUpdate, 1, 4);
     //Knop aan de rechter kant plaatsen

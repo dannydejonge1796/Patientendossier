@@ -1,5 +1,7 @@
 package com.example.patientendossier.screen;
 
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,7 +46,12 @@ public class InfoPageScreen {
     HBox.setHgrow(hBoxLblPage, Priority.SOMETIMES);
 
     //Knop toevoegen aanmaken en op onzichtbaar instellen
-    this.btnAdd = new Button("Toevoegen");
+    this.btnAdd = new Button();
+    //Set font awesome icon as graphic
+    btnAdd.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.PLUS));
+    this.btnAdd.getStyleClass().add("btnPrimary");
+
+
     this.btnAdd.setVisible(false);
     //Label en knop toevoegen
     hBoxTop.getChildren().addAll(hBoxLblPage, this.btnAdd);
@@ -60,7 +67,10 @@ public class InfoPageScreen {
     HBox hBoxBottom = new HBox();
 
     //Knop verwijderen aanmaken, op onzichtbaar zetten en onbeschikbaar maken
-    this.btnDelete = new Button("Verwijderen");
+    this.btnDelete = new Button();
+    btnDelete.getStyleClass().add("btnPrimary");
+    //Set font awesome icon as graphic
+    btnDelete.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.MINUS));
     this.btnDelete.setVisible(false);
     this.btnDelete.setDisable(true);
 
@@ -69,7 +79,10 @@ public class InfoPageScreen {
     HBox.setHgrow(regionBottom, Priority.ALWAYS);
 
     //Knop wijzigen aanmaken, op onzichtbaar zetten en onbeschikbaar maken
-    this.btnUpdate = new Button("Wijzigen");
+    this.btnUpdate = new Button();
+    btnUpdate.getStyleClass().add("btnPrimary");
+    //Set font awesome icon as graphic
+    btnUpdate.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.EDIT));
     this.btnUpdate.setVisible(false);
     this.btnUpdate.setDisable(true);
 

@@ -3,6 +3,8 @@ package com.example.patientendossier.screen;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
 import com.example.patientendossier.utility.Utility;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
@@ -124,7 +126,11 @@ public class ProfileFormScreen {
       tfEmail.setText(patient.getEmail());
 
       //Nieuwe submit knop aanmaken en toevoegen
-      this.btnUpdateProfile = new Button("Wijzig");
+      this.btnUpdateProfile = new Button();
+      this.btnUpdateProfile.getStyleClass().add("btnPrimary");
+      //Set font awesome icon as graphic
+      btnUpdateProfile.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.EDIT));
+
       grid.add(btnUpdateProfile, 1, 7 + compensation);
       GridPane.setHalignment(btnUpdateProfile, HPos.RIGHT);
     }
@@ -179,7 +185,11 @@ public class ProfileFormScreen {
     //Als er een patient object is meegegeven
     if (patient != null) {
       //Maak knop wijzig en voeg toe aan grid
-      this.btnUpdatePassword = new Button("Wijzig");
+      this.btnUpdatePassword = new Button();
+      btnUpdatePassword.getStyleClass().add("btnPrimary");
+      //Set font awesome icon as graphic
+      btnUpdatePassword.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.EDIT));
+
       grid.add(btnUpdatePassword, 1, 3);
       GridPane.setHalignment(btnUpdatePassword, HPos.RIGHT);
     }
@@ -299,23 +309,23 @@ public class ProfileFormScreen {
       return false;
     }
 
-    //Regex code voor check
-    String passwordPattern = "(?=.*?\\d)(?=.*?[a-zA-Z])(?=.*?\\W).{8,}";
-    //Als wachtwoord niet voldoet aan de vereisten
-    if(!newPass.matches(passwordPattern)) {
-      //Foutmelding
-      new Utility().showAlert(
-        Alert.AlertType.ERROR,
-        grid.getScene().getWindow(),
-        "Error!",
-        "Het wachtwoord moet minimaal 1 cijfer hebben," +
-        "1 letter hebben," +
-        "1 symbool hebben," +
-        "8 karakters hebben en" +
-        "mag niet enkel nummers bevatten!"
-      );
-      return false;
-    }
+//    //Regex code voor check
+//    String passwordPattern = "(?=.*?\\d)(?=.*?[a-zA-Z])(?=.*?\\W).{8,}";
+//    //Als wachtwoord niet voldoet aan de vereisten
+//    if(!newPass.matches(passwordPattern)) {
+//      //Foutmelding
+//      new Utility().showAlert(
+//        Alert.AlertType.ERROR,
+//        grid.getScene().getWindow(),
+//        "Error!",
+//        "Het wachtwoord moet minimaal 1 cijfer hebben," +
+//        "1 letter hebben," +
+//        "1 symbool hebben," +
+//        "8 karakters hebben en" +
+//        "mag niet enkel nummers bevatten!"
+//      );
+//      return false;
+//    }
 
     //Als de twee wachtwoorden niet gelijk zijn
     if (!newPass.equals(confirmPass)) {

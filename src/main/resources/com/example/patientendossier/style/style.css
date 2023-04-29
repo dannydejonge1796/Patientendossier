@@ -5,16 +5,44 @@
 }
 
 .button {
-    -fx-background-color: #ff0000; /* Set button background color to red */
     -fx-text-fill: #ffffff; /* Set button text color to white */
+}
+
+.btnSuccess {
+    -fx-background-color: #21CC65;
+}
+
+.btnSuccess .glyph-icon {
+    -fx-fill: white;
+}
+
+.btnError {
+    -fx-background-color: #EE3C3C;
+}
+
+.btnError .glyph-icon {
+    -fx-fill: white;
+}
+
+.btnWarning {
+    -fx-background-color: #FFFF66;
+    -fx-text-fill: black;
+}
+
+.btnWarning .glyph-icon {
+    -fx-fill: black;
+}
+
+.btnPrimary {
+    -fx-background-color: #21A8CC;
+}
+
+.btnPrimary .glyph-icon {
+    -fx-fill: white;
 }
 
 .navIcon {
     -fx-padding: 0 10 0 10;
-}
-
-.separator {
-    -fx-border-color: lightgray;
 }
 
 .context-menu {
@@ -22,11 +50,6 @@
     -fx-font-size: 18;
     -fx-border-color: lightgray;
 }
-
-.menu-item {
-    -fx-padding: 15,5,15,5;
-}
-
 
 .text-field {
     -fx-background-color: #FFFFFF;
@@ -64,7 +87,7 @@
 }
 
 /* Set alternating row colors */
-.table-row-cell:odd {
+.table-row-cell {
     -fx-background-color: #ffffe6;
 }
 
@@ -84,13 +107,30 @@
 }
 
 .table-view .column-header {
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: lightgray;
-}
-
-.table-view .column-header {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
+
+/* Remove padding from TableView */
+.table-view {
+    -fx-padding: 0;
+}
+
+/* Remove padding from TableHeader */
+.table-view .column-header {
+    -fx-padding: 0;
+}
+
+/* Remove padding from TableCells */
+.table-view .table-cell {
+    -fx-padding: 0;
+}
+
+/* Remove padding from rows */
+.table-view .table-row-cell {
+    -fx-padding: 0;
+}
+
+
 
 

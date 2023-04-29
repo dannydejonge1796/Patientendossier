@@ -1,5 +1,6 @@
 package com.example.patientendossier.screen;
 
+import com.example.patientendossier.Application;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Login;
 import com.example.patientendossier.model.Patient;
@@ -16,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
+import java.util.Objects;
 
 public class LoginScreen {
 
@@ -66,6 +68,7 @@ public class LoginScreen {
 
     //Knop om in te loggen aanmaken
     Button btnLogin = new Button("Inloggen");
+    btnLogin.getStyleClass().add("btnPrimary");
     gridForm.add(btnLogin, 0, 6);
 
     //Actie voor login knop
@@ -94,7 +97,12 @@ public class LoginScreen {
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(stackPane);
 
-    return new Scene(borderPane);
+    Scene scene = new Scene(borderPane);
+
+    scene.getStylesheets().add(Objects.requireNonNull(Application.class.getResource("style/style.css")).toExternalForm());
+
+    //Scene teruggeven
+    return scene;
   }
 
   private void setBackground(StackPane stackPane)
@@ -151,8 +159,8 @@ public class LoginScreen {
 
     //Knop om in te loggen aanmaken
     Button btnLogin = new Button("Inloggen");
+    btnLogin.getStyleClass().add("btnPrimary");
     gridForm.add(btnLogin, 0, 6);
-    btnLogin.getStyleClass().add("button");
 
     //Actie voor login knop
     btnLogin.setOnAction(e -> {
@@ -182,7 +190,12 @@ public class LoginScreen {
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(stackPane);
 
-    return new Scene(borderPane);
+    Scene scene = new Scene(borderPane);
+
+    scene.getStylesheets().add(Objects.requireNonNull(Application.class.getResource("style/style.css")).toExternalForm());
+
+    //Scene teruggeven
+    return scene;
   }
 
   private void addFormFields(GridPane grid, Text txtCarerLogin)

@@ -177,6 +177,7 @@ public class AppointmentScreen {
 
     //Knop initialiseren
     Button btnUpdate = new Button();
+    btnUpdate.getStyleClass().add("btnPrimary");
     //Toevoegen aan grid
     gridForm.add(btnUpdate, 1, 5);
     //Knop aan de rechter kant plaatsen

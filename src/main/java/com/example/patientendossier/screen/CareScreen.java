@@ -1,8 +1,11 @@
 package com.example.patientendossier.screen;
 
+import com.example.patientendossier.Application;
 import com.example.patientendossier.model.Appointment;
 import com.example.patientendossier.model.Care;
 import com.example.patientendossier.model.Patient;
+import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -17,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CareScreen {
 
@@ -39,11 +43,17 @@ public class CareScreen {
     //Nav toevoegen
     this.borderPane.setTop(getNav());
 
-    //Patiëntlijst aan center borderpane toevoegen
+    //Patiënt lijst aan center borderpane toevoegen
     borderPane.setCenter(addPatListPane());
 
+    //Borderpane aan scene toevoegen
+    Scene scene = new Scene(borderPane);
+
+    //Style aan scene linken
+    scene.getStylesheets().add(Objects.requireNonNull(Application.class.getResource("style/style.css")).toExternalForm());
+
     //Scene teruggeven
-    return new Scene(borderPane);
+    return scene;
   }
 
   private HBox getNav()
@@ -167,7 +177,10 @@ public class CareScreen {
     hBoxTop.getChildren().add(regionTop);
 
     //Patient aanmaken knop aanmaken en toevoegen
-    Button btnAddPatient = new Button("Nieuwe patiënt aanmaken");
+    Button btnAddPatient = new Button();
+    btnAddPatient.getStyleClass().add("btnPrimary");
+    //Fontawesome icon als graphic instellen
+    btnAddPatient.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.PLUS));
     hBoxTop.getChildren().add(btnAddPatient);
 
     //HBox toevoegen aan VBox
@@ -187,7 +200,9 @@ public class CareScreen {
     HBox hBoxBottom = new HBox();
 
     //Patient verwijder-knop aanmaken en toevoegen
-    Button btnRemoveFromMyPatients = new Button("Verwijder uit mijn patiënten");
+    Button btnRemoveFromMyPatients = new Button();
+    btnRemoveFromMyPatients.getStyleClass().add("btnPrimary");
+    btnRemoveFromMyPatients.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.MINUS));
     btnRemoveFromMyPatients.setDisable(true);
     hBoxBottom.getChildren().add(btnRemoveFromMyPatients);
 
@@ -198,6 +213,7 @@ public class CareScreen {
 
     //Naar het dossier knop aanmaken en toevoegen
     Button btnToDossier = new Button("Naar dossier");
+    btnToDossier.getStyleClass().add("btnPrimary");
     btnToDossier.setDisable(true);
     hBoxBottom.getChildren().add(btnToDossier);
     //HBox beneden toevoegen aan VBox
@@ -268,7 +284,10 @@ public class CareScreen {
     hBoxTop.getChildren().add(regionTop);
 
     //Knop om nieuwe zorgverlener aan te maken aanmaken en toevoegen
-    Button btnAddCare = new Button("Nieuwe zorgverlener aanmaken");
+    Button btnAddCare = new Button();
+    btnAddCare.getStyleClass().add("btnPrimary");
+    //Fontawesome icon als graphic instellen
+    btnAddCare.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.PLUS));
     hBoxTop.getChildren().add(btnAddCare);
 
     //HBox boven toevoegen aan VBox
@@ -289,7 +308,9 @@ public class CareScreen {
     HBox hBoxBottom = new HBox();
 
     //Verwijder zorgverlener knop aanmaken en toevoegen
-    Button btnDeleteCare = new Button("Verwijder");
+    Button btnDeleteCare = new Button();
+    btnDeleteCare.getStyleClass().add("btnPrimary");
+    btnDeleteCare.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.MINUS));
     btnDeleteCare.setDisable(true);
     hBoxBottom.getChildren().add(btnDeleteCare);
 
@@ -299,7 +320,9 @@ public class CareScreen {
     hBoxBottom.getChildren().add(regionBottom);
 
     //Wijzig zorgverlener knop aanmaken en toevoegen
-    Button btnUpdate = new Button("Wijzig");
+    Button btnUpdate = new Button();
+    btnUpdate.getStyleClass().add("btnPrimary");
+    btnUpdate.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.EDIT));
     btnUpdate.setDisable(true);
     hBoxBottom.getChildren().add(btnUpdate);
 
@@ -382,6 +405,7 @@ public class CareScreen {
 
     //Submit knop toevoegen en juiste text instellen op basis van modus en meegegeven object
     Button btnSave = new Button("Toevoegen");
+    btnSave.getStyleClass().add("btnPrimary");
     if (mode.equals("care") && careUpdate != null) {
       btnSave.setText("Update");
     }
