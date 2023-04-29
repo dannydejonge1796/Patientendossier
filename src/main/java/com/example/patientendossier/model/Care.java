@@ -30,47 +30,12 @@ public class Care {
     this.password = password;
   }
 
-  public void removeCare(Integer careNumber)
+  public Integer getHighestAppointmentNumber()
   {
-    //Query om een zorgverlener te verwijderen
+    //Query om het hoogste afspraaknummer te vinden
     String query =
-            "DELETE FROM care " +
-            "WHERE number = '" + careNumber + "'"
-    ;
-
-    //Roep store functie in db class
-    Application.db.storeData(query);
-  }
-
-  public Integer getHighestResultId()
-  {
-    //Query om het hoogste uitslag id te verkrijgen
-    String query =
-            "SELECT MAX(id) as highest_id " +
-            "FROM result"
-    ;
-
-    //Data ophaal functie aanroepen in de database class
-    ResultSet result = Application.db.getData(query);
-
-    //Het resultaat teruggeven
-    try {
-      if (result.next()) {
-        return result.getInt("highest_id");
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-
-    return null;
-  }
-
-  public Integer getHighestReportId()
-  {
-    //Query om het hoogste verslag id te verkrijgen
-    String query =
-            "SELECT MAX(id) as highest_id " +
-                    "FROM report"
+            "SELECT MAX(number) as highest_number " +
+                    "FROM appointment"
             ;
 
     //Data ophaal functie aanroepen in de database class
@@ -79,13 +44,65 @@ public class Care {
     //Resultaat teruggeven
     try {
       if (result.next()) {
-        return result.getInt("highest_id");
+        return result.getInt("highest_number");
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
 
     return null;
+  }
+
+  public ArrayList<String> getAllMedicineNames()
+  {
+    //Lijst met namen van alle medicijnen initialiseren
+    ArrayList<String> medicineNames = new ArrayList<>();
+
+    //Query voor het ophalen van alle namen van medicijnen
+    String query =
+            "SELECT medicine.name " +
+                    "FROM medicine"
+            ;
+
+    //Data ophaal functie aanroepen in de database class
+    ResultSet result = Application.db.getData(query);
+
+    //Door resultaten lopen en namen toevoegen aan de lijst
+    try {
+      while (result.next()) {
+        medicineNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return medicineNames;
+  }
+
+  public ArrayList<String> getAllHealthNames()
+  {
+    //Lijst met namen van alle gezondheidsproblemen initialiseren
+    ArrayList<String> healthNames = new ArrayList<>();
+
+    //Query voor het ophalen van de namen van alle gezondheidsproblemen
+    String query =
+            "SELECT health.name " +
+                    "FROM health"
+            ;
+
+    //Data ophaal functie aanroepen in de database class
+    ResultSet result = Application.db.getData(query);
+
+    //Door resultaten lopen en namen in de lijst stoppen
+    try {
+      while (result.next()) {
+        healthNames.add(result.getString("name"));
+      }
+    } catch (SQLException e) {
+      System.out.println("Ophalen data mislukt!");
+    }
+
+    return healthNames;
   }
 
   public ArrayList<Appointment> getAppointments()
@@ -123,29 +140,6 @@ public class Care {
     return appointments;
   }
 
-  public Integer getHighestAppointmentNumber()
-  {
-    //Query om het hoogste afspraaknummer te vinden
-    String query =
-            "SELECT MAX(number) as highest_number " +
-            "FROM appointment"
-    ;
-
-    //Data ophaal functie aanroepen in de database class
-    ResultSet result = Application.db.getData(query);
-
-    //Resultaat teruggeven
-    try {
-      if (result.next()) {
-        return result.getInt("highest_number");
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-
-    return null;
-  }
-
   public ArrayList<String> getAllAllergyNames()
   {
     //Lijst met namen van alle allergieën initialiseren
@@ -154,8 +148,8 @@ public class Care {
     //Query voor het ophalen van de namen van alle allergieën
     String query =
             "SELECT allergy.name " +
-            "FROM allergy"
-    ;
+                    "FROM allergy"
+            ;
 
     //Data ophaal functie aanroepen in de database class
     ResultSet result = Application.db.getData(query);
@@ -172,56 +166,62 @@ public class Care {
     return allergyNames;
   }
 
-  public ArrayList<String> getAllHealthNames()
+  public Integer getHighestReportId()
   {
-    //Lijst met namen van alle gezondheidsproblemen initialiseren
-    ArrayList<String> healthNames = new ArrayList<>();
-
-    //Query voor het ophalen van de namen van alle gezondheidsproblemen
+    //Query om het hoogste verslag id te verkrijgen
     String query =
-            "SELECT health.name " +
-            "FROM health"
-    ;
-
-    //Data ophaal functie aanroepen in de database class
-    ResultSet result = Application.db.getData(query);
-
-    //Door resultaten lopen en namen in de lijst stoppen
-    try {
-      while (result.next()) {
-        healthNames.add(result.getString("name"));
-      }
-    } catch (SQLException e) {
-      System.out.println("Ophalen data mislukt!");
-    }
-
-    return healthNames;
-  }
-
-  public ArrayList<String> getAllMedicineNames()
-  {
-    //Lijst met namen van alle medicijnen initialiseren
-    ArrayList<String> medicineNames = new ArrayList<>();
-
-    //Query voor het ophalen van alle namen van medicijnen
-    String query =
-            "SELECT medicine.name " +
-                    "FROM medicine"
+            "SELECT MAX(id) as highest_id " +
+                    "FROM report"
             ;
 
     //Data ophaal functie aanroepen in de database class
     ResultSet result = Application.db.getData(query);
 
-    //Door resultaten lopen en namen toevoegen aan de lijst
+    //Resultaat teruggeven
     try {
-      while (result.next()) {
-        medicineNames.add(result.getString("name"));
+      if (result.next()) {
+        return result.getInt("highest_id");
       }
     } catch (SQLException e) {
-      System.out.println("Ophalen data mislukt!");
+      throw new RuntimeException(e);
     }
 
-    return medicineNames;
+    return null;
+  }
+
+  public Integer getHighestResultId()
+  {
+    //Query om het hoogste uitslag id te verkrijgen
+    String query =
+            "SELECT MAX(id) as highest_id " +
+                    "FROM result"
+            ;
+
+    //Data ophaal functie aanroepen in de database class
+    ResultSet result = Application.db.getData(query);
+
+    //Het resultaat teruggeven
+    try {
+      if (result.next()) {
+        return result.getInt("highest_id");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    return null;
+  }
+
+  public void removeCare(Integer careNumber)
+  {
+    //Query om een zorgverlener te verwijderen
+    String query =
+            "DELETE FROM care " +
+            "WHERE number = '" + careNumber + "'"
+    ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
   }
 
   public void unAuthorizePatient(Integer careNumber, Integer patientNumber)

@@ -117,7 +117,7 @@ public class ReportScreen {
           report.setMadeBy(this.care.getLastname());
 
           //Update verslagen in de database
-          this.patient.updateReport(report);
+          report.update();
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.reportPane);
@@ -143,7 +143,7 @@ public class ReportScreen {
           Report newReport = new Report(id, patientNumber, reportText, madeBy, date);
 
           //Voeg het verslag toe aan de patient in de database
-          this.patient.addReport(newReport);
+          newReport.store();
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.reportPane);
@@ -191,7 +191,7 @@ public class ReportScreen {
       //Verkrijg het geselecteerde verslag
       Report selectedReport = table.getSelectionModel().getSelectedItem();
       //Verwijder het verslag uit de database
-      this.patient.deleteReport(selectedReport);
+      selectedReport.delete();
       //Herlaad pagina
       this.load();
       this.dossier.getBorderPane().setCenter(this.reportPane);

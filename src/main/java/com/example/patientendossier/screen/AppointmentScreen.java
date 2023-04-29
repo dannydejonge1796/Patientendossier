@@ -221,7 +221,7 @@ public class AppointmentScreen {
           appointment.setTime(selectedTime);
 
           //Update afspraken in de database
-          this.patient.updateAppointment(appointment);
+          appointment.update();
 
           //Herlaad de pagina
           this.load();
@@ -259,7 +259,7 @@ public class AppointmentScreen {
           );
 
           //Voeg de afspraak toe aan de patient en de zorgverlener in de database
-          this.patient.addAppointment(newAppointment);
+          newAppointment.store();
           //Herlaad de paigna
           this.load();
           this.dossier.getBorderPane().setCenter(this.appointmentPane);
@@ -314,7 +314,7 @@ public class AppointmentScreen {
       //Verkrijg de geselecteerde afspraak
       Appointment selectedAppointment = table.getSelectionModel().getSelectedItem();
       //Verwijder de afspraak uit de database
-      this.patient.deleteAppointment(selectedAppointment);
+      selectedAppointment.delete();
       //Herlaad de pagina
       this.load();
       this.dossier.getBorderPane().setCenter(this.appointmentPane);

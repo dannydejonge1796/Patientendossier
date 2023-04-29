@@ -134,7 +134,7 @@ public class MedicineScreen {
           medicine.setDescription(tfDescription.getText());
           medicine.setDosage(tfDosage.getText());
           //Update medicijnen in de database
-          this.patient.updateMedicine(medicine);
+          medicine.update(this.patient);
           //Herlaad pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.medicinePane);
@@ -167,7 +167,7 @@ public class MedicineScreen {
           //Maak nieuw medicine object
           Medicine newMedicine = new Medicine(name, description, dosage);
           //Voeg het medicijn toe aan de patient in de database
-          this.patient.addMedicine(newMedicine);
+          newMedicine.store(this.patient);
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.medicinePane);
@@ -225,7 +225,7 @@ public class MedicineScreen {
       //Verkrijg de geselecteerde medicine
       Medicine selectedMedicine = table.getSelectionModel().getSelectedItem();
       //Verwijder het medicijn uit de database
-      this.patient.deleteMedicine(selectedMedicine);
+      selectedMedicine.delete(this.patient);
       //Herlaad de pagina
       this.load();
       this.dossier.getBorderPane().setCenter(this.medicinePane);

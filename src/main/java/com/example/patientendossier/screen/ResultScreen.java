@@ -117,7 +117,7 @@ public class ResultScreen {
           result.setMadeBy(this.care.getLastname());
 
           //Update uitslagen in de database
-          this.patient.updateResult(result);
+          result.update();
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.resultPane);
@@ -141,7 +141,7 @@ public class ResultScreen {
           //Maak nieuw uitslag object met data
           Result newResult = new Result(id, patientNumber, resultText, madeBy, date);
           //Voeg de uitslag toe aan de patient in de database
-          this.patient.addResult(newResult);
+          newResult.store();
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.resultPane);
@@ -189,7 +189,7 @@ public class ResultScreen {
       //Verkrijg de geselecteerde uitslag
       Result selectedResult = table.getSelectionModel().getSelectedItem();
       //Verwijder de uitslag uit de database
-      this.patient.deleteResult(selectedResult);
+      selectedResult.delete();
       //Herlaad pagina
       this.load();
       this.dossier.getBorderPane().setCenter(this.resultPane);

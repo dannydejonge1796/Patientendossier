@@ -120,7 +120,7 @@ public class AllergyScreen {
           //Update de description van het allergy object met de ingevoerde data
           allergy.setDescription(tfDescription.getText());
           //Update allergieën in de database
-          this.patient.updateAllergy(allergy);
+          allergy.update(this.patient);
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.allergyPane);
@@ -152,7 +152,7 @@ public class AllergyScreen {
           //Maak nieuw allergy object
           Allergy newAllergy = new Allergy(name, description);
           //Voeg de allergy toe aan de patient in de database
-          this.patient.addAllergy(newAllergy);
+          newAllergy.store(this.patient);
           //Herlaad de pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.allergyPane);
@@ -203,7 +203,7 @@ public class AllergyScreen {
       //Verkrijg de geselecteerde allergy
       Allergy selectedAllergy = table.getSelectionModel().getSelectedItem();
       //Verwijder de allergy uit de database
-      this.patient.deleteAllergy(selectedAllergy);
+      selectedAllergy.delete(this.patient);
       //Herlaad pagina
       this.load();
       this.dossier.getBorderPane().setCenter(this.allergyPane);

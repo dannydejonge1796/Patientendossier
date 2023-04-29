@@ -1,5 +1,7 @@
 package com.example.patientendossier.model;
 
+import com.example.patientendossier.Application;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -23,6 +25,53 @@ public class Appointment {
     this.description = description;
     this.date = date;
     this.time = time;
+  }
+
+  public void delete()
+  {
+    //Query voor het verwijderen van een afspraak
+    String query =
+            "DELETE FROM appointment " +
+                    "WHERE number = '" + this.number + "'"
+            ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
+  }
+
+  public void store()
+  {
+    //Query voor het aanmaken van een nieuwe afspraak
+    String query =
+            "INSERT INTO appointment (number, patient_number, care_number, care_lastname, description, date, time)" +
+                    "VALUES ('" + this.number + "', " +
+                    "'" + this.patientNumber + "', " +
+                    "'" + this.careNumber + "', " +
+                    "'" + this.careLastname + "', " +
+                    "'" + this.description + "', " +
+                    "'" + this.date + "', " +
+                    "'" + this.time + "')"
+            ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
+  }
+
+  public void update()
+  {
+    //Query voor het bijwerken van een bestaande afspraak
+    String query =
+            "UPDATE appointment " +
+                    "SET care_number = '" + this.careNumber + "', " +
+                    "care_lastname = '" + this.careLastname + "', " +
+                    "description = '" + this.description + "', " +
+                    "date = '" + this.date + "', " +
+                    "time = '" + this.time + "' " +
+                    "WHERE number = '" + this.number + "'"
+            ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
   }
 
   public void setCareNumber(Integer careNumber) {

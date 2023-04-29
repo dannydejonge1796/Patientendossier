@@ -1,5 +1,7 @@
 package com.example.patientendossier.model;
 
+import com.example.patientendossier.Application;
+
 import java.time.LocalDate;
 
 public class Result {
@@ -16,6 +18,49 @@ public class Result {
     this.result = result;
     this.madeBy = madeBy;
     this.date = date;
+  }
+
+  public void store()
+  {
+    //Query voor het maken van een nieuwe uitslag
+    String query =
+            "INSERT INTO result (id, patient_number, date, result, made_by)" +
+                    "VALUES ('" + this.id + "', " +
+                    "'" + this.patientNumber + "', " +
+                    "'" + this.date + "', " +
+                    "'" + this.result + "', " +
+                    "'" + this.madeBy + "')"
+            ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
+  }
+
+  public void update()
+  {
+    //Query voor het bijwerken van een uitslag
+    String query =
+            "UPDATE result " +
+                    "SET result = '" + this.result + "', " +
+                    "made_by = '" + this.madeBy + "', " +
+                    "date = '" + this.date + "' " +
+                    "WHERE id = '" + this.id + "'"
+            ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
+  }
+
+  public void delete()
+  {
+    //Query voor het verwijderen van een uitslag
+    String query =
+            "DELETE FROM result " +
+                    "WHERE id = '" + this.getId() + "'"
+            ;
+
+    //Roep store functie in db class
+    Application.db.storeData(query);
   }
 
   public Integer getPatientNumber() {

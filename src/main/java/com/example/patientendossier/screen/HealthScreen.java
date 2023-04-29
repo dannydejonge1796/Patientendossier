@@ -128,7 +128,7 @@ public class HealthScreen {
           //Update de description van het health object met de ingevoerde data
           health.setDescription(tfDescription.getText());
           //Update gezondheidsproblemen in de database
-          this.patient.updateHealth(health);
+          health.update(this.patient);
           //Herlaad pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.healthPane);
@@ -165,7 +165,7 @@ public class HealthScreen {
           Health newHealth = new Health(name, description);
 
           //Voeg het gezondheidsprobleem toe aan de patient in de database
-          this.patient.addHealth(newHealth);
+          newHealth.store(this.patient);
           //Herlaad pagina
           this.load();
           this.dossier.getBorderPane().setCenter(this.healthPane);
@@ -220,7 +220,7 @@ public class HealthScreen {
       //Verkrijg het geselecteerde gezondheidsprobleem
       Health selectedHealth = table.getSelectionModel().getSelectedItem();
       //Verwijder het gezondheidsprobleem uit de db
-      this.patient.deleteHealth(selectedHealth);
+      selectedHealth.delete(this.patient);
       //Herlaad pagina
       this.load();
       this.dossier.getBorderPane().setCenter(this.healthPane);

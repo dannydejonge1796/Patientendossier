@@ -18,7 +18,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -209,7 +208,7 @@ public class DossierScreen {
             vBox.getChildren().add(txtAuthorize);
 
             //Haal alle zorgverleners van een patient op en stop ze in de lijst
-            ArrayList<Care> caresOfPatient = patient.getCareOfPatient();
+            ArrayList<Care> caresOfPatient = patient.getCare();
             //Array met kolom namen
             String[] careColumnNames = {"Zorgverlener nummer", "Voornaam", "Achternaam", "Geboortedatum", "Beroep", "Telefoonnummer", "Email"};
             //Array met attribuut namen
