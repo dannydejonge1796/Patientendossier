@@ -399,6 +399,8 @@ public class CareScreen {
     //Haal het wachtwoord form op
     GridPane gridPassword = profileFormScreen.getUpdatePasswordForm();
 
+    dossierFormScreen.getFormPane().setSpacing(20);
+
     //Voeg de formulieren toe aan het scherm
     dossierFormScreen.getFormPane().getChildren().add(gridProfile);
     dossierFormScreen.getFormPane().getChildren().add(gridPassword);

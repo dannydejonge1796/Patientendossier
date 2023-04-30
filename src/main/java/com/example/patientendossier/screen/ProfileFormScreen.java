@@ -49,10 +49,11 @@ public class ProfileFormScreen {
 
     grid.getColumnConstraints().addAll(col1, col2);
 
-    //Als het formulier wordt gebruikt voor zorgverleners hebben we een optelling van 1 nodig
-    int compensation = 0;
-    if (mode.equals("care")) {
-      compensation = 1;
+    //Als het formulier wordt gebruikt voor zorgverleners, hebben we een optelling van 1 nodig
+    //Als het formulier wordt gebruikt om een nieuwe patiënt toe te voegen, hebben we een aftrekking van 1 nodig
+    int rowIdxModifier = 0;
+    if (patient == null) {
+      rowIdxModifier = -1;
     }
 
     //Label voor pagina aanmaken en toevoegen
@@ -62,49 +63,51 @@ public class ProfileFormScreen {
 
     //Label voor veld aanmaken en toevoegen
     Label lblFirstname = new Label("Voornaam:");
-    grid.add(lblFirstname, 0, 2);
+    grid.add(lblFirstname, 0, 2 + rowIdxModifier);
     //Text veld aanmaken en toevoegen
     this.tfFirstname = new TextField();
-    grid.add(tfFirstname, 1, 2);
+    grid.add(tfFirstname, 1, 2 + rowIdxModifier);
 
     //Label voor veld aanmaken en toevoegen
     Label lbLastname = new Label("Achternaam:");
-    grid.add(lbLastname, 0, 3);
+    grid.add(lbLastname, 0, 3 + rowIdxModifier);
     //Text veld aanmaken en toevoegen
     this.tfLastname = new TextField();
-    grid.add(tfLastname, 1, 3);
+    grid.add(tfLastname, 1, 3 + rowIdxModifier);
 
     //Label voor veld aanmaken en toevoegen
     Label lblBirth = new Label("Geboortedatum:");
-    grid.add(lblBirth, 0, 4);
+    grid.add(lblBirth, 0, 4 + rowIdxModifier);
 
     //Datepicker aanmaken en toevoegen
     this.dpBirth = new DatePicker();
-    grid.add(dpBirth, 1, 4);
+    grid.add(dpBirth, 1, 4 + rowIdxModifier);
 
     //Als het form wordt gebruikt voor zorgverleners
     if (mode.equals("care")) {
       //Voeg label beroep toe
       Label lblProfession = new Label("Beroep");
-      grid.add(lblProfession, 0, 5);
+      grid.add(lblProfession, 0, 5 + rowIdxModifier);
       //Voeg text veld beroep toe
       this.tfProfession = new TextField();
-      grid.add(tfProfession, 1, 5);
+      grid.add(tfProfession, 1, 5 + rowIdxModifier);
+
+      rowIdxModifier = 0;
     }
 
     //Label voor veld aanmaken en toevoegen
     Label lblPhone = new Label("Telefoonnummer:");
-    grid.add(lblPhone, 0, 5 + compensation);
+    grid.add(lblPhone, 0, 5 + rowIdxModifier);
     //Text veld aanmaken en toevoegen
     this.tfPhone = new TextField();
-    grid.add(tfPhone, 1, 5 + compensation);
+    grid.add(tfPhone, 1, 5 + rowIdxModifier);
 
     //Label voor veld aanmaken en toevoegen
     Label lblEmail = new Label("Email:");
-    grid.add(lblEmail, 0, 6 + compensation);
+    grid.add(lblEmail, 0, 6 + rowIdxModifier);
     //Text veld aanmaken en toevoegen
     this.tfEmail = new TextField();
-    grid.add(tfEmail, 1, 6 + compensation);
+    grid.add(tfEmail, 1, 6 + rowIdxModifier);
 
     //Als er een patient object is meegegeven
     if (patient != null) {
@@ -131,7 +134,7 @@ public class ProfileFormScreen {
       //Set font awesome icon as graphic
       btnUpdateProfile.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.EDIT));
 
-      grid.add(btnUpdateProfile, 1, 7 + compensation);
+      grid.add(btnUpdateProfile, 1, 7 + rowIdxModifier);
       GridPane.setHalignment(btnUpdateProfile, HPos.RIGHT);
     }
 
@@ -407,7 +410,7 @@ public class ProfileFormScreen {
     care.setPhonenumber(Integer.parseInt(tfPhone.getText()));
     care.setEmail(tfEmail.getText());
     care.setPassword(pfNewPass.getText());
-    //Zorgverlener updaten in de database
+    //Zorgverlener bijwerken in de database
     care.update();
   }
 
