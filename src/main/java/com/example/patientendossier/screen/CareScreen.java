@@ -150,7 +150,7 @@ public class CareScreen {
     //Text label instellen
     this.lblBack.setText("Uitloggen");
     //Actie terug naar zorgverlener login instellen
-    this.lblBack.setOnMouseClicked(e -> stage.setScene(new LoginScreen(this.stage).getCarerLoginScene()));
+    this.lblBack.setOnMouseClicked(e -> stage.setScene(new LoginScreen(this.stage).getPatientLoginScene()));
   }
 
   private VBox addPatListPane()
