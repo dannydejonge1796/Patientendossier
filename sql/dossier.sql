@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 08 apr 2023 om 15:50
+-- Gegenereerd op: 30 apr 2023 om 13:33
 -- Serverversie: 10.4.27-MariaDB
 -- PHP-versie: 8.2.0
 
@@ -97,7 +97,7 @@ CREATE TABLE `care` (
 --
 
 INSERT INTO `care` (`number`, `firstname`, `lastname`, `birthdate`, `profession`, `phonenumber`, `email`, `password`) VALUES
-(1987654321, 'Danny', 'Care', '2023-04-17', 'dokter', 612345678, 'danny@gmail.com', '123');
+(1470770303, 'Danny', 'de Jonge', '1996-10-17', 'Huisarts', 612345678, 'danny@gmail.com', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE `care_patient` (
 --
 
 INSERT INTO `care_patient` (`care_number`, `patient_number`) VALUES
-(1987654321, 1234567890);
+(1470770303, 1356302154);
 
 -- --------------------------------------------------------
 
@@ -215,7 +215,7 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`number`, `firstname`, `lastname`, `birthdate`, `phonenumber`, `email`, `password`) VALUES
-(1234567890, 'Danny', 'de Jonge', '1996-10-17', 1234567890, 'd@gmail.com', '123');
+(1356302154, 'Danny', 'de Jonge', '1996-10-17', 612345678, 'd@gmail.com', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 

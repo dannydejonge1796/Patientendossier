@@ -79,7 +79,7 @@ public class LoginScreen {
       if (this.validateFormFields(gridForm)) {
         //Data uit velden halen
         String email = tfEmail.getText();
-        String password = pfPassword.getText();
+        String password = new Utility().hashPassword(pfPassword.getText());
         //Patient object op proberen te halen met ingevoerde gegevens
         Patient patient = new Login(email, password).loginPatient();
         //Als er geen patient gevonden is
@@ -170,7 +170,7 @@ public class LoginScreen {
       if (this.validateFormFields(gridForm)) {
         //Data uit velden halen
         String email = tfEmail.getText();
-        String password = pfPassword.getText();
+        String password = new Utility().hashPassword(pfPassword.getText());
 
         //Care object op proberen te halen met ingevoerde gegevens
         Care care = new Login(email, password).loginCare();

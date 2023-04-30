@@ -3,6 +3,9 @@ package com.example.patientendossier.utility;
 import javafx.scene.control.Alert;
 import javafx.stage.Window;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Utility {
 
   public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
@@ -18,5 +21,23 @@ public class Utility {
     alert.initOwner(owner);
     //Weergeef de alert
     alert.show();
+  }
+
+  public String hashPassword(String password) {
+    try {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      byte[] passwordBytes = password.getBytes();
+      byte[] hashedBytes = md.digest(passwordBytes);
+
+      // Convert the byte array to a hexadecimal string representation
+      StringBuilder sb = new StringBuilder();
+      for (byte b : hashedBytes) {
+        sb.append(String.format("%02x", b));
+      }
+      return sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }

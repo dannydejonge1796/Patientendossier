@@ -197,13 +197,6 @@ public class ProfileFormScreen {
       GridPane.setHalignment(btnUpdatePassword, HPos.RIGHT);
     }
 
-    //Als er een care object is meegegeven
-    if (care != null) {
-      //Vul het huidige wachtwoord in, in beide velden
-      pfNewPass.setText(care.getPassword());
-      pfConfirmPass.setText(care.getPassword());
-    }
-
     return grid;
   }
 
@@ -354,7 +347,7 @@ public class ProfileFormScreen {
             dpBirth.getValue(),
             Integer.parseInt(tfPhone.getText()),
             tfEmail.getText(),
-            pfNewPass.getText()
+            new Utility().hashPassword(pfNewPass.getText())
     );
 
     //Patient opslaan in de database
@@ -378,7 +371,7 @@ public class ProfileFormScreen {
   public void updatePatientPassword()
   {
     //Wachtwoord wijzigen in het object
-    patient.setPassword(pfNewPass.getText());
+    patient.setPassword(new Utility().hashPassword(pfNewPass.getText()));
     //Update de patient in de database
     patient.update();
   }
@@ -394,7 +387,7 @@ public class ProfileFormScreen {
             tfProfession.getText(),
             Integer.parseInt(tfPhone.getText()),
             tfEmail.getText(),
-            pfNewPass.getText()
+            new Utility().hashPassword(pfNewPass.getText())
     );
     //Voeg de zorgverlener toe aan de database
     newCare.store();
@@ -409,7 +402,7 @@ public class ProfileFormScreen {
     care.setProfession(tfProfession.getText());
     care.setPhonenumber(Integer.parseInt(tfPhone.getText()));
     care.setEmail(tfEmail.getText());
-    care.setPassword(pfNewPass.getText());
+    care.setPassword(new Utility().hashPassword(pfNewPass.getText()));
     //Zorgverlener bijwerken in de database
     care.update();
   }
