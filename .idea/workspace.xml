@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="402bc318-f8f9-43e8-8cde-2cb0f1de776d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2NJyefBfU7ywtu1tAmQ3amMWAnU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/danny/Documents/fontawesomefx-8.9.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3954023",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danny\Mijn Drive (dannydejonge1796@gmail.com)\avans\Jaar 2022-2023\Periode 2\BP\Patientendossier\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danny\Mijn Drive\avans\Jaar 2022-2023\Periode 2\BP\Patientendossier\src\main\resources\com\example\patientendossier" />
+      <recent name="C:\Users\danny\Mijn Drive (dannydejonge1796@gmail.com)\avans\Jaar 2022-2023\Periode 2\BP\Patientendossier\src\main\resources\com.example.patientendossier" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.patientendossier.Application" />
+      <module name="Patientendossier" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.patientendossier.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="402bc318-f8f9-43e8-8cde-2cb0f1de776d" name="Changes" comment="" />
+      <created>1679396583524</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1679396583524</updated>
+      <workItem from="1679396587829" duration="147000" />
+      <workItem from="1679396778041" duration="2984000" />
+      <workItem from="1679476284948" duration="1581000" />
+      <workItem from="1679904984836" duration="12762000" />
+      <workItem from="1680173017808" duration="56000" />
+      <workItem from="1680173114408" duration="22000" />
+      <workItem from="1680173171142" duration="150000" />
+      <workItem from="1680173330778" duration="288000" />
+      <workItem from="1680173681609" duration="11619000" />
+      <workItem from="1680340755264" duration="12529000" />
+      <workItem from="1680429700911" duration="9739000" />
+      <workItem from="1680505985686" duration="42000" />
+      <workItem from="1680506081217" duration="2487000" />
+      <workItem from="1680512343143" duration="7698000" />
+      <workItem from="1680520694380" duration="1973000" />
+      <workItem from="1680595211370" duration="9559000" />
+      <workItem from="1680773309653" duration="3615000" />
+      <workItem from="1680777374437" duration="449000" />
+      <workItem from="1680777884977" duration="1405000" />
+      <workItem from="1680779424304" duration="160000" />
+      <workItem from="1680779660787" duration="333000" />
+      <workItem from="1680780004691" duration="6000" />
+      <workItem from="1680780110665" duration="148000" />
+      <workItem from="1680780463748" duration="122000" />
+      <workItem from="1680780708489" duration="591000" />
+      <workItem from="1680782634926" duration="40000" />
+      <workItem from="1680782733207" duration="81000" />
+      <workItem from="1680782950536" duration="19000" />
+      <workItem from="1680782983675" duration="121000" />
+      <workItem from="1680783719014" duration="9000" />
+      <workItem from="1680783780586" duration="9000" />
+      <workItem from="1680784085173" duration="2329000" />
+      <workItem from="1680814346243" duration="8000" />
+      <workItem from="1680857654031" duration="79000" />
+      <workItem from="1680857743010" duration="14893000" />
+      <workItem from="1680886853537" duration="323000" />
+      <workItem from="1680887288237" duration="741000" />
+      <workItem from="1680895507313" duration="4320000" />
+      <workItem from="1680951623787" duration="16918000" />
+      <workItem from="1681032324490" duration="10697000" />
+      <workItem from="1681142944476" duration="904000" />
+      <workItem from="1681145286598" duration="3424000" />
+      <workItem from="1681723316191" duration="466000" />
+      <workItem from="1681811502923" duration="986000" />
+      <workItem from="1681888273478" duration="1697000" />
+      <workItem from="1681889990278" duration="9213000" />
+      <workItem from="1682327604460" duration="5622000" />
+      <workItem from="1682406682488" duration="18613000" />
+      <workItem from="1682492924960" duration="1416000" />
+      <workItem from="1682499782610" duration="5681000" />
+      <workItem from="1682759405325" duration="8000" />
+      <workItem from="1682759527904" duration="10867000" />
+      <workItem from="1682849227638" duration="4127000" />
+      <workItem from="1682858624596" duration="145000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

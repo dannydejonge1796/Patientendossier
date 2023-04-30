@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+* {
+    -fx-font-family: "Lato";
+}
+
+.button {
+    -fx-text-fill: #ffffff; /* Set button text color to white */
+}
+
+.btnSuccess {
+    -fx-background-color: #21CC65;
+}
+
+.btnSuccess .glyph-icon {
+    -fx-fill: white;
+}
+
+.btnError {
+    -fx-background-color: #EE3C3C;
+}
+
+.btnError .glyph-icon {
+    -fx-fill: white;
+}
+
+.btnWarning {
+    -fx-background-color: #FFFF66;
+    -fx-text-fill: black;
+}
+
+.btnWarning .glyph-icon {
+    -fx-fill: black;
+}
+
+.btnPrimary {
+    -fx-background-color: #21A8CC;
+}
+
+.btnPrimary .glyph-icon {
+    -fx-fill: white;
+}
+
+.navIcon {
+    -fx-padding: 0 10 0 10;
+}
+
+.context-menu {
+    -fx-background-color: white;
+    -fx-font-size: 18;
+    -fx-border-color: lightgray;
+}
+
+.text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.password-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.subHeader {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+.navLabel {
+    -fx-padding: 0 10 0 10;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+.carePageLabel {
+    -fx-font-size: 24;
+}
+
+/* Set background color for table view */
+.table-view {
+    -fx-background-color: #ffffe6;
+}
+
+/* Set alternating row colors */
+.table-row-cell {
+    -fx-background-color: #ffffe6;
+}
+
+/* Set text color for table cells */
+.table-cell {
+    -fx-text-fill: #333333;
+}
+
+/* Set hover effect on table rows */
+.table-row-cell:hover {
+    -fx-background-color: lightgray;
+}
+
+/* Set selection color for selected table rows */
+.table-row-cell:selected {
+    -fx-background-color: lightgray;
+}
+
+.table-view .column-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Remove padding from TableView */
+.table-view {
+    -fx-padding: 0;
+}
+
+/* Remove padding from TableHeader */
+.table-view .column-header {
+    -fx-padding: 0;
+}
+
+/* Remove padding from TableCells */
+.table-view .table-cell {
+    -fx-padding: 0;
+}
+
+/* Remove padding from rows */
+.table-view .table-row-cell {
+    -fx-padding: 0;
+}
+
+
+
+
